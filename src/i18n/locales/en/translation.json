@@ -1,0 +1,105 @@
+{
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "portfolio": "Portfolio",
+    "contact": "Contact"
+  },
+  "hero": {
+    "greeting": "Hello, I'm",
+    "title": "Creative Developer",
+    "description": "I build captivating digital experiences that blend innovative design with cutting-edge technology to create memorable user journeys.",
+    "viewWork": "View My Work",
+    "contactMe": "Contact Me",
+    "scrollDown": "Scroll Down"
+  },
+  "about": {
+    "title": "About Me",
+    "subtitle": "Creative developer with a passion for building interactive and visually stunning digital experiences.",
+    "whoIAm": "Who I Am",
+    "bioP1": "I'm a creative developer with 5+ years of experience crafting engaging digital experiences that blend artful design with technical precision.",
+    "bioP2": "My passion lies at the intersection of code and creativity, where I build immersive, interactive web applications with particular expertise in data visualization and user interface design.",
+    "bioP3": "I'm constantly exploring new technologies and techniques to push the boundaries of what's possible on the web, focusing on performance, accessibility, and delightful user experiences.",
+    "personalDetails": {
+      "name": "Name",
+      "email": "Email",
+      "location": "Location",
+      "availability": "Availability"
+    },
+    "downloadResume": "Download Resume",
+    "tabs": {
+      "skills": "Skills & Expertise",
+      "experience": "Work Experience",
+      "education": "Education"
+    },
+    "skillCategories": {
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "design": "Design",
+      "data": "Data"
+    }
+  },
+  "portfolio": {
+    "title": "My Work",
+    "subtitle": "Explore a selection of my projects showcasing my skills in web development, design, and interactive data visualization.",
+    "mindMapTitle": "Interactive Mind Map",
+    "mindMapDescription": "Explore my thoughts, skills and interests through this interactive visualization. Click on nodes to learn more.",
+    "filters": {
+      "all": "All Projects",
+      "featured": "Featured"
+    },
+    "projects": {
+      "neuralNetwork": {
+        "title": "Neural Network Visualization",
+        "description": "An interactive D3.js visualization of neural networks with real-time simulation of network learning. Explore connections between nodes, observe weights changing, and see how data flows through the network.",
+        "details": "Built with React and D3.js, this visualization demonstrates advanced concepts in interactive data visualization, animation techniques, and real-time updates."
+      }
+    },
+    "viewLive": "View Live",
+    "viewCode": "View Code",
+    "noResults": "No projects match the selected filter.",
+    "showAll": "Show all projects",
+    "viewMoreGithub": "View More on GitHub"
+  },
+  "contact": {
+    "title": "Get In Touch",
+    "subtitle": "Feel free to reach out for collaborations, questions, or just to say hello!",
+    "contactInfo": "Contact Information",
+    "infoDetails": {
+      "email": "Email",
+      "location": "Location",
+      "phone": "Phone"
+    },
+    "connectWithMe": "Connect With Me",
+    "availableFor": "Available For",
+    "availabilityTypes": {
+      "freelance": "Freelance Projects",
+      "fulltime": "Full-time Positions",
+      "collaborations": "Collaborations",
+      "consulting": "Consulting"
+    },
+    "form": {
+      "title": "Send Me a Message",
+      "name": "Your Name",
+      "email": "Email Address",
+      "subject": "Subject",
+      "message": "Message",
+      "namePlaceholder": "John Doe",
+      "emailPlaceholder": "john@example.com",
+      "subjectPlaceholder": "Project Inquiry",
+      "messagePlaceholder": "I'd like to discuss a potential project...",
+      "sendButton": "Send Message",
+      "sending": "Sending...",
+      "successMessage": "Your message has been sent successfully! I'll get back to you soon.",
+      "errorMessage": "There was an error sending your message. Please try again later."
+    }
+  },
+  "footer": {
+    "copyright": "© 2025 Your Name. All rights reserved.",
+    "madeWith": "Made with ❤️ and React"
+  },
+  "languageSwitcher": {
+    "en": "English",
+    "tr": "Turkish"
+  }
+}

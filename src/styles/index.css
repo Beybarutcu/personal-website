@@ -1,0 +1,87 @@
+/* Import Tailwind directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base styles that work with Tailwind instead of conflicting */
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Reset margins that won't conflict with Tailwind */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  /* Ensure the body takes full height for proper layout */
+  display: flex;
+  flex-direction: column;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Smooth page transitions */
+.page-transition-enter {
+  opacity: 0;
+}
+.page-transition-enter-active {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+.page-transition-exit {
+  opacity: 1;
+}
+.page-transition-exit-active {
+  opacity: 0;
+  transition: opacity 300ms;
+}
+
+/* Handle initial content rendering */
+.content-hidden {
+  opacity: 0;
+  transition: opacity 0.3s ease-in;
+}
+.content-visible {
+  opacity: 1;
+}
+
+/* Visualization loading state */
+.viz-loading {
+  filter: blur(5px);
+  transition: filter 0.5s ease-out;
+}
+.viz-loaded {
+  filter: blur(0);
+}
+
+/* Remove any conflicting styling from the original index.css */
+/* For example, replacing the original button styles with ones that work with Tailwind */
+button:focus,
+button:focus-visible {
+  @apply outline-none ring-2 ring-offset-2 ring-blue-500;
+}
+
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Fix for mobile devices */
+@media (max-width: 640px) {
+  html {
+    font-size: 14px;
+  }
+}

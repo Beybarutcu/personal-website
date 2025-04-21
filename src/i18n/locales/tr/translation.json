@@ -1,0 +1,105 @@
+{
+  "navigation": {
+    "home": "Ana Sayfa",
+    "about": "Hakkımda",
+    "portfolio": "Portfolyo",
+    "contact": "İletişim"
+  },
+  "hero": {
+    "greeting": "Merhaba, Ben",
+    "title": "Yaratıcı Geliştirici",
+    "description": "Yenilikçi tasarımı son teknoloji ile birleştirerek, akılda kalıcı kullanıcı deneyimleri oluşturan etkileyici dijital deneyimler inşa ediyorum.",
+    "viewWork": "Çalışmalarımı Gör",
+    "contactMe": "Bana Ulaş",
+    "scrollDown": "Aşağı Kaydır"
+  },
+  "about": {
+    "title": "Hakkımda",
+    "subtitle": "İnteraktif ve görsel olarak etkileyici dijital deneyimler oluşturma tutkusuna sahip yaratıcı geliştirici.",
+    "whoIAm": "Ben Kimim",
+    "bioP1": "Sanatsal tasarımı teknik hassasiyetle birleştiren etkileyici dijital deneyimler oluşturmada 5+ yıllık deneyime sahip yaratıcı bir geliştiriciyim.",
+    "bioP2": "Tutkum, kod ve yaratıcılığın kesişim noktasında, özellikle veri görselleştirme ve kullanıcı arayüzü tasarımında uzmanlığımla sürükleyici, interaktif web uygulamaları oluşturmaktır.",
+    "bioP3": "Sürekli olarak yeni teknolojileri ve teknikleri keşfederek, performans, erişilebilirlik ve keyifli kullanıcı deneyimlerine odaklanarak web'de mümkün olanın sınırlarını zorluyorum.",
+    "personalDetails": {
+      "name": "İsim",
+      "email": "E-posta",
+      "location": "Konum",
+      "availability": "Müsaitlik"
+    },
+    "downloadResume": "CV'yi İndir",
+    "tabs": {
+      "skills": "Beceriler & Uzmanlık",
+      "experience": "İş Deneyimi",
+      "education": "Eğitim"
+    },
+    "skillCategories": {
+      "frontend": "Önyüz",
+      "backend": "Arkayüz",
+      "design": "Tasarım",
+      "data": "Veri"
+    }
+  },
+  "portfolio": {
+    "title": "Çalışmalarım",
+    "subtitle": "Web geliştirme, tasarım ve interaktif veri görselleştirme alanındaki becerilerimi sergileyen projelerimi keşfedin.",
+    "mindMapTitle": "İnteraktif Zihin Haritası",
+    "mindMapDescription": "Bu interaktif görselleştirme aracılığıyla düşüncelerimi, becerilerimi ve ilgi alanlarımı keşfedin. Daha fazla bilgi için düğümlere tıklayın.",
+    "filters": {
+      "all": "Tüm Projeler",
+      "featured": "Öne Çıkanlar"
+    },
+    "projects": {
+      "neuralNetwork": {
+        "title": "Sinir Ağı Görselleştirmesi",
+        "description": "Ağ öğrenmesinin gerçek zamanlı simülasyonu ile interaktif D3.js sinir ağı görselleştirmesi. Düğümler arasındaki bağlantıları keşfedin, değişen ağırlıkları gözlemleyin ve verilerin ağ içinde nasıl aktığını görün.",
+        "details": "React ve D3.js ile oluşturulan bu görselleştirme, interaktif veri görselleştirme, animasyon teknikleri ve gerçek zamanlı güncellemeler konusundaki ileri kavramları göstermektedir."
+      }
+    },
+    "viewLive": "Canlı Görüntüle",
+    "viewCode": "Kodu Görüntüle",
+    "noResults": "Seçilen filtreyle eşleşen proje yok.",
+    "showAll": "Tüm projeleri göster",
+    "viewMoreGithub": "GitHub'da Daha Fazlasını Gör"
+  },
+  "contact": {
+    "title": "İletişime Geç",
+    "subtitle": "İşbirliği, sorular veya sadece merhaba demek için iletişime geçmekten çekinmeyin!",
+    "contactInfo": "İletişim Bilgileri",
+    "infoDetails": {
+      "email": "E-posta",
+      "location": "Konum",
+      "phone": "Telefon"
+    },
+    "connectWithMe": "Benimle Bağlantı Kur",
+    "availableFor": "Müsaitlik Durumu",
+    "availabilityTypes": {
+      "freelance": "Serbest Projeler",
+      "fulltime": "Tam Zamanlı Pozisyonlar",
+      "collaborations": "İşbirlikleri",
+      "consulting": "Danışmanlık"
+    },
+    "form": {
+      "title": "Bana Mesaj Gönder",
+      "name": "Adınız",
+      "email": "E-posta Adresiniz",
+      "subject": "Konu",
+      "message": "Mesaj",
+      "namePlaceholder": "Ahmet Yılmaz",
+      "emailPlaceholder": "ahmet@ornek.com",
+      "subjectPlaceholder": "Proje Danışma",
+      "messagePlaceholder": "Potansiyel bir proje hakkında görüşmek istiyorum...",
+      "sendButton": "Mesaj Gönder",
+      "sending": "Gönderiliyor...",
+      "successMessage": "Mesajınız başarıyla gönderildi! En kısa sürede size geri döneceğim.",
+      "errorMessage": "Mesajınız gönderilirken bir hata oluştu. Lütfen daha sonra tekrar deneyin."
+    }
+  },
+  "footer": {
+    "copyright": "© 2025 İsminiz. Tüm hakları saklıdır.",
+    "madeWith": "❤️ ve React ile yapıldı"
+  },
+  "languageSwitcher": {
+    "en": "İngilizce",
+    "tr": "Türkçe"
+  }
+}

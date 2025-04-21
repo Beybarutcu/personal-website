@@ -1,0 +1,40 @@
+/* Update for custom-theme.css - Darker background colors */
+
+/* Custom color variables */
+:root {
+  /* Main colors */
+  --color-primary: 139, 92, 246;       /* Purple/indigo */
+  --color-secondary: 56, 189, 248;     /* Sky blue */
+  --color-accent: 251, 113, 133;       /* Pink/rose */
+  --color-highlight: 249, 115, 22;     /* Striking orange - highlight color */
+  
+  /* Darker background gradients */
+  --bg-gradient-main: linear-gradient(135deg, 
+    rgba(10, 15, 30, 1) 0%, 
+    rgba(17, 24, 60, 1) 100%
+  );
+  --bg-gradient-card: linear-gradient(135deg, 
+    rgba(22, 30, 46, 0.4) 0%, 
+    rgba(15, 20, 35, 0.4) 100%
+  );
+  
+  /* Animation speeds */
+  --transition-slow: 0.7s;
+  --transition-medium: 0.4s;
+  --transition-fast: 0.2s;
+}
+
+/* Body and base styles with darker background */
+body {
+  background: var(--bg-gradient-main);
+  background-attachment: fixed;
+  font-feature-settings: 'ss01', 'ss02', 'cv01', 'cv03';
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Update any other specific background colors */
+.bg-gray-900 {
+  background-color: transparent !important; /* Override to ensure consistent background */
+}

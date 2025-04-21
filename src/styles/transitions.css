@@ -1,0 +1,32 @@
+/* transitions.css - Add this file */
+/* Add to body for smoother initial loading */
+body {
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in forwards;
+  }
+  
+  /* Create a fade-in animation */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  /* Hide content until fonts and styles are loaded */
+  .content-hidden {
+    opacity: 0;
+    transition: opacity 0.3s ease-in;
+  }
+  
+  .content-visible {
+    opacity: 1;
+  }
+  
+  /* Blur transition for the visualization loading */
+  .viz-loading {
+    filter: blur(5px);
+    transition: filter 0.5s ease-out;
+  }
+  
+  .viz-loaded {
+    filter: blur(0);
+  }
