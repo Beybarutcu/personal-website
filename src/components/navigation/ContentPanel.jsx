@@ -1,12 +1,11 @@
 // src/components/navigation/ContentPanel.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import { nodeContent } from '../../data/mindMapData';
-import { X, ArrowLeft } from 'lucide-react';
+import { X } from 'lucide-react';
 
-const ContentPanel = ({ nodeId, language = 'en' }) => {
+const ContentPanel = ({ nodeId, language = 'en', onClose }) => {
   const [content, setContent] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
   const panelRef = useRef(null);
   
   // Handle escape key to close panel
@@ -29,34 +28,42 @@ const ContentPanel = ({ nodeId, language = 'en' }) => {
     if (nodeId && nodeContent[nodeId]) {
       const nodeData = nodeContent[nodeId][language] || nodeContent[nodeId]['en'];
       setContent(nodeData);
-      
-      // Animate in
-      setIsAnimating(true);
       setIsVisible(true);
       
-      // After animation completes
-      const timer = setTimeout(() => {
-        setIsAnimating(false);
-      }, 500);
-      
-      return () => clearTimeout(timer);
+      // Animation for panel entry
+      if (panelRef.current) {
+        panelRef.current.style.transform = 'translateY(100%)';
+        panelRef.current.style.opacity = '0';
+        
+        // Trigger animation after a tiny delay to ensure styles are applied
+        setTimeout(() => {
+          panelRef.current.style.transform = 'translateY(0)';
+          panelRef.current.style.opacity = '1';
+        }, 10);
+      }
     }
   }, [nodeId, language]);
   
   // Handle close button or outside click
   const handleClose = () => {
-    setIsAnimating(true);
-    
-    // Start hiding animation
+    // Animate out
     if (panelRef.current) {
       panelRef.current.style.transform = 'translateY(100%)';
-    }
-    
-    // After animation completes, hide component
-    setTimeout(() => {
+      panelRef.current.style.opacity = '0';
+      
+      // Hide after animation completes
+      setTimeout(() => {
+        setIsVisible(false);
+        if (onClose) {
+          onClose();
+        }
+      }, 500);
+    } else {
       setIsVisible(false);
-      setIsAnimating(false);
-    }, 500);
+      if (onClose) {
+        onClose();
+      }
+    }
   };
   
   if (!isVisible || !content) {
@@ -74,19 +81,16 @@ const ContentPanel = ({ nodeId, language = 'en' }) => {
       }}
     >
       {/* Semi-transparent backdrop */}
-      <div 
-        className={`absolute inset-0 bg-black/30 backdrop-blur-sm transition-opacity duration-500 ${
-          isAnimating ? 'opacity-0' : 'opacity-100'
-        }`}
-      ></div>
+      <div className="absolute inset-0 bg-black/30 backdrop-blur-sm transition-opacity duration-500"></div>
       
       {/* Content panel sliding from bottom */}
       <div 
         ref={panelRef}
-        className="w-full max-w-4xl bg-gray-800/90 backdrop-blur-md border-t border-t-gray-700/50 rounded-t-xl shadow-2xl transition-transform duration-500 ease-in-out transform"
+        className="w-full max-w-4xl bg-gray-800/90 backdrop-blur-md border-t border-t-gray-700/50 rounded-t-xl shadow-2xl transition-all duration-500 ease-in-out transform"
         style={{ 
-          transform: isAnimating ? 'translateY(100%)' : 'translateY(0)',
-          maxHeight: '70vh'
+          maxHeight: '70vh',
+          transform: 'translateY(100%)', // Initial position
+          opacity: 0
         }}
       >
         {/* Handle bar for visual indication */}
@@ -95,7 +99,7 @@ const ContentPanel = ({ nodeId, language = 'en' }) => {
         {/* Content container with scrolling */}
         <div className="p-6 md:p-8 overflow-y-auto" style={{ maxHeight: 'calc(70vh - 40px)' }}>
           <div className="relative">
-            {/* Close button */}
+            {/* Close button - single button design */}
             <button 
               onClick={handleClose}
               className="absolute top-0 right-0 p-2 rounded-full bg-gray-700/60 text-gray-300 hover:bg-white hover:text-gray-900 transition-colors z-10"
@@ -104,21 +108,12 @@ const ContentPanel = ({ nodeId, language = 'en' }) => {
               <X size={20} />
             </button>
             
-            {/* Back button */}
-            <button 
-              onClick={handleClose}
-              className="mb-4 flex items-center text-gray-400 hover:text-white transition-colors group"
-            >
-              <ArrowLeft size={16} className="mr-1 group-hover:-translate-x-1 transition-transform" />
-              <span>{language === 'tr' ? 'Geri' : 'Back'}</span>
-            </button>
-            
             {/* Title with gradient background */}
             <div className="relative mb-6">
               <h2 className="text-2xl md:text-3xl font-bold text-white">
                 {content.title}
               </h2>
-              <div className="absolute h-1 w-20 bg-white/50 bottom-0 left-0 mt-2 rounded-full"></div>
+              <div className="absolute h-1 w-20 bg-orange-500/50 bottom-0 left-0 mt-2 rounded-full"></div>
             </div>
             
             {/* Content */}
@@ -126,18 +121,6 @@ const ContentPanel = ({ nodeId, language = 'en' }) => {
               className="text-gray-300 leading-relaxed space-y-4 mb-8"
               dangerouslySetInnerHTML={{ __html: content.description }}
             />
-            
-            {/* Bottom actions */}
-            <div className="flex justify-between items-center mt-6 pt-4 border-t border-gray-700/30">
-              <button 
-                onClick={handleClose}
-                className="px-4 py-2 bg-gray-700/50 hover:bg-white hover:text-gray-900 rounded-lg border border-gray-600/50 text-gray-300 transition-colors"
-              >
-                {language === 'tr' ? 'Kapat' : 'Close'}
-              </button>
-              
-              {/* You could add additional actions here if needed */}
-            </div>
           </div>
         </div>
       </div>

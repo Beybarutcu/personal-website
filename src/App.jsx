@@ -12,6 +12,7 @@ import Projects from './components/sections/Projects';
 import Contact from './components/sections/Contact';
 import CosmicBackground from './components/ui/CosmicBackground';
 
+// Simplified App.jsx without complex D3 animations that might be causing issues
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [language, setLanguage] = useState('en');
@@ -45,9 +46,9 @@ const App = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <LoadingIndicator isLoading={isLoading} />
-      
-      {!isLoading && (
+      {isLoading ? (
+        <LoadingIndicator isLoading={isLoading} />
+      ) : (
         <>
           {/* Cosmic animated background */}
           <CosmicBackground />

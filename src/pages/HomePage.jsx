@@ -1,5 +1,5 @@
 // src/pages/HomePage.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import MindMapNavigation from '../components/navigation/MindMapNavigation';
 import ContentPanel from '../components/navigation/ContentPanel';
@@ -19,14 +19,12 @@ const HomePage = ({ currentLanguage, onLanguageChange }) => {
   };
   
   return (
-    <section id="portfolio" className="min-h-screen text-white relative py-20">
-      {/* Mind Map Section */}
-      <div className="h-screen">
-        <MindMapNavigation 
-          onNodeSelect={handleNodeSelect}
-          currentLanguage={currentLanguage}
-        />
-      </div>
+    <>
+      {/* No outer container - Let MindMap create its own section */}
+      <MindMapNavigation 
+        onNodeSelect={handleNodeSelect}
+        currentLanguage={currentLanguage}
+      />
       
       {/* Content Panel - renders only when a node is selected */}
       {selectedNode && (
@@ -36,7 +34,7 @@ const HomePage = ({ currentLanguage, onLanguageChange }) => {
           onClose={handleContentClose}
         />
       )}
-    </section>
+    </>
   );
 };
 

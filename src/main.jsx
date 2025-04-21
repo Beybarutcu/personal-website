@@ -6,11 +6,11 @@ import App from "./App";
 // Import i18n configuration
 import "./i18n/i18n";
 
-// Import styles
-import "./styles/index.css";
+// Import styles in the correct order
+import "./styles/index.css"; // Tailwind directives
 import "./styles/custom-base.css";
+import "./styles/custom-theme.css";
 import "./styles/animations.css";
-import "./styles/transitions.css";
 import "./App.css";
 
 // Initialize the app

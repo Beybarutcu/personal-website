@@ -1,5 +1,5 @@
 // src/components/sections/Contact.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Mail, MapPin, Phone, Github, Linkedin } from 'lucide-react';
 
@@ -35,6 +35,61 @@ const Contact = ({ language }) => {
     success: false,
     error: false
   });
+  
+  // Function to create comet effect
+  const createComet = () => {
+    if (!document.querySelector('.contact-comet-container')) return;
+    
+    const comet = document.createElement('div');
+    comet.className = 'absolute bg-white rounded-full opacity-0 pointer-events-none';
+    
+    // Random properties for the comet
+    const size = 2 + Math.random() * 3;
+    const angle = Math.PI / 4 + (Math.random() * Math.PI / 4);
+    const duration = 2 + Math.random() * 3;
+    const delay = Math.random() * 10;
+    
+    // Position the comet off-screen
+    const startX = Math.random() * 100;
+    const startY = -10;
+    
+    // Style the comet
+    comet.style.width = `${size}px`;
+    comet.style.height = `${size}px`;
+    comet.style.left = `${startX}vw`;
+    comet.style.top = `${startY}vh`;
+    comet.style.boxShadow = `0 0 20px 2px rgba(255, 255, 255, 0.7), 0 0 30px 10px rgba(255, 255, 255, 0.5)`;
+    comet.style.zIndex = '1';
+    
+    // Animation
+    comet.style.animation = `comet ${duration}s linear ${delay}s forwards`;
+    comet.style.transform = `rotate(${angle}rad)`;
+    
+    // Add to DOM
+    document.querySelector('.contact-comet-container')?.appendChild(comet);
+    
+    // Clean up after animation
+    setTimeout(() => {
+      comet.remove();
+    }, (duration + delay) * 1000);
+  };
+  
+  // Create comets periodically
+  useEffect(() => {
+    // Create comets periodically
+    const cometInterval = setInterval(() => {
+      if (Math.random() > 0.8) { // 20% chance to create a comet
+        createComet();
+      }
+    }, 8000);
+    
+    // Initial comet
+    if (Math.random() > 0.5) {
+      createComet();
+    }
+    
+    return () => clearInterval(cometInterval);
+  }, []);
   
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -79,7 +134,39 @@ const Contact = ({ language }) => {
   };
   
   return (
-    <section id="contact" className="py-20 relative overflow-hidden">
+    <section id="contact" className="relative py-20 overflow-hidden">
+      {/* Cosmic Background */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        {/* Star background */}
+        <div className="absolute inset-0">
+          {Array.from({ length: 50 }).map((_, i) => (
+            <div
+              key={`contact-star-${i}`}
+              className="absolute rounded-full bg-white animate-starTwinkle"
+              style={{
+                width: `${Math.random() * 2 + 0.5}px`,
+                height: `${Math.random() * 2 + 0.5}px`,
+                top: `${Math.random() * 100}%`,
+                left: `${Math.random() * 100}%`,
+                opacity: Math.random() * 0.7 + 0.2,
+                animationDelay: `${Math.random() * 5}s`,
+                animationDuration: `${Math.random() * 5 + 2}s`
+              }}
+            />
+          ))}
+        </div>
+        
+        {/* Comet container */}
+        <div className="contact-comet-container absolute inset-0"></div>
+        
+        {/* Gradient orbs with a different color scheme */}
+        <div className="absolute top-1/4 left-1/3 w-96 h-96 rounded-full bg-violet-500/10 blur-3xl animate-float-y" 
+             style={{ animationDelay: "0.2s" }}></div>
+        <div className="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full bg-rose-500/10 blur-3xl animate-float-y" 
+             style={{ animationDelay: "1.1s" }}></div>
+        <div className="absolute top-2/3 left-1/5 w-64 h-64 rounded-full bg-teal-500/10 blur-3xl animate-float-x" 
+             style={{ animationDelay: "0.8s" }}></div>
+      </div>
       
       <div className="container mx-auto px-6 relative z-10">
         {/* Section header */}
@@ -300,7 +387,6 @@ const FormInput = ({ id, name, label, type = 'text', placeholder, value, onChang
 };
 
 // Contact Info Item Component with improved organization
-// Improved Contact Info Item Component with left-aligned headers
 const ContactInfoItem = ({ icon, title, content, href }) => {
   return (
     <div className="flex items-start gap-4 group">

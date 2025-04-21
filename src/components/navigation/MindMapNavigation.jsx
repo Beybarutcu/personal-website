@@ -8,21 +8,35 @@ const MindMapNavigation = ({ onNodeSelect, currentLanguage = 'en' }) => {
   const containerRef = useRef(null);
   const tooltipRef = useRef(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  // Changed from 'main' to null to prevent automatic welcome message
   const [activeNode, setActiveNode] = useState(null);
   
-  // Update dimensions on resize
+  // Set fixed dimensions immediately to avoid timing issues
+  useEffect(() => {
+    if (containerRef.current) {
+      // Force a fixed height - this is key to making the visualization appear
+      containerRef.current.style.height = '600px';
+    }
+  }, []);
+  
+  // Update dimensions when component mounts and on window resize
   useEffect(() => {
     const updateDimensions = () => {
       if (containerRef.current) {
+        const width = containerRef.current.clientWidth;
+        // Use the explicit height we set above
+        const height = containerRef.current.clientHeight || 600;
+        
         setDimensions({
-          width: containerRef.current.clientWidth,
-          height: containerRef.current.clientHeight
+          width,
+          height
         });
       }
     };
     
+    // Call it once immediately
     updateDimensions();
+    
+    // Then set up the listener for future changes
     window.addEventListener('resize', updateDimensions);
     
     return () => {
@@ -30,255 +44,124 @@ const MindMapNavigation = ({ onNodeSelect, currentLanguage = 'en' }) => {
     };
   }, []);
   
-  // Setup visualization - the main effect that creates everything
+  // Create visualization only after dimensions are definitely set
   useEffect(() => {
-    if (!svgRef.current || dimensions.width === 0) return;
+    // Skip if dimensions aren't available yet or are zero
+    if (!dimensions.width || !dimensions.height || !svgRef.current) {
+      return;
+    }
     
-    // Clear SVG
-    d3.select(svgRef.current).selectAll('*').remove();
-    
-    const svg = d3.select(svgRef.current);
-    
-    // Deep clone nodes and links to avoid mutations
-    const nodes = JSON.parse(JSON.stringify(mindMapData.nodes)).map(node => ({
-      ...node,
-      // Make nodes smaller
-      size: node.size ? node.size * 0.75 : 15
-    }));
-    
-    const links = JSON.parse(JSON.stringify(mindMapData.links));
-    
-    // Create a defs section for filters and patterns
-    const defs = svg.append('defs');
-  
-    
-    // Set up the force simulation
-    const simulation = d3.forceSimulation(nodes)
-      .force('link', d3.forceLink()
-        .id(d => d.id)
-        .links(links)
-        .distance(d => 120 + d.weight * 30)
-        .strength(d => 0.6))
-      .force('charge', d3.forceManyBody().strength(-500))
-      .force('center', d3.forceCenter(dimensions.width / 2, dimensions.height / 2).strength(0.1))
-      .force('collision', d3.forceCollide().radius(d => (d.size || 15) * 2.5));
-    
-    // Add positioning forces by node type
-    const nodeTypes = ['main', 'skills', 'interests', 'education', 'projects'];
-    
-    // Create cluster positioning
-    simulation.force('x', d3.forceX().strength(0.1).x(d => {
-      const typeIndex = nodeTypes.indexOf(d.type);
-      if (typeIndex === -1) return dimensions.width / 2;
+    try {
+      // Clear SVG
+      const svg = d3.select(svgRef.current);
+      svg.selectAll('*').remove();
       
-      // Position clusters at different areas of the screen
-      switch(d.type) {
-        case 'main':
-          return dimensions.width / 2;
-        case 'skills':
-          return dimensions.width * 0.25;
-        case 'interests':
-          return dimensions.width * 0.75;
-        case 'education':
-          return dimensions.width * 0.4;
-        case 'projects':
-          return dimensions.width * 0.6;
-        default:
-          return dimensions.width / 2;
-      }
-    }));
-    
-    simulation.force('y', d3.forceY().strength(0.1).y(d => {
-      const typeIndex = nodeTypes.indexOf(d.type);
-      if (typeIndex === -1) return dimensions.height / 2;
+      // Deep clone nodes and links to avoid mutations
+      const nodes = JSON.parse(JSON.stringify(mindMapData.nodes)).map(node => ({
+        ...node,
+        // Make nodes smaller
+        size: node.size ? node.size * 0.75 : 15
+      }));
       
-      // Position clusters at different areas of the screen
-      switch(d.type) {
-        case 'main':
-          return dimensions.height / 2;
-        case 'skills':
-          return dimensions.height * 0.3;
-        case 'interests':
-          return dimensions.height * 0.3;
-        case 'education':
-          return dimensions.height * 0.7;
-        case 'projects':
-          return dimensions.height * 0.7;
-        default:
-          return dimensions.height / 2;
-      }
-    }));
-    
-    // Create container for links
-    const linkGroup = svg.append('g').attr('class', 'links');
-    
-    // Create links
-    const link = linkGroup.selectAll('line')
-      .data(links)
-      .enter()
-      .append('line')
-      .attr('stroke', 'rgba(255, 255, 255, 0.2)')
-      .attr('stroke-opacity', d => d.weight * 0.3 + 0.15)
-      .attr('stroke-width', d => d.weight * 0.8);
-    
-    // Container for signal pulses traveling on links
-    const signalsGroup = svg.append('g').attr('class', 'signals');
-    
-    // Create node groups
-    const nodeGroup = svg.append('g').attr('class', 'nodes');
-    
-    const node = nodeGroup.selectAll('g')
-      .data(nodes)
-      .enter()
-      .append('g')
-      .attr('class', 'node')
-      .call(d3.drag()
-        .on('start', dragStarted)
-        .on('drag', dragged)
-        .on('end', dragEnded));
-    
-    // Outer glow for nodes - lighter shade of white
-    node.append('circle')
-      .attr('r', d => (d.size || 15) * 1.8) 
-      .attr('class', 'node-glow')
-      .attr('fill', 'rgba(255, 255, 255, 0.05)')
-      .attr('stroke', 'rgba(255, 255, 255, 0.2)')
-      .attr('stroke-width', 0.5)
-      .attr('opacity', d => d.id === activeNode ? 0.7 : 0.4);
-    
-    // Main node circle - brighter white
-    node.append('circle')
-      .attr('r', d => d.size || 15)
-      .attr('class', 'node-main')
-      .attr('fill', d => {
-        // Active node is brightest 
-        if (d.id === activeNode) {
-          return 'rgba(255, 255, 255, 0.95)';
+      const links = JSON.parse(JSON.stringify(mindMapData.links));
+      
+      // Set up the force simulation
+      const simulation = d3.forceSimulation(nodes)
+        .force('link', d3.forceLink()
+          .id(d => d.id)
+          .links(links)
+          .distance(d => 120 + d.weight * 30)
+          .strength(d => 0.6))
+        .force('charge', d3.forceManyBody().strength(-500))
+        .force('center', d3.forceCenter(dimensions.width / 2, dimensions.height / 2).strength(0.1))
+        .force('collision', d3.forceCollide().radius(d => (d.size || 15) * 2.5));
+      
+      // Add positioning forces by node type
+      const nodeTypes = ['main', 'skills', 'interests', 'education', 'projects'];
+      
+      // Create cluster positioning
+      simulation.force('x', d3.forceX().strength(0.1).x(d => {
+        const typeIndex = nodeTypes.indexOf(d.type);
+        if (typeIndex === -1) return dimensions.width / 2;
+        
+        // Position clusters at different areas of the screen
+        switch(d.type) {
+          case 'main':
+            return dimensions.width / 2;
+          case 'skills':
+            return dimensions.width * 0.25;
+          case 'interests':
+            return dimensions.width * 0.75;
+          case 'education':
+            return dimensions.width * 0.4;
+          case 'projects':
+            return dimensions.width * 0.6;
+          default:
+            return dimensions.width / 2;
         }
+      }));
+      
+      simulation.force('y', d3.forceY().strength(0.1).y(d => {
+        const typeIndex = nodeTypes.indexOf(d.type);
+        if (typeIndex === -1) return dimensions.height / 2;
         
-        // Create a subtle gradient from white to light gray based on node type
-        const brightnessByType = {
-          main: 0.85,
-          skills: 0.75,
-          projects: 0.7,
-          education: 0.65,
-          interests: 0.6
-        };
-        
-        const brightness = brightnessByType[d.type] || 0.6;
-        const color = Math.floor(255 * brightness);
-        return `rgba(${color}, ${color}, ${color}, 0.85)`;
-      })
-      .attr('stroke', 'rgba(255, 255, 255, 0.9)')
-      .attr('stroke-width', d => d.id === activeNode ? 1.2 : 0.5);
-    
-    // Inner pulse for active node - pure bright white
-    node.append('circle')
-      .attr('r', d => (d.size || 15) * 0.6)
-      .attr('fill', 'rgba(255, 255, 255, 1)') // Pure white
-      .attr('opacity', d => d.id === activeNode ? 0.7 : 0)
-      .attr('class', 'node-pulse');
-    
-    // Add text labels below nodes
-    node.append('text')
-      .attr('dy', d => (d.size || 15) + 12)
-      .attr('text-anchor', 'middle')
-      .attr('fill', 'rgba(255, 255, 255, 0.9)')
-      .attr('font-size', 10)
-      .attr('font-weight', d => d.id === activeNode ? 'bold' : 'normal')
-      .attr('class', 'node-label')
-      .text(d => {
-        // Get the appropriate label based on language
-        const label = currentLanguage === 'tr' ? 
-          (d.labelTr || d.label || d.id) : 
-          (d.labelEn || d.label || d.id);
-          
-        // Truncate if too long
-        return label.length > 12 ? label.slice(0, 10) + '...' : label;
-      });
+        // Position clusters at different areas of the screen
+        switch(d.type) {
+          case 'main':
+            return dimensions.height / 2;
+          case 'skills':
+            return dimensions.height * 0.3;
+          case 'interests':
+            return dimensions.height * 0.3;
+          case 'education':
+            return dimensions.height * 0.7;
+          case 'projects':
+            return dimensions.height * 0.7;
+          default:
+            return dimensions.height / 2;
+        }
+      }));
       
-    // Create an enhanced tooltip that appears near the node
-    // Create custom tooltip
-    const tooltip = d3.select("body")
-      .append("div")
-      .attr("class", "tooltip-container")
-      .style("position", "absolute")
-      .style("visibility", "hidden")
-      .style("width", "220px")
-      .style("background-color", "rgba(30, 41, 59, 0.95)") // Darker blue-gray
-      .style("border", "1px solid rgba(255, 255, 255, 0.2)")
-      .style("border-radius", "8px")
-      .style("padding", "12px")
-      .style("color", "white")
-      .style("font-size", "12px")
-      .style("pointer-events", "none")
-      .style("z-index", 1000)
-      .style("box-shadow", "0 4px 15px rgba(0, 0, 0, 0.3)")
-      .style("transition", "opacity 0.2s ease-in-out");
-    
-    tooltipRef.current = tooltip.node();
+      // Create link container and draw links directly 
+      const linkGroup = svg.append('g').attr('class', 'links');
       
-    // Add mouse events
-    node.on('mouseover', function(event, d) {
-      // Get mouse position for tooltip
-      const [mouseX, mouseY] = d3.pointer(event, document.body);
+      const link = linkGroup.selectAll('line')
+        .data(links)
+        .enter()
+        .append('line')
+        .attr('stroke', 'rgba(255, 255, 255, 0.2)')
+        .attr('stroke-opacity', d => d.weight * 0.3 + 0.15)
+        .attr('stroke-width', d => d.weight * 0.8);
       
-      // Brighten the node
-      d3.select(this).select('.node-glow')
-        .attr('opacity', 0.9)
-        .attr('fill', 'rgba(255, 255, 255, 0.3)');
+      // Create signal container
+      const signalGroup = svg.append('g').attr('class', 'signals');
       
-      d3.select(this).select('.node-main')
-        .attr('fill', 'rgba(255, 255, 255, 0.95)');
+      // Create node container and draw nodes directly
+      const nodeGroup = svg.append('g').attr('class', 'nodes');
       
-      // Show tooltip near the node
-      const nodeData = nodeContent[d.id] ? 
-        nodeContent[d.id][currentLanguage] || nodeContent[d.id]['en'] : null;
-        
-      if (nodeData && tooltipRef.current) {
-        // Extract first sentence from description
-        let summary = nodeData.description;
-        summary = summary.replace(/<[^>]*>?/gm, ' ');
-        
-        const firstSentence = summary.split('.')[0];
-        const displayText = firstSentence.length > 120 ? 
-          firstSentence.substring(0, 120) + '...' : 
-          firstSentence;
-        
-        // Update tooltip content
-        tooltip.html(`
-          <div style="font-weight: bold; margin-bottom: 8px; color: white;">${nodeData.title}</div>
-          <div style="color: rgba(255, 255, 255, 0.8); font-size: 12px;">${displayText}</div>
-          <div style="margin-top: 8px; font-size: 11px; color: rgba(255, 255, 255, 0.6);">Click to view details</div>
-        `);
-        
-        // Position tooltip near mouse but ensure it stays within viewport
-        tooltip
-          .style("visibility", "visible")
-          .style("opacity", 1)
-          .style("left", `${mouseX + 15}px`)
-          .style("top", `${mouseY - 15}px`);
-      }
-    })
-    .on('mousemove', function(event) {
-      // Move tooltip with mouse
-      if (tooltipRef.current && tooltipRef.current.style.visibility === 'visible') {
-        const [mouseX, mouseY] = d3.pointer(event, document.body);
-        tooltip
-          .style("left", `${mouseX + 15}px`)
-          .style("top", `${mouseY - 15}px`);
-      }
-    })
-    .on('mouseout', function() {
-      // Reset node appearance
-      const d = d3.select(this).datum();
-      const isActive = d.id === activeNode;
+      const node = nodeGroup.selectAll('g')
+        .data(nodes)
+        .enter()
+        .append('g')
+        .attr('class', 'node')
+        .call(d3.drag()
+          .on('start', dragStarted)
+          .on('drag', dragged)
+          .on('end', dragEnded));
       
-      d3.select(this).select('.node-glow')
-        .attr('opacity', isActive ? 0.7 : 0.4)
-        .attr('fill', 'rgba(255, 255, 255, 0.05)');
+      // Outer glow for nodes
+      node.append('circle')
+        .attr('r', d => (d.size || 15) * 1.8)
+        .attr('class', 'node-glow')
+        .attr('fill', 'rgba(255, 255, 255, 0.05)')
+        .attr('stroke', 'rgba(255, 255, 255, 0.2)')
+        .attr('stroke-width', 0.5)
+        .attr('opacity', d => d.id === activeNode ? 0.7 : 0.4);
       
-      d3.select(this).select('.node-main')
+      // Main node circle
+      node.append('circle')
+        .attr('r', d => d.size || 15)
+        .attr('class', 'node-main')
         .attr('fill', d => {
           if (d.id === activeNode) {
             return 'rgba(255, 255, 255, 0.95)';
@@ -295,272 +178,151 @@ const MindMapNavigation = ({ onNodeSelect, currentLanguage = 'en' }) => {
           const brightness = brightnessByType[d.type] || 0.6;
           const color = Math.floor(255 * brightness);
           return `rgba(${color}, ${color}, ${color}, 0.85)`;
-        });
-      
-      // Hide tooltip
-      tooltip.style("visibility", "hidden");
-    })
-    .on('click', function(event, d) {
-      // Prevent event bubbling
-      event.preventDefault();
-      event.stopPropagation();
-      
-      // Hide tooltip
-      tooltip.style("visibility", "hidden");
-      
-      // Update active node for visual highlighting
-      setActiveNode(d.id);
-      updateHighlighting(d.id);
-      
-      // Notify parent component to handle ContentPanel
-      if (onNodeSelect) {
-        onNodeSelect(d.id);
-      }
-    });
-    
-    // Function to update highlighting of nodes and links
-    function updateHighlighting(nodeId) {
-      // Find connected nodes
-      const connectedNodeIds = links
-        .filter(link => {
-          // Check both source and target, which might be objects or string IDs
-          const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
-          const targetId = typeof link.target === 'object' ? link.target.id : link.target;
-          return sourceId === nodeId || targetId === nodeId;
         })
-        .map(link => {
-          // Extract the ID of the connected node
-          const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
-          const targetId = typeof link.target === 'object' ? link.target.id : link.target;
-          return sourceId === nodeId ? targetId : sourceId;
-        });
+        .attr('stroke', 'rgba(255, 255, 255, 0.9)')
+        .attr('stroke-width', d => d.id === activeNode ? 1.2 : 0.5);
       
-      // Update node styling
-      nodeGroup.selectAll('.node-glow')
-        .attr('opacity', d => {
-          if (d.id === nodeId) return 0.8;  // Increased opacity for better visibility
-          if (connectedNodeIds.includes(d.id)) return 0.6;
-          return 0.3;
-        });
+      // Inner pulse for active node
+      node.append('circle')
+        .attr('r', d => (d.size || 15) * 0.6)
+        .attr('fill', 'rgba(255, 255, 255, 1)') // Pure white
+        .attr('opacity', d => d.id === activeNode ? 0.7 : 0)
+        .attr('class', 'node-pulse');
       
-      // Update node main circles
-      nodeGroup.selectAll('.node-main')
-        .attr('stroke-width', d => {
-          if (d.id === nodeId) return 1.5;  // Slightly thicker for active node
-          if (connectedNodeIds.includes(d.id)) return 0.8;
-          return 0.4;
-        })
-        .attr('fill', d => {
-          // Active node is brightest
-          if (d.id === nodeId) {
-            return 'rgba(255, 255, 255, 0.95)';  // Pure white
-          }
-          
-          // Connected nodes are brighter than inactive
-          if (connectedNodeIds.includes(d.id)) {
-            const brightnessByType = {
-              main: 0.85,
-              skills: 0.8,
-              projects: 0.75,
-              education: 0.7,
-              interests: 0.65
-            };
+      // Node labels
+      node.append('text')
+        .attr('dy', d => (d.size || 15) + 12)
+        .attr('text-anchor', 'middle')
+        .attr('fill', 'rgba(255, 255, 255, 0.9)')
+        .attr('font-size', 10)
+        .attr('font-weight', d => d.id === activeNode ? 'bold' : 'normal')
+        .attr('class', 'node-label')
+        .text(d => {
+          const label = currentLanguage === 'tr' ? 
+            (d.labelTr || d.label || d.id) : 
+            (d.labelEn || d.label || d.id);
             
-            const brightness = brightnessByType[d.type] || 0.65;
-            const color = Math.floor(255 * brightness);
-            return `rgba(${color}, ${color}, ${color}, 0.85)`;
-          }
-          
-          // Inactive nodes are dimmer but still visible
-          const brightnessByType = {
-            main: 0.75,
-            skills: 0.7,
-            projects: 0.65,
-            education: 0.6,
-            interests: 0.55
-          };
-          
-          const brightness = brightnessByType[d.type] || 0.5;
-          const color = Math.floor(255 * brightness);
-          return `rgba(${color}, ${color}, ${color}, 0.65)`;
+          return label.length > 12 ? label.slice(0, 10) + '...' : label;
         });
+      
+      // Add click handlers
+      node.on('click', function(event, d) {
+        // Prevent default
+        event.preventDefault();
+        event.stopPropagation();
         
-      // Update inner pulse for active node
-      nodeGroup.selectAll('.node-pulse')
-        .attr('opacity', d => d.id === nodeId ? 0.7 : 0);
-      
-      // Update labels
-      nodeGroup.selectAll('.node-label')
-        .attr('font-weight', d => d.id === nodeId ? 'bold' : 'normal')
-        .attr('fill', d => {
-          if (d.id === nodeId) return 'rgba(255, 255, 255, 1)';
-          if (connectedNodeIds.includes(d.id)) return 'rgba(255, 255, 255, 0.9)';
-          return 'rgba(255, 255, 255, 0.6)';
-        });
-      
-      // Update link appearance
-      linkGroup.selectAll('line')
-        .attr('stroke', link => {
-          // Handle both object and string references
-          const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
-          const targetId = typeof link.target === 'object' ? link.target.id : link.target;
+        // Set active node
+        setActiveNode(d.id);
+        
+        // Create a starburst effect when node is clicked
+        const nodeElement = d3.select(this);
+        const nodePosition = {
+          x: parseFloat(nodeElement.attr('transform').split('(')[1].split(',')[0]),
+          y: parseFloat(nodeElement.attr('transform').split('(')[1].split(',')[1].split(')')[0])
+        };
+        
+        // Create starburst particles
+        for (let i = 0; i < 10; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const distance = 30 + Math.random() * 70;
+          const duration = 700 + Math.random() * 300;
+          const size = 1 + Math.random() * 2;
           
-          if (sourceId === nodeId || targetId === nodeId) {
-            return 'rgba(255, 255, 255, 0.45)';  // Brighter for connected links
-          }
-          return 'rgba(255, 255, 255, 0.15)';
-        })
-        .attr('stroke-opacity', link => {
-          // Handle both object and string references
-          const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
-          const targetId = typeof link.target === 'object' ? link.target.id : link.target;
-          
-          if (sourceId === nodeId || targetId === nodeId) {
-            return 0.6;  // More visible for connected links
-          }
-          return 0.25;
-        })
-        .attr('stroke-width', link => {
-          // Handle both object and string references
-          const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
-          const targetId = typeof link.target === 'object' ? link.target.id : link.target;
-          
-          if (sourceId === nodeId || targetId === nodeId) {
-            return link.weight * 1.0;  // Slightly thicker for connected links
-          }
-          return link.weight * 0.6;
-        });
-    }
-    
-    // Only apply initial highlighting if activeNode exists
-    if (activeNode) {
-      updateHighlighting(activeNode);
-    }
-    
-    // Update positions on simulation tick
-    simulation.on('tick', () => {
-      // Keep nodes within bounds with padding
-      nodes.forEach(d => {
-        const padding = 80;
-        d.x = Math.max(padding, Math.min(dimensions.width - padding, d.x));
-        d.y = Math.max(padding, Math.min(dimensions.height - padding, d.y));
+          signalGroup.append('circle')
+            .attr('class', 'starburst')
+            .attr('cx', nodePosition.x)
+            .attr('cy', nodePosition.y)
+            .attr('r', size)
+            .attr('fill', 'white')
+            .style('opacity', 0.8)
+            .transition()
+            .duration(duration)
+            .ease(d3.easeCircleOut)
+            .attr('cx', nodePosition.x + Math.cos(angle) * distance)
+            .attr('cy', nodePosition.y + Math.sin(angle) * distance)
+            .style('opacity', 0)
+            .remove();
+        }
+        
+        // Notify parent
+        if (onNodeSelect) {
+          onNodeSelect(d.id);
+        }
       });
       
-      // Update link positions
-      link
-        .attr('x1', d => d.source.x)
-        .attr('y1', d => d.source.y)
-        .attr('x2', d => d.target.x)
-        .attr('y2', d => d.target.y);
-      
-      // Update node positions
-      node.attr('transform', d => `translate(${d.x}, ${d.y})`);
-    });
-    
-    // Signal animation - signals traveling along connections
-    function animateSignals() {
-      // Remove old signals that have completed their journey
-      signalsGroup.selectAll('.signal')
-        .filter(function() {
-          return parseFloat(d3.select(this).attr('opacity')) <= 0.1;
-        })
-        .remove();
-      
-      // Create new signals occasionally
-      if (Math.random() < 0.04) {
-        // Filter to get active links connected to the active node
-        const activeLinks = links.filter(link => {
-          const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
-          const targetId = typeof link.target === 'object' ? link.target.id : link.target;
-          return sourceId === activeNode || targetId === activeNode;
+      // Update on simulation tick
+      simulation.on('tick', () => {
+        // Keep nodes within bounds
+        nodes.forEach(d => {
+          const padding = 80;
+          d.x = Math.max(padding, Math.min(dimensions.width - padding, d.x));
+          d.y = Math.max(padding, Math.min(dimensions.height - padding, d.y));
         });
         
-        // Randomly select an active link
-        if (activeLinks.length > 0) {
-          const randomLink = activeLinks[Math.floor(Math.random() * activeLinks.length)];
-          
-          // Determine source and target for the signal
-          const sourceId = typeof randomLink.source === 'object' ? randomLink.source.id : randomLink.source;
-          const isSourceActive = sourceId === activeNode;
-          
-          const sourceNode = isSourceActive ? 
-            (typeof randomLink.source === 'object' ? randomLink.source : nodes.find(n => n.id === sourceId)) : 
-            (typeof randomLink.target === 'object' ? randomLink.target : nodes.find(n => n.id === randomLink.target));
-            
-          const targetNode = isSourceActive ? 
-            (typeof randomLink.target === 'object' ? randomLink.target : nodes.find(n => n.id === randomLink.target)) : 
-            (typeof randomLink.source === 'object' ? randomLink.source : nodes.find(n => n.id === sourceId));
-          
-          if (sourceNode && targetNode) {
-            // Create a signal with pure white light
-            signalsGroup.append('circle')
-              .attr('class', 'signal')
-              .attr('cx', sourceNode.x)
-              .attr('cy', sourceNode.y)
-              .attr('r', 1.5)
-              .attr('fill', 'rgba(255, 255, 255, 1)')  // Pure white for better visibility
-              .attr('opacity', 0.9)  // Slightly higher opacity
-              .datum({
-                source: sourceNode,
-                target: targetNode,
-                progress: 0,
-                speed: 0.004 + Math.random() * 0.006
-              });
-          }
-        }
-      }
-      
-      // Create occasional ambient signals on other links
-      if (Math.random() < 0.012) {
-        const inactiveLinks = links.filter(link => {
-          const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
-          const targetId = typeof link.target === 'object' ? link.target.id : link.target;
-          return sourceId !== activeNode && targetId !== activeNode;
-        });
+        // Update link positions
+        link
+          .attr('x1', d => d.source.x)
+          .attr('y1', d => d.source.y)
+          .attr('x2', d => d.target.x)
+          .attr('y2', d => d.target.y);
         
-        if (inactiveLinks.length > 0) {
-          const randomLink = inactiveLinks[Math.floor(Math.random() * inactiveLinks.length)];
+        // Update node positions
+        node.attr('transform', d => `translate(${d.x}, ${d.y})`);
+      });
+      
+      // Signal animation - creates traveling signals on links
+      function animateSignals() {
+        // Create new signals occasionally
+        if (Math.random() < 0.04 && activeNode) {
+          // Filter to get active links connected to the active node
+          const activeLinks = links.filter(link => {
+            const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
+            const targetId = typeof link.target === 'object' ? link.target.id : link.target;
+            return sourceId === activeNode || targetId === activeNode;
+          });
           
-          // Random direction for ambient signals
-          const direction = Math.random() > 0.5;
-          
-          const sourceNode = direction ? 
-            (typeof randomLink.source === 'object' ? randomLink.source : nodes.find(n => n.id === randomLink.source)) : 
-            (typeof randomLink.target === 'object' ? randomLink.target : nodes.find(n => n.id === randomLink.target));
+          // Randomly select an active link
+          if (activeLinks.length > 0) {
+            const randomLink = activeLinks[Math.floor(Math.random() * activeLinks.length)];
             
-          const targetNode = direction ? 
-            (typeof randomLink.target === 'object' ? randomLink.target : nodes.find(n => n.id === randomLink.target)) : 
-            (typeof randomLink.source === 'object' ? randomLink.source : nodes.find(n => n.id === randomLink.source));
-          
-          if (sourceNode && targetNode) {
-            signalsGroup.append('circle')
-              .attr('class', 'signal ambient')
-              .attr('cx', sourceNode.x)
-              .attr('cy', sourceNode.y)
-              .attr('r', 1)
-              .attr('fill', 'rgba(255, 255, 255, 0.7)')  // White light
-              .attr('opacity', 0.5)
-              .datum({
-                source: sourceNode,
-                target: targetNode,
-                progress: 0,
-                speed: 0.002 + Math.random() * 0.004
-              });
+            // Determine source and target for the signal
+            const sourceId = typeof randomLink.source === 'object' ? randomLink.source.id : randomLink.source;
+            const isSourceActive = sourceId === activeNode;
+            
+            const sourceNode = isSourceActive ? 
+              (typeof randomLink.source === 'object' ? randomLink.source : nodes.find(n => n.id === sourceId)) : 
+              (typeof randomLink.target === 'object' ? randomLink.target : nodes.find(n => n.id === randomLink.target));
+              
+            const targetNode = isSourceActive ? 
+              (typeof randomLink.target === 'object' ? randomLink.target : nodes.find(n => n.id === randomLink.target)) : 
+              (typeof randomLink.source === 'object' ? randomLink.source : nodes.find(n => n.id === sourceId));
+            
+            if (sourceNode && targetNode) {
+              // Create a signal with pure white light
+              signalGroup.append('circle')
+                .attr('class', 'signal')
+                .attr('cx', sourceNode.x)
+                .attr('cy', sourceNode.y)
+                .attr('r', 1.5)
+                .attr('fill', 'rgba(255, 255, 255, 1)')  // Pure white for visibility
+                .attr('opacity', 0.9)
+                .datum({
+                  source: { x: sourceNode.x, y: sourceNode.y },
+                  target: { x: targetNode.x, y: targetNode.y },
+                  progress: 0,
+                  speed: 0.01
+                });
+            }
           }
         }
-      }
-      
-      // Animate existing signals
-      signalsGroup.selectAll('.signal')
-        .each(function(d) {
+        
+        // Animate existing signals
+        signalGroup.selectAll('.signal').each(function(d) {
           d.progress += d.speed;
           
-          // If signal completes journey, start fading out
+          // Remove completed signals
           if (d.progress >= 1) {
-            d3.select(this).attr('opacity', function() {
-              const currentOpacity = parseFloat(d3.select(this).attr('opacity'));
-              return Math.max(0.1, currentOpacity - 0.03);
-            });
+            d3.select(this).remove();
             return;
           }
           
@@ -573,103 +335,308 @@ const MindMapNavigation = ({ onNodeSelect, currentLanguage = 'en' }) => {
             .attr('cx', x)
             .attr('cy', y);
         });
+        
+        // Continue animation loop
+        requestAnimationFrame(animateSignals);
+      }
       
-      // Pulsate effect for nodes with light emission
-      nodeGroup.selectAll('.node-pulse')
-        .filter(function(d) {
-          return d.id === activeNode;
-        })
-        .attr('opacity', function() {
-          const baseOpacity = 0.5;
-          const pulseRange = 0.2;
-          return baseOpacity + pulseRange * Math.sin(Date.now() * 0.002);
-        });
+      // Start signal animation
+      const animationId = requestAnimationFrame(animateSignals);
       
-      // More subtle ambient pulsing for all nodes
-      nodeGroup.selectAll('.node-glow')
-        .filter(function(d) {
-          // Don't animate if being hovered
-          const nodeElement = d3.select(this.parentNode);
-          const isHovered = nodeElement.classed('hovered');
-          if (isHovered) return false;
-          
-          return true;
-        })
-        .attr('opacity', function(d) {
-          if (d.id === activeNode) {
-            return 0.6 + 0.15 * Math.sin(Date.now() * 0.0015);
+      // Create custom tooltip
+      if (!tooltipRef.current) {
+        const tooltip = d3.select("body")
+          .append("div")
+          .attr("class", "tooltip-container")
+          .style("position", "absolute")
+          .style("visibility", "hidden")
+          .style("width", "220px")
+          .style("background-color", "rgba(30, 41, 59, 0.95)")
+          .style("border", "1px solid rgba(255, 255, 255, 0.2)")
+          .style("border-radius", "8px")
+          .style("padding", "12px")
+          .style("color", "white")
+          .style("font-size", "12px")
+          .style("pointer-events", "none")
+          .style("z-index", 1000)
+          .style("box-shadow", "0 4px 15px rgba(0, 0, 0, 0.3)")
+          .style("transition", "opacity 0.2s ease-in-out")
+          .style("opacity", 0);
+        
+        tooltipRef.current = tooltip.node();
+      }
+      
+      // Add mouse events for tooltip
+      node.on('mouseover', function(event, d) {
+        const [mouseX, mouseY] = d3.pointer(event, document.body);
+        
+        // Brighten the node
+        d3.select(this).select('.node-glow')
+          .transition()
+          .duration(300)
+          .attr('opacity', 0.9)
+          .attr('fill', 'rgba(255, 255, 255, 0.3)');
+        
+        d3.select(this).select('.node-main')
+          .transition()
+          .duration(300)
+          .attr('fill', 'rgba(255, 255, 255, 0.95)');
+        
+        // Show tooltip
+        if (tooltipRef.current) {
+          const tooltip = d3.select(tooltipRef.current);
+          const nodeData = nodeContent[d.id] ? 
+            nodeContent[d.id][currentLanguage] || nodeContent[d.id]['en'] : null;
+            
+          if (nodeData) {
+            // Extract first sentence from description
+            let summary = nodeData.description;
+            summary = summary.replace(/<[^>]*>?/gm, ' ');
+            
+            const firstSentence = summary.split('.')[0];
+            const displayText = firstSentence.length > 120 ? 
+              firstSentence.substring(0, 120) + '...' : 
+              firstSentence;
+            
+            // Update tooltip content
+            tooltip.html(`
+              <div style="font-weight: bold; margin-bottom: 8px; color: white;">${nodeData.title}</div>
+              <div style="color: rgba(255, 255, 255, 0.8); font-size: 12px;">${displayText}</div>
+              <div style="margin-top: 8px; font-size: 11px; color: rgba(255, 255, 255, 0.6);">Click to view details</div>
+            `);
+            
+            // Position tooltip
+            tooltip
+              .style("visibility", "visible")
+              .style("left", `${mouseX + 15}px`)
+              .style("top", `${mouseY - 15}px`)
+              .transition()
+              .duration(300)
+              .style("opacity", 1);
           }
-          
-          // Find if connected to active node
-          const isConnected = links.some(link => {
-            const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
-            const targetId = typeof link.target === 'object' ? link.target.id : link.target;
-            return (sourceId === activeNode && targetId === d.id) || 
-                  (targetId === activeNode && sourceId === d.id);
+        }
+      })
+      .on('mousemove', function(event) {
+        // Move tooltip with mouse
+        if (tooltipRef.current) {
+          const [mouseX, mouseY] = d3.pointer(event, document.body);
+          d3.select(tooltipRef.current)
+            .style("left", `${mouseX + 15}px`)
+            .style("top", `${mouseY - 15}px`);
+        }
+      })
+      .on('mouseout', function() {
+        // Reset node appearance
+        const d = d3.select(this).datum();
+        const isActive = d.id === activeNode;
+        
+        d3.select(this).select('.node-glow')
+          .transition()
+          .duration(300)
+          .attr('opacity', isActive ? 0.7 : 0.4)
+          .attr('fill', 'rgba(255, 255, 255, 0.05)');
+        
+        d3.select(this).select('.node-main')
+          .transition()
+          .duration(300)
+          .attr('fill', d => {
+            if (d.id === activeNode) {
+              return 'rgba(255, 255, 255, 0.95)';
+            }
+            
+            const brightnessByType = {
+              main: 0.85,
+              skills: 0.75,
+              projects: 0.7,
+              education: 0.65,
+              interests: 0.6
+            };
+            
+            const brightness = brightnessByType[d.type] || 0.6;
+            const color = Math.floor(255 * brightness);
+            return `rgba(${color}, ${color}, ${color}, 0.85)`;
           });
-          
-          if (isConnected) {
-            return 0.4 + 0.08 * Math.sin(Date.now() * 0.0008 + d.id.charCodeAt(0));
-          }
-          
-          return 0.2 + 0.05 * Math.sin(Date.now() * 0.0004 + d.id.charCodeAt(0));
-        });
+        
+        // Hide tooltip
+        if (tooltipRef.current) {
+          d3.select(tooltipRef.current)
+            .transition()
+            .duration(300)
+            .style("opacity", 0)
+            .on("end", () => d3.select(tooltipRef.current).style("visibility", "hidden"));
+        }
+      });
       
-      requestAnimationFrame(animateSignals);
-    }
-    
-    // Start the animation loop
-    animateSignals();
-    
-    // Drag functions
-    function dragStarted(event, d) {
-      // Hide tooltip when dragging starts
-      if (tooltipRef.current) {
-        tooltip.style("visibility", "hidden");
+      // Drag functions
+      function dragStarted(event, d) {
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        d.fx = d.x;
+        d.fy = d.y;
       }
       
-      if (!event.active) simulation.alphaTarget(0.3).restart();
-      d.fx = d.x;
-      d.fy = d.y;
-    }
-    
-    function dragged(event, d) {
-      d.fx = event.x;
-      d.fy = event.y;
-    }
-    
-    function dragEnded(event, d) {
-      if (!event.active) simulation.alphaTarget(0);
-      d.fx = null;
-      d.fy = null;
-    }
-    
-    // Add click handler to background to hide tooltip
-    svg.on('click', function() {
-      tooltip.style("visibility", "hidden");
-    });
-    
-    // Cleanup simulation on component unmount
-    return () => {
-      simulation.stop();
-      
-      // Remove tooltip if component unmounts
-      if (tooltipRef.current) {
-        document.body.removeChild(tooltipRef.current);
-        tooltipRef.current = null;
+      function dragged(event, d) {
+        d.fx = event.x;
+        d.fy = event.y;
       }
-    };
+      
+      function dragEnded(event, d) {
+        if (!event.active) simulation.alphaTarget(0);
+        d.fx = null;
+        d.fy = null;
+      }
+      
+      // Cleanup
+      return () => {
+        simulation.stop();
+        cancelAnimationFrame(animationId);
+        
+        // Remove tooltip if component unmounts
+        if (tooltipRef.current) {
+          document.body.removeChild(tooltipRef.current);
+          tooltipRef.current = null;
+        }
+      };
+    } catch (error) {
+      console.error("Error in MindMap:", error);
+    }
   }, [dimensions, activeNode, currentLanguage, onNodeSelect]);
   
+  // Function to create comet effect
+  const createComet = () => {
+    const comet = document.createElement('div');
+    comet.className = 'absolute bg-white rounded-full opacity-0 pointer-events-none';
+    
+    // Random properties for the comet
+    const size = 2 + Math.random() * 3;
+    const angle = Math.PI / 4 + (Math.random() * Math.PI / 4); // Angle between π/4 and π/2
+    const duration = 2 + Math.random() * 3; // 2-5 seconds
+    const delay = Math.random() * 10; // 0-10 seconds
+    
+    // Position the comet off-screen
+    const startX = Math.random() * 100;
+    const startY = -10;
+    
+    // Style the comet
+    comet.style.width = `${size}px`;
+    comet.style.height = `${size}px`;
+    comet.style.left = `${startX}vw`;
+    comet.style.top = `${startY}vh`;
+    comet.style.boxShadow = `0 0 20px 2px rgba(255, 255, 255, 0.7), 0 0 30px 10px rgba(255, 255, 255, 0.5)`;
+    comet.style.zIndex = '1';
+    
+    // Animation
+    comet.style.animation = `comet ${duration}s linear ${delay}s forwards`;
+    comet.style.transform = `rotate(${angle}rad)`;
+    
+    // Add to DOM
+    document.querySelector('.comet-container')?.appendChild(comet);
+    
+    // Clean up after animation
+    setTimeout(() => {
+      comet.remove();
+    }, (duration + delay) * 1000);
+  };
+  
+  // Create comets periodically
+  useEffect(() => {
+    // Create comets periodically
+    const cometInterval = setInterval(() => {
+      if (Math.random() > 0.7) { // 30% chance to create a comet
+        createComet();
+      }
+    }, 5000);
+    
+    // Initial comets
+    for (let i = 0; i < 2; i++) {
+      createComet();
+    }
+    
+    return () => clearInterval(cometInterval);
+  }, []);
+  
   return (
-    <div className="w-full h-screen flex items-center justify-center overflow-hidden" ref={containerRef}>
-      {/* SVG for visualization */}
-      <svg 
-        ref={svgRef} 
-        className="w-full h-full relative z-10"
-        style={{ minHeight: "600px" }}
-      />
-    </div>
+    <section className="relative py-20 min-h-screen flex flex-col items-center">
+      {/* Background elements - matching the style of other sections */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        {/* Star background */}
+        <div className="absolute inset-0">
+          {Array.from({ length: 70 }).map((_, i) => (
+            <div
+              key={`mindmap-star-${i}`}
+              className="absolute rounded-full bg-white animate-starTwinkle"
+              style={{
+                width: `${Math.random() * 2 + 0.5}px`,
+                height: `${Math.random() * 2 + 0.5}px`,
+                top: `${Math.random() * 100}%`,
+                left: `${Math.random() * 100}%`,
+                opacity: Math.random() * 0.7 + 0.2,
+                animationDelay: `${Math.random() * 5}s`,
+                animationDuration: `${Math.random() * 5 + 2}s`
+              }}
+            />
+          ))}
+        </div>
+        
+        {/* Comet container */}
+        <div className="comet-container absolute inset-0"></div>
+        
+        {/* Gradient orbs with different hues matching other sections */}
+        <div className="absolute top-1/4 left-1/3 w-96 h-96 rounded-full bg-blue-500/10 blur-3xl animate-float-y" 
+             style={{ animationDelay: "0s" }}></div>
+        <div className="absolute bottom-1/4 left-1/5 w-80 h-80 rounded-full bg-purple-500/10 blur-3xl animate-float-y" 
+             style={{ animationDelay: "1.5s" }}></div>
+        <div className="absolute top-2/4 left-2/3 w-64 h-64 rounded-full bg-teal-500/10 blur-3xl animate-float-x" 
+             style={{ animationDelay: "1s" }}></div>
+      </div>
+      
+      {/* Section header */}
+      <div className="container mx-auto px-4 relative z-10 mb-10">
+        <div className="text-center mb-10 max-w-3xl mx-auto">
+          <h2 className="text-4xl font-bold text-white mb-4">
+            {currentLanguage === 'tr' ? 'Zihin Haritam' : 'My Mind Map'}
+          </h2>
+          <p className="text-xl text-gray-300">
+            {currentLanguage === 'tr' 
+              ? 'Bu interaktif görselleştirme aracılığıyla becerilerimi ve ilgi alanlarımı keşfedin.'
+              : 'Explore my skills and interests through this interactive visualization.'}
+          </p>
+        </div>
+      </div>
+      
+      {/* Mind Map Visualization */}
+      <div 
+        className="w-full flex-grow flex items-center justify-center overflow-hidden" 
+        ref={containerRef}
+        style={{ width: '100%', height: '600px' }}
+      >
+        <svg 
+          ref={svgRef} 
+          className="w-full h-full"
+          width="100%"
+          height="100%"
+        ></svg>
+      </div>
+      
+      {/* Add CSS for comet animation */}
+      <style jsx>{`
+        @keyframes comet {
+          0% {
+            opacity: 0;
+            transform: rotate(45deg) translateX(-10vw) translateY(-10vh);
+          }
+          10% {
+            opacity: 1;
+          }
+          90% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 0;
+            transform: rotate(45deg) translateX(110vw) translateY(110vh);
+          }
+        }
+      `}</style>
+    </section>
   );
 };
 
