@@ -1,7 +1,7 @@
-// src/components/navigation/mindmap/NodeRenderer.jsx
+// src/components/visualization/elements/NodeRenderer.jsx
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
-import { useTranslation } from 'react-i18next';
+import { useMindMap } from '../../../context/MindMapContext';
 
 const NodeRenderer = ({ 
   nodes, 
@@ -9,13 +9,14 @@ const NodeRenderer = ({
   onNodeClick, 
   currentLanguage, 
   tooltipRef,
-  simulation
+  getConnectedNodeIds,
+  simulationPaused
 }) => {
   const nodeGroupRef = useRef(null);
-  const { t } = useTranslation();
+  const { t } = useMindMap();
   
   useEffect(() => {
-    if (!nodeGroupRef.current || !simulation || nodes.length === 0) return;
+    if (!nodeGroupRef.current || nodes.length === 0) return;
     
     const nodeGroup = d3.select(nodeGroupRef.current);
     
@@ -28,6 +29,7 @@ const NodeRenderer = ({
       .enter()
       .append('g')
       .attr('class', 'node')
+      .attr('transform', d => `translate(${d.x}, ${d.y})`) // Set initial positions
       .style('opacity', 0)
       .on('mouseover', handleMouseOver)
       .on('mousemove', handleMouseMove)
@@ -120,18 +122,32 @@ const NodeRenderer = ({
       updateHighlighting(activeNode);
     }
     
-    // Update positions on simulation tick
-    simulation.on('tick', () => {
-      // Keep nodes within bounds with padding
-      nodes.forEach(d => {
-        const padding = 80;
-        d.x = Math.max(padding, Math.min(window.innerWidth - padding, d.x));
-        d.y = Math.max(padding, Math.min(window.innerHeight - padding, d.y));
-      });
+    // Animation loop for gentle node movement (if not paused)
+    let animationFrameId;
+    const animate = () => {
+      if (!simulationPaused) {
+        // Apply gentle floating movement to nodes
+        nodes.forEach(node => {
+          // Add small random movements
+          node.x += Math.random() * 0.4 - 0.2;
+          node.y += Math.random() * 0.4 - 0.2;
+          
+          // Keep nodes within bounds with padding
+          const padding = 80;
+          node.x = Math.max(padding, Math.min(window.innerWidth - padding, node.x));
+          node.y = Math.max(padding, Math.min(window.innerHeight - padding, node.y));
+        });
+        
+        // Update node positions
+        nodeGroup.selectAll('.node')
+          .attr('transform', d => `translate(${d.x}, ${d.y})`);
+      }
       
-      // Update node positions
-      node.attr('transform', d => `translate(${d.x}, ${d.y})`);
-    });
+      animationFrameId = requestAnimationFrame(animate);
+    };
+    
+    // Start animation
+    animate();
     
     // Mouse event handlers
     function handleMouseOver(event, d) {
@@ -262,17 +278,7 @@ const NodeRenderer = ({
     
     function updateHighlighting(nodeId) {
       // Find connected nodes
-      const connectedNodeIds = simulation.force('link').links()
-        .filter(link => {
-          const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
-          const targetId = typeof link.target === 'object' ? link.target.id : link.target;
-          return sourceId === nodeId || targetId === nodeId;
-        })
-        .map(link => {
-          const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
-          const targetId = typeof link.target === 'object' ? link.target.id : link.target;
-          return sourceId === nodeId ? targetId : sourceId;
-        });
+      const connectedNodeIds = getConnectedNodeIds(nodeId);
       
       // Update node styling
       nodeGroup.selectAll('.node-glow')
@@ -324,7 +330,7 @@ const NodeRenderer = ({
           const color = Math.floor(255 * brightness);
           return `rgba(${color}, ${color}, ${color}, 0.65)`;
         });
-        
+      
       // Update inner pulse for active node
       nodeGroup.selectAll('.node-pulse')
         .transition()
@@ -350,7 +356,6 @@ const NodeRenderer = ({
         d3.select(tooltipRef.current).style("visibility", "hidden");
       }
       
-      if (!event.active) simulation.alphaTarget(0.3).restart();
       d.fx = d.x;
       d.fy = d.y;
     }
@@ -358,12 +363,21 @@ const NodeRenderer = ({
     function dragged(event, d) {
       d.fx = event.x;
       d.fy = event.y;
+      
+      // Update the node position in real-time
+      d3.select(this).attr('transform', `translate(${event.x}, ${event.y})`);
     }
     
     function dragEnded(event, d) {
-      if (!event.active) simulation.alphaTarget(0);
-      d.fx = null;
-      d.fy = null;
+      // Store the new position
+      d.x = event.x;
+      d.y = event.y;
+      
+      // Clear fixed position after a short delay to prevent bouncing
+      setTimeout(() => {
+        d.fx = null;
+        d.fy = null;
+      }, 100);
     }
     
     // Click handler to background to hide tooltip
@@ -385,27 +399,22 @@ const NodeRenderer = ({
         .on('click', null);
       
       d3.select(nodeGroupRef.current.parentNode).on('click', null);
+      
+      // Cancel animation frame
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
     };
-  }, [nodes, activeNode, simulation, currentLanguage, onNodeClick, tooltipRef, t]);
+  }, [nodes, activeNode, currentLanguage, onNodeClick, tooltipRef, t, simulationPaused, getConnectedNodeIds]);
   
   // Apply highlighting when activeNode changes
   useEffect(() => {
-    if (!nodeGroupRef.current || !simulation || !activeNode) return;
+    if (!nodeGroupRef.current || !activeNode) return;
     
     const nodeGroup = d3.select(nodeGroupRef.current);
     
     // Find connected nodes
-    const connectedNodeIds = simulation.force('link').links()
-      .filter(link => {
-        const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
-        const targetId = typeof link.target === 'object' ? link.target.id : link.target;
-        return sourceId === activeNode || targetId === activeNode;
-      })
-      .map(link => {
-        const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
-        const targetId = typeof link.target === 'object' ? link.target.id : link.target;
-        return sourceId === activeNode ? targetId : sourceId;
-      });
+    const connectedNodeIds = getConnectedNodeIds(activeNode);
     
     // Update node styling
     nodeGroup.selectAll('.node-glow')
@@ -474,7 +483,7 @@ const NodeRenderer = ({
         if (connectedNodeIds.includes(d.id)) return 'rgba(255, 255, 255, 0.9)';
         return 'rgba(255, 255, 255, 0.6)';
       });
-  }, [activeNode, simulation, t]);
+  }, [activeNode, getConnectedNodeIds, t]);
 
   return <g ref={nodeGroupRef} className="nodes"></g>;
 };

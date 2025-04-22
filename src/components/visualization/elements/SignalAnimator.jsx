@@ -1,8 +1,9 @@
-// src/components/navigation/mindmap/SignalAnimator.jsx
+// src/components/visualization/elements/SignalAnimator.jsx
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
+import { useMindMap } from '../../../context/MindMapContext';
 
-const SignalAnimator = ({ nodes, links, activeNode }) => {
+const SignalAnimator = ({ nodes, links, activeNode, simulationPaused }) => {
   const signalsGroupRef = useRef(null);
   const animationRef = useRef(null);
   
@@ -17,6 +18,11 @@ const SignalAnimator = ({ nodes, links, activeNode }) => {
     
     // Animation function
     const animateSignals = () => {
+      if (simulationPaused) {
+        animationRef.current = requestAnimationFrame(animateSignals);
+        return;
+      }
+      
       // Remove old signals that have completed their journey
       signalsGroup.selectAll('.signal')
         .filter(function() {
@@ -190,7 +196,7 @@ const SignalAnimator = ({ nodes, links, activeNode }) => {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [nodes, links, activeNode]);
+  }, [nodes, links, activeNode, simulationPaused]);
   
   // Create starburst effect when activeNode changes
   useEffect(() => {

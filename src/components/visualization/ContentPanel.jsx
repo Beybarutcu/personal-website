@@ -1,44 +1,40 @@
-// src/components/navigation/ContentPanel.jsx
+// src/components/visualization/ContentPanel.jsx
 import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useMindMap } from '../../context/MindMapContext';
 import { X, ExternalLink } from 'lucide-react';
 
-const ContentPanel = ({ nodeId, onClose }) => {
+const ContentPanel = ({ language }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const { t } = useTranslation();
+  const { activeNode, isContentVisible, handleCloseContent, t } = useMindMap();
   
   useEffect(() => {
-    if (nodeId) {
+    if (activeNode && isContentVisible) {
       // Animate in
       setTimeout(() => {
         setIsVisible(true);
       }, 50);
-    }
-    
-    return () => {
+    } else {
       setIsVisible(false);
-    };
-  }, [nodeId]);
+    }
+  }, [activeNode, isContentVisible]);
   
   // Handle closing the panel
   const handleClose = () => {
     setIsVisible(false);
     setTimeout(() => {
-      if (onClose) {
-        onClose();
-      }
+      handleCloseContent();
     }, 300); // Wait for fade out animation
   };
   
-  if (!nodeId) {
+  if (!activeNode || !isContentVisible) {
     return null;
   }
   
   // Get node content from i18n translations
-  const titleKey = `mindMap.nodes.${nodeId}.title`;
-  const subtitleKey = `mindMap.nodes.${nodeId}.subtitle`;
-  const descriptionKey = `mindMap.nodes.${nodeId}.description`;
-  const skillsKey = `mindMap.nodes.${nodeId}.skills`;
+  const titleKey = `mindMap.nodes.${activeNode}.title`;
+  const subtitleKey = `mindMap.nodes.${activeNode}.subtitle`;
+  const descriptionKey = `mindMap.nodes.${activeNode}.description`;
+  const skillsKey = `mindMap.nodes.${activeNode}.skills`;
   
   // Get skills array from i18n or use fallback
   const getSkills = () => {
@@ -53,7 +49,7 @@ const ContentPanel = ({ nodeId, onClose }) => {
   // Get links from i18n
   const getLinks = () => {
     try {
-      const linksPrefix = `mindMap.nodes.${nodeId}.links`;
+      const linksPrefix = `mindMap.nodes.${activeNode}.links`;
       const linksObject = t(`${linksPrefix}`, '', { returnObjects: true });
       
       if (typeof linksObject === 'object' && linksObject !== null) {
@@ -76,8 +72,8 @@ const ContentPanel = ({ nodeId, onClose }) => {
   
   return (
     <div 
-      className={`bg-gray-800/60 backdrop-blur-md border border-gray-700/50 rounded-xl 
-                  shadow-xl overflow-hidden transition-all duration-300 h-full
+      className={`absolute top-0 right-0 w-96 max-w-full h-full bg-gray-800/60 backdrop-blur-md border-l border-gray-700/50
+                  shadow-xl overflow-hidden transition-all duration-300
                   ${isVisible ? 'opacity-100 transform-none' : 'opacity-0 translate-x-10'}`}
     >
       {/* Panel Header */}
@@ -119,7 +115,7 @@ const ContentPanel = ({ nodeId, onClose }) => {
       </div>
       
       {/* Panel Content */}
-      <div className="p-6 overflow-y-auto max-h-[calc(600px-12rem)]">
+      <div className="p-6 overflow-y-auto max-h-[calc(100%-12rem)]">
         {/* Description */}
         <div className="prose prose-invert max-w-none mb-6">
           <div dangerouslySetInnerHTML={{ __html: t(descriptionKey) }} />

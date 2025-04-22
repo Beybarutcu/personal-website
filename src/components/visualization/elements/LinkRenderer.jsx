@@ -1,8 +1,9 @@
-// src/components/navigation/mindmap/LinkRenderer.jsx
+// src/components/visualization/elements/LinkRenderer.jsx
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
+import { useMindMap } from '../../../context/MindMapContext';
 
-const LinkRenderer = ({ links, nodes, activeNode }) => {
+const LinkRenderer = ({ links, nodes, activeNode, simulationPaused }) => {
   const linkGroupRef = useRef(null);
   
   useEffect(() => {
@@ -21,7 +22,23 @@ const LinkRenderer = ({ links, nodes, activeNode }) => {
       .attr('stroke', 'rgba(255, 255, 255, 0.2)')
       .attr('stroke-opacity', d => d.weight * 0.3 + 0.15)
       .attr('stroke-width', d => d.weight * 0.8)
-      .style('opacity', 0);
+      .style('opacity', 0)
+      .attr('x1', d => {
+        const source = typeof d.source === 'object' ? d.source : nodes.find(n => n.id === d.source);
+        return source ? source.x : 0;
+      })
+      .attr('y1', d => {
+        const source = typeof d.source === 'object' ? d.source : nodes.find(n => n.id === d.source);
+        return source ? source.y : 0;
+      })
+      .attr('x2', d => {
+        const target = typeof d.target === 'object' ? d.target : nodes.find(n => n.id === d.target);
+        return target ? target.x : 0;
+      })
+      .attr('y2', d => {
+        const target = typeof d.target === 'object' ? d.target : nodes.find(n => n.id === d.target);
+        return target ? target.y : 0;
+      });
     
     // Fade in links with staggered timing
     link.transition()
@@ -71,6 +88,33 @@ const LinkRenderer = ({ links, nodes, activeNode }) => {
         });
     }
     
+    // Set up an interval to update link positions repeatedly
+    const updateLinkPositions = () => {
+      if (simulationPaused) return;
+      
+      linkGroup.selectAll('line')
+        .attr('x1', d => {
+          const source = typeof d.source === 'object' ? d.source : nodes.find(n => n.id === d.source);
+          return source ? source.x : 0;
+        })
+        .attr('y1', d => {
+          const source = typeof d.source === 'object' ? d.source : nodes.find(n => n.id === d.source);
+          return source ? source.y : 0;
+        })
+        .attr('x2', d => {
+          const target = typeof d.target === 'object' ? d.target : nodes.find(n => n.id === d.target);
+          return target ? target.x : 0;
+        })
+        .attr('y2', d => {
+          const target = typeof d.target === 'object' ? d.target : nodes.find(n => n.id === d.target);
+          return target ? target.y : 0;
+        });
+    };
+    
+    // Set up an interval to update link positions repeatedly
+    const interval = setInterval(updateLinkPositions, 30);
+    
+    return () => clearInterval(interval);
   }, [links, nodes]);
   
   // Update links when active node changes
@@ -114,40 +158,6 @@ const LinkRenderer = ({ links, nodes, activeNode }) => {
         return link.weight * 0.6;
       });
   }, [activeNode, links]);
-  
-  // Update link positions when nodes move
-  useEffect(() => {
-    if (!linkGroupRef.current || links.length === 0 || nodes.length === 0) return;
-    
-    // Find the simulation object from the parent components
-    const parentSvg = linkGroupRef.current.parentNode;
-    if (!parentSvg) return;
-    
-    const updateLinkPositions = () => {
-      d3.select(linkGroupRef.current).selectAll('line')
-        .attr('x1', d => {
-          const source = typeof d.source === 'object' ? d.source : nodes.find(n => n.id === d.source);
-          return source ? source.x : 0;
-        })
-        .attr('y1', d => {
-          const source = typeof d.source === 'object' ? d.source : nodes.find(n => n.id === d.source);
-          return source ? source.y : 0;
-        })
-        .attr('x2', d => {
-          const target = typeof d.target === 'object' ? d.target : nodes.find(n => n.id === d.target);
-          return target ? target.x : 0;
-        })
-        .attr('y2', d => {
-          const target = typeof d.target === 'object' ? d.target : nodes.find(n => n.id === d.target);
-          return target ? target.y : 0;
-        });
-    };
-    
-    // Set up an interval to update link positions repeatedly
-    const interval = setInterval(updateLinkPositions, 30);
-    
-    return () => clearInterval(interval);
-  }, [links, nodes]);
   
   return <g ref={linkGroupRef} className="links"></g>;
 };
