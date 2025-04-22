@@ -1,128 +1,143 @@
 // src/components/navigation/ContentPanel.jsx
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { nodeContent } from '../../data/mindMapData';
-import { X } from 'lucide-react';
+import { X, ExternalLink } from 'lucide-react';
 
-const ContentPanel = ({ nodeId, language = 'en', onClose }) => {
+const ContentPanel = ({ nodeId, currentLanguage = 'en', onClose }) => {
   const [content, setContent] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
-  const panelRef = useRef(null);
   
-  // Handle escape key to close panel
   useEffect(() => {
-    const handleEscapeKey = (e) => {
-      if (e.key === 'Escape' && isVisible) {
-        handleClose();
+    if (nodeId) {
+      // Get content for this node
+      const nodeData = nodeContent[nodeId];
+      if (nodeData) {
+        // Get content in current language or fall back to English
+        const localized = nodeData[currentLanguage] || nodeData['en'];
+        setContent(localized);
+        
+        // Animate in
+        setTimeout(() => {
+          setIsVisible(true);
+        }, 50);
       }
-    };
-    
-    window.addEventListener('keydown', handleEscapeKey);
+    } else {
+      setContent(null);
+    }
     
     return () => {
-      window.removeEventListener('keydown', handleEscapeKey);
-    };
-  }, [isVisible]);
-  
-  // Load content when nodeId changes
-  useEffect(() => {
-    if (nodeId && nodeContent[nodeId]) {
-      const nodeData = nodeContent[nodeId][language] || nodeContent[nodeId]['en'];
-      setContent(nodeData);
-      setIsVisible(true);
-      
-      // Animation for panel entry
-      if (panelRef.current) {
-        panelRef.current.style.transform = 'translateY(100%)';
-        panelRef.current.style.opacity = '0';
-        
-        // Trigger animation after a tiny delay to ensure styles are applied
-        setTimeout(() => {
-          panelRef.current.style.transform = 'translateY(0)';
-          panelRef.current.style.opacity = '1';
-        }, 10);
-      }
-    }
-  }, [nodeId, language]);
-  
-  // Handle close button or outside click
-  const handleClose = () => {
-    // Animate out
-    if (panelRef.current) {
-      panelRef.current.style.transform = 'translateY(100%)';
-      panelRef.current.style.opacity = '0';
-      
-      // Hide after animation completes
-      setTimeout(() => {
-        setIsVisible(false);
-        if (onClose) {
-          onClose();
-        }
-      }, 500);
-    } else {
       setIsVisible(false);
+    };
+  }, [nodeId, currentLanguage]);
+  
+  // Handle closing the panel
+  const handleClose = () => {
+    setIsVisible(false);
+    setTimeout(() => {
       if (onClose) {
         onClose();
       }
-    }
+    }, 300); // Wait for fade out animation
   };
   
-  if (!isVisible || !content) {
+  if (!content) {
     return null;
   }
   
   return (
     <div 
-      className="fixed inset-0 z-30 flex items-end justify-center"
-      onClick={(e) => {
-        // Only close if clicking the backdrop, not the content
-        if (e.target === e.currentTarget) {
-          handleClose();
-        }
-      }}
+      className={`bg-gray-800/60 backdrop-blur-md border border-gray-700/50 rounded-xl 
+                  shadow-xl overflow-hidden transition-all duration-300 h-full
+                  ${isVisible ? 'opacity-100 transform-none' : 'opacity-0 translate-x-10'}`}
     >
-      {/* Semi-transparent backdrop */}
-      <div className="absolute inset-0 bg-black/30 backdrop-blur-sm transition-opacity duration-500"></div>
-      
-      {/* Content panel sliding from bottom */}
-      <div 
-        ref={panelRef}
-        className="w-full max-w-4xl bg-gray-800/90 backdrop-blur-md border-t border-t-gray-700/50 rounded-t-xl shadow-2xl transition-all duration-500 ease-in-out transform"
-        style={{ 
-          maxHeight: '70vh',
-          transform: 'translateY(100%)', // Initial position
-          opacity: 0
-        }}
-      >
-        {/* Handle bar for visual indication */}
-        <div className="mx-auto w-12 h-1 bg-gray-600 rounded-full my-3"></div>
-        
-        {/* Content container with scrolling */}
-        <div className="p-6 md:p-8 overflow-y-auto" style={{ maxHeight: 'calc(70vh - 40px)' }}>
-          <div className="relative">
-            {/* Close button - single button design */}
-            <button 
-              onClick={handleClose}
-              className="absolute top-0 right-0 p-2 rounded-full bg-gray-700/60 text-gray-300 hover:bg-white hover:text-gray-900 transition-colors z-10"
-              aria-label="Close"
-            >
-              <X size={20} />
-            </button>
-            
-            {/* Title with gradient background */}
-            <div className="relative mb-6">
-              <h2 className="text-2xl md:text-3xl font-bold text-white">
-                {content.title}
-              </h2>
-              <div className="absolute h-1 w-20 bg-orange-500/50 bottom-0 left-0 mt-2 rounded-full"></div>
-            </div>
-            
-            {/* Content */}
-            <div 
-              className="text-gray-300 leading-relaxed space-y-4 mb-8"
-              dangerouslySetInnerHTML={{ __html: content.description }}
+      {/* Panel Header */}
+      <div className="relative h-48 bg-gradient-to-r from-gray-900/80 to-gray-800/80 overflow-hidden">
+        {/* Background stars */}
+        <div className="absolute inset-0">
+          {Array.from({ length: 30 }).map((_, i) => (
+            <div
+              key={`panel-star-${i}`}
+              className="absolute rounded-full bg-white animate-starTwinkle"
+              style={{
+                width: `${Math.random() * 2 + 0.5}px`,
+                height: `${Math.random() * 2 + 0.5}px`,
+                top: `${Math.random() * 100}%`,
+                left: `${Math.random() * 100}%`,
+                opacity: Math.random() * 0.7 + 0.2,
+                animationDelay: `${Math.random() * 5}s`,
+                animationDuration: `${Math.random() * 5 + 2}s`
+              }}
             />
-          </div>
+          ))}
         </div>
+        
+        {/* Title overlay */}
+        <div className="absolute inset-0 flex flex-col justify-end p-6 bg-gradient-to-t from-gray-900 via-gray-900/70 to-transparent">
+          <h3 className="text-2xl font-bold text-white mb-2">{content.title}</h3>
+          
+          {content.subtitle && (
+            <p className="text-gray-300">{content.subtitle}</p>
+          )}
+        </div>
+        
+        {/* Close button */}
+        <button
+          onClick={handleClose}
+          className="absolute top-4 right-4 p-2 rounded-full bg-gray-800/60 backdrop-blur-sm text-gray-400 hover:text-white transition-colors"
+          aria-label="Close panel"
+        >
+          <X size={20} />
+        </button>
+      </div>
+      
+      {/* Panel Content */}
+      <div className="p-6 overflow-y-auto max-h-[calc(600px-12rem)]">
+        {/* Description */}
+        <div className="prose prose-invert max-w-none mb-6">
+          <div dangerouslySetInnerHTML={{ __html: content.description }} />
+        </div>
+        
+        {/* Skills/Technologies if available */}
+        {content.skills && content.skills.length > 0 && (
+          <div className="mb-6">
+            <h4 className="text-lg font-semibold text-white mb-3">
+              {currentLanguage === 'tr' ? 'Beceriler' : 'Skills'}
+            </h4>
+            <div className="flex flex-wrap gap-2">
+              {content.skills.map((skill, index) => (
+                <span
+                  key={index}
+                  className="px-3 py-1 bg-orange-500/20 text-orange-400 border border-orange-500/30 rounded-full text-sm"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+        
+        {/* Links if available */}
+        {content.links && content.links.length > 0 && (
+          <div className="mt-6 pt-4 border-t border-gray-700/30">
+            <h4 className="text-lg font-semibold text-white mb-3">
+              {currentLanguage === 'tr' ? 'İlgili Bağlantılar' : 'Related Links'}
+            </h4>
+            <div className="space-y-2">
+              {content.links.map((link, index) => (
+                <a
+                  key={index}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-orange-400 hover:text-orange-300 transition-colors"
+                >
+                  <ExternalLink size={16} />
+                  <span>{link.label}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

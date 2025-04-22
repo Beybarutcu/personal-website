@@ -1,4 +1,4 @@
-// src/App.jsx
+// src/App.jsx - Modified version with debugging and proper HomePage integration
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import HomePage from './pages/HomePage';
@@ -12,7 +12,6 @@ import Projects from './components/sections/Projects';
 import Contact from './components/sections/Contact';
 import CosmicBackground from './components/ui/CosmicBackground';
 
-// Simplified App.jsx without complex D3 animations that might be causing issues
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [language, setLanguage] = useState('en');
@@ -20,6 +19,7 @@ const App = () => {
 
   // Function to handle language changes throughout the app
   const handleLanguageChange = (lang) => {
+    console.log("Language changed to:", lang);
     setLanguage(lang);
     // Change i18n language to update translations across components
     i18n.changeLanguage(lang);
@@ -60,8 +60,13 @@ const App = () => {
             {/* Hero Section */}
             <Hero language={language} />
             
-            {/* Mind Map Home Section */}
-            <HomePage currentLanguage={language} onLanguageChange={handleLanguageChange} />
+            {/* Mind Map Home Section - Ensure this section uses correct z-index */}
+            <div className="relative z-20">
+              <HomePage 
+                currentLanguage={language} 
+                onLanguageChange={handleLanguageChange} 
+              />
+            </div>
             
             {/* Other sections */}
             <About language={language} />
@@ -70,6 +75,11 @@ const App = () => {
           </main>
           
           <Footer language={language} />
+          
+          {/* Debug panel - remove in production */}
+          <div className="fixed bottom-4 right-4 z-50 bg-black/60 text-white text-xs p-2 rounded">
+            Language: {language} | Debug Mode
+          </div>
         </>
       )}
     </div>
