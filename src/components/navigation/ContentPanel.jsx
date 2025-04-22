@@ -1,34 +1,24 @@
 // src/components/navigation/ContentPanel.jsx
 import React, { useState, useEffect } from 'react';
-import { nodeContent } from '../../data/mindMapData';
+import { useTranslation } from 'react-i18next';
 import { X, ExternalLink } from 'lucide-react';
 
-const ContentPanel = ({ nodeId, currentLanguage = 'en', onClose }) => {
-  const [content, setContent] = useState(null);
+const ContentPanel = ({ nodeId, onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const { t } = useTranslation();
   
   useEffect(() => {
     if (nodeId) {
-      // Get content for this node
-      const nodeData = nodeContent[nodeId];
-      if (nodeData) {
-        // Get content in current language or fall back to English
-        const localized = nodeData[currentLanguage] || nodeData['en'];
-        setContent(localized);
-        
-        // Animate in
-        setTimeout(() => {
-          setIsVisible(true);
-        }, 50);
-      }
-    } else {
-      setContent(null);
+      // Animate in
+      setTimeout(() => {
+        setIsVisible(true);
+      }, 50);
     }
     
     return () => {
       setIsVisible(false);
     };
-  }, [nodeId, currentLanguage]);
+  }, [nodeId]);
   
   // Handle closing the panel
   const handleClose = () => {
@@ -40,9 +30,49 @@ const ContentPanel = ({ nodeId, currentLanguage = 'en', onClose }) => {
     }, 300); // Wait for fade out animation
   };
   
-  if (!content) {
+  if (!nodeId) {
     return null;
   }
+  
+  // Get node content from i18n translations
+  const titleKey = `mindMap.nodes.${nodeId}.title`;
+  const subtitleKey = `mindMap.nodes.${nodeId}.subtitle`;
+  const descriptionKey = `mindMap.nodes.${nodeId}.description`;
+  const skillsKey = `mindMap.nodes.${nodeId}.skills`;
+  
+  // Get skills array from i18n or use fallback
+  const getSkills = () => {
+    try {
+      const skillsJson = t(skillsKey, '', { returnObjects: true });
+      return Array.isArray(skillsJson) ? skillsJson : [];
+    } catch (error) {
+      return [];
+    }
+  };
+  
+  // Get links from i18n
+  const getLinks = () => {
+    try {
+      const linksPrefix = `mindMap.nodes.${nodeId}.links`;
+      const linksObject = t(`${linksPrefix}`, '', { returnObjects: true });
+      
+      if (typeof linksObject === 'object' && linksObject !== null) {
+        return Object.entries(linksObject).map(([key, label]) => ({
+          key,
+          label,
+          url: key === 'portfolio' ? '#portfolio' : 
+               key === 'contact' ? '#contact' : 
+               `#${key}` // Fallback for other keys
+        }));
+      }
+      return [];
+    } catch (error) {
+      return [];
+    }
+  };
+  
+  const skills = getSkills();
+  const links = getLinks();
   
   return (
     <div 
@@ -73,11 +103,9 @@ const ContentPanel = ({ nodeId, currentLanguage = 'en', onClose }) => {
         
         {/* Title overlay */}
         <div className="absolute inset-0 flex flex-col justify-end p-6 bg-gradient-to-t from-gray-900 via-gray-900/70 to-transparent">
-          <h3 className="text-2xl font-bold text-white mb-2">{content.title}</h3>
+          <h3 className="text-2xl font-bold text-white mb-2">{t(titleKey)}</h3>
           
-          {content.subtitle && (
-            <p className="text-gray-300">{content.subtitle}</p>
-          )}
+          <p className="text-gray-300">{t(subtitleKey)}</p>
         </div>
         
         {/* Close button */}
@@ -94,17 +122,17 @@ const ContentPanel = ({ nodeId, currentLanguage = 'en', onClose }) => {
       <div className="p-6 overflow-y-auto max-h-[calc(600px-12rem)]">
         {/* Description */}
         <div className="prose prose-invert max-w-none mb-6">
-          <div dangerouslySetInnerHTML={{ __html: content.description }} />
+          <div dangerouslySetInnerHTML={{ __html: t(descriptionKey) }} />
         </div>
         
         {/* Skills/Technologies if available */}
-        {content.skills && content.skills.length > 0 && (
+        {skills.length > 0 && (
           <div className="mb-6">
             <h4 className="text-lg font-semibold text-white mb-3">
-              {currentLanguage === 'tr' ? 'Beceriler' : 'Skills'}
+              {t('mindMap.skillsLabel')}
             </h4>
             <div className="flex flex-wrap gap-2">
-              {content.skills.map((skill, index) => (
+              {skills.map((skill, index) => (
                 <span
                   key={index}
                   className="px-3 py-1 bg-orange-500/20 text-orange-400 border border-orange-500/30 rounded-full text-sm"
@@ -117,18 +145,16 @@ const ContentPanel = ({ nodeId, currentLanguage = 'en', onClose }) => {
         )}
         
         {/* Links if available */}
-        {content.links && content.links.length > 0 && (
+        {links.length > 0 && (
           <div className="mt-6 pt-4 border-t border-gray-700/30">
             <h4 className="text-lg font-semibold text-white mb-3">
-              {currentLanguage === 'tr' ? 'İlgili Bağlantılar' : 'Related Links'}
+              {t('mindMap.relatedLinksLabel')}
             </h4>
             <div className="space-y-2">
-              {content.links.map((link, index) => (
+              {links.map((link) => (
                 <a
-                  key={index}
+                  key={link.key}
                   href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="flex items-center gap-2 text-orange-400 hover:text-orange-300 transition-colors"
                 >
                   <ExternalLink size={16} />

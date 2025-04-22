@@ -175,7 +175,7 @@ const Hero = ({ language }) => {
       </div>
       
       {/* Add CSS for comet animation */}
-      <style jsx>{`
+      <style>{`
         @keyframes comet {
           0% {
             opacity: 0;

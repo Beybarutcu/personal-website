@@ -1,6 +1,7 @@
 // src/components/navigation/mindmap/NodeRenderer.jsx
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
+import { useTranslation } from 'react-i18next';
 
 const NodeRenderer = ({ 
   nodes, 
@@ -8,10 +9,10 @@ const NodeRenderer = ({
   onNodeClick, 
   currentLanguage, 
   tooltipRef,
-  simulation,
-  nodeContent
+  simulation
 }) => {
   const nodeGroupRef = useRef(null);
+  const { t } = useTranslation();
   
   useEffect(() => {
     if (!nodeGroupRef.current || !simulation || nodes.length === 0) return;
@@ -101,10 +102,9 @@ const NodeRenderer = ({
       .attr('class', 'node-label')
       .style('opacity', 0) // Start invisible for animation
       .text(d => {
-        // Get the appropriate label based on language
-        const label = currentLanguage === 'tr' ? 
-          (d.labelTr || d.label || d.id) : 
-          (d.labelEn || d.label || d.id);
+        // Get the translated label from i18n
+        const translationKey = `mindMap.nodes.${d.id}.label`;
+        const label = t(translationKey);
           
         // Truncate if too long
         return label.length > 12 ? label.slice(0, 10) + '...' : label;
@@ -153,35 +153,38 @@ const NodeRenderer = ({
       // Show tooltip near the node
       if (tooltipRef && tooltipRef.current) {
         const tooltip = d3.select(tooltipRef.current);
-        const nodeData = nodeContent[d.id] ? 
-          nodeContent[d.id][currentLanguage] || nodeContent[d.id]['en'] : null;
-          
-        if (nodeData) {
-          // Extract first sentence from description
-          let summary = nodeData.description;
-          summary = summary.replace(/<[^>]*>?/gm, ' ');
-          
-          const firstSentence = summary.split('.')[0];
-          const displayText = firstSentence.length > 120 ? 
-            firstSentence.substring(0, 120) + '...' : 
-            firstSentence;
-          
-          // Update tooltip content
-          tooltip.html(`
-            <div style="font-weight: bold; margin-bottom: 8px; color: white;">${nodeData.title}</div>
-            <div style="color: rgba(255, 255, 255, 0.8); font-size: 12px;">${displayText}</div>
-            <div style="margin-top: 8px; font-size: 11px; color: rgba(255, 255, 255, 0.6);">Click to view details</div>
-          `);
-          
-          // Position tooltip near mouse and fade it in
-          tooltip
-            .style("visibility", "visible")
-            .style("left", `${mouseX + 15}px`)
-            .style("top", `${mouseY - 15}px`)
-            .transition()
-            .duration(300)
-            .style("opacity", 1);
-        }
+        
+        // Get translated content using i18n
+        const titleKey = `mindMap.nodes.${d.id}.title`;
+        const descriptionKey = `mindMap.nodes.${d.id}.description`;
+        
+        const title = t(titleKey);
+        const description = t(descriptionKey);
+        
+        // Clean up description (remove HTML tags for tooltip)
+        const plainDescription = description.replace(/<[^>]*>?/gm, ' ');
+        
+        // Extract first sentence for the tooltip
+        const firstSentence = plainDescription.split('.')[0];
+        const displayText = firstSentence.length > 120 ? 
+          firstSentence.substring(0, 120) + '...' : 
+          firstSentence;
+        
+        // Update tooltip content
+        tooltip.html(`
+          <div style="font-weight: bold; margin-bottom: 8px; color: white;">${title}</div>
+          <div style="color: rgba(255, 255, 255, 0.8); font-size: 12px;">${displayText}</div>
+          <div style="margin-top: 8px; font-size: 11px; color: rgba(255, 255, 255, 0.6);">${t('mindMap.clickToView')}</div>
+        `);
+        
+        // Position tooltip near mouse and fade it in
+        tooltip
+          .style("visibility", "visible")
+          .style("left", `${mouseX + 15}px`)
+          .style("top", `${mouseY - 15}px`)
+          .transition()
+          .duration(300)
+          .style("opacity", 1);
       }
     }
     
@@ -383,7 +386,7 @@ const NodeRenderer = ({
       
       d3.select(nodeGroupRef.current.parentNode).on('click', null);
     };
-  }, [nodes, activeNode, simulation, currentLanguage, onNodeClick, tooltipRef, nodeContent]);
+  }, [nodes, activeNode, simulation, currentLanguage, onNodeClick, tooltipRef, t]);
   
   // Apply highlighting when activeNode changes
   useEffect(() => {
@@ -471,7 +474,7 @@ const NodeRenderer = ({
         if (connectedNodeIds.includes(d.id)) return 'rgba(255, 255, 255, 0.9)';
         return 'rgba(255, 255, 255, 0.6)';
       });
-  }, [activeNode, simulation]);
+  }, [activeNode, simulation, t]);
 
   return <g ref={nodeGroupRef} className="nodes"></g>;
 };

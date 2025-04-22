@@ -9,13 +9,6 @@ const HomePage = ({ currentLanguage, onLanguageChange }) => {
   const [selectedNode, setSelectedNode] = useState(null);
   const { t } = useTranslation();
   
-  // Add debugging to see when a node is selected
-  useEffect(() => {
-    if (selectedNode) {
-      console.log("Node selected in HomePage:", selectedNode);
-    }
-  }, [selectedNode]);
-  
   // Handler for when a node is clicked in the mind map
   const handleNodeSelect = (nodeId) => {
     setSelectedNode(nodeId);
@@ -23,32 +16,26 @@ const HomePage = ({ currentLanguage, onLanguageChange }) => {
   
   // Handler for closing the content panel
   const handleContentClose = () => {
-    console.log("Content panel closed");
     setSelectedNode(null);
   };
   
   return (
     <>
-      {/* Mind Map Component */}
+      {/* Mind Map Component - Pass pauseSimulation prop to stop movement when panel is open */}
       <MindMapNavigation 
         onNodeSelect={handleNodeSelect}
         currentLanguage={currentLanguage}
+        pauseSimulation={selectedNode !== null}
       />
       
       {/* Content Panel - renders when a node is selected */}
       {selectedNode && (
         <ContentPanel 
-          key={`panel-${selectedNode}`} // Force re-creation when nodeId changes
           nodeId={selectedNode}
           language={currentLanguage}
           onClose={handleContentClose}
         />
       )}
-      
-      {/* Debug display - remove in production */}
-      <div className="fixed bottom-20 right-4 z-40 bg-gray-800/80 p-2 rounded text-xs text-white">
-        Selected: {selectedNode || 'none'}
-      </div>
     </>
   );
 };

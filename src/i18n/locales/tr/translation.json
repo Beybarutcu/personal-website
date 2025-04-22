@@ -1,105 +1,284 @@
 {
   "navigation": {
-    "home": "Ana Sayfa",
-    "about": "Hakkımda",
-    "portfolio": "Portfolyo",
-    "contact": "İletişim"
+    "home": "Home",
+    "about": "About",
+    "portfolio": "Portfolio",
+    "contact": "Contact"
   },
   "hero": {
-    "greeting": "Merhaba, Ben",
-    "title": "Yaratıcı Geliştirici",
-    "description": "Yenilikçi tasarımı son teknoloji ile birleştirerek, akılda kalıcı kullanıcı deneyimleri oluşturan etkileyici dijital deneyimler inşa ediyorum.",
-    "viewWork": "Çalışmalarımı Gör",
-    "contactMe": "Bana Ulaş",
-    "scrollDown": "Aşağı Kaydır"
+    "greeting": "Hello, I'm",
+    "title": "Creative Developer",
+    "description": "I build captivating digital experiences that blend innovative design with cutting-edge technology to create memorable user journeys.",
+    "viewWork": "View My Work",
+    "contactMe": "Contact Me",
+    "scrollDown": "Scroll Down"
   },
   "about": {
-    "title": "Hakkımda",
-    "subtitle": "İnteraktif ve görsel olarak etkileyici dijital deneyimler oluşturma tutkusuna sahip yaratıcı geliştirici.",
-    "whoIAm": "Ben Kimim",
-    "bioP1": "Sanatsal tasarımı teknik hassasiyetle birleştiren etkileyici dijital deneyimler oluşturmada 5+ yıllık deneyime sahip yaratıcı bir geliştiriciyim.",
-    "bioP2": "Tutkum, kod ve yaratıcılığın kesişim noktasında, özellikle veri görselleştirme ve kullanıcı arayüzü tasarımında uzmanlığımla sürükleyici, interaktif web uygulamaları oluşturmaktır.",
-    "bioP3": "Sürekli olarak yeni teknolojileri ve teknikleri keşfederek, performans, erişilebilirlik ve keyifli kullanıcı deneyimlerine odaklanarak web'de mümkün olanın sınırlarını zorluyorum.",
+    "title": "About Me",
+    "subtitle": "Creative developer with a passion for building interactive and visually stunning digital experiences.",
+    "whoIAm": "Who I Am",
+    "bioP1": "I'm a creative developer with 5+ years of experience crafting engaging digital experiences that blend artful design with technical precision.",
+    "bioP2": "My passion lies at the intersection of code and creativity, where I build immersive, interactive web applications with particular expertise in data visualization and user interface design.",
+    "bioP3": "I'm constantly exploring new technologies and techniques to push the boundaries of what's possible on the web, focusing on performance, accessibility, and delightful user experiences.",
     "personalDetails": {
-      "name": "İsim",
-      "email": "E-posta",
-      "location": "Konum",
-      "availability": "Müsaitlik"
+      "name": "Name",
+      "email": "Email",
+      "location": "Location",
+      "availability": "Availability"
     },
-    "downloadResume": "CV'yi İndir",
+    "downloadResume": "Download Resume",
     "tabs": {
-      "skills": "Beceriler & Uzmanlık",
-      "experience": "İş Deneyimi",
-      "education": "Eğitim"
+      "skills": "Skills & Expertise",
+      "experience": "Work Experience",
+      "education": "Education"
     },
     "skillCategories": {
-      "frontend": "Önyüz",
-      "backend": "Arkayüz",
-      "design": "Tasarım",
-      "data": "Veri"
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "design": "Design",
+      "data": "Data"
     }
   },
   "portfolio": {
-    "title": "Çalışmalarım",
-    "subtitle": "Web geliştirme, tasarım ve interaktif veri görselleştirme alanındaki becerilerimi sergileyen projelerimi keşfedin.",
-    "mindMapTitle": "İnteraktif Zihin Haritası",
-    "mindMapDescription": "Bu interaktif görselleştirme aracılığıyla düşüncelerimi, becerilerimi ve ilgi alanlarımı keşfedin. Daha fazla bilgi için düğümlere tıklayın.",
+    "title": "My Work",
+    "subtitle": "Explore a selection of my projects showcasing my skills in web development, design, and interactive data visualization.",
+    "mindMapTitle": "Interactive Mind Map",
+    "mindMapDescription": "Explore my thoughts, skills and interests through this interactive visualization. Click on nodes to learn more.",
     "filters": {
-      "all": "Tüm Projeler",
-      "featured": "Öne Çıkanlar"
+      "all": "All Projects",
+      "featured": "Featured"
     },
     "projects": {
       "neuralNetwork": {
-        "title": "Sinir Ağı Görselleştirmesi",
-        "description": "Ağ öğrenmesinin gerçek zamanlı simülasyonu ile interaktif D3.js sinir ağı görselleştirmesi. Düğümler arasındaki bağlantıları keşfedin, değişen ağırlıkları gözlemleyin ve verilerin ağ içinde nasıl aktığını görün.",
-        "details": "React ve D3.js ile oluşturulan bu görselleştirme, interaktif veri görselleştirme, animasyon teknikleri ve gerçek zamanlı güncellemeler konusundaki ileri kavramları göstermektedir."
+        "title": "Neural Network Visualization",
+        "description": "An interactive D3.js visualization of neural networks with real-time simulation of network learning. Explore connections between nodes, observe weights changing, and see how data flows through the network.",
+        "details": "Built with React and D3.js, this visualization demonstrates advanced concepts in interactive data visualization, animation techniques, and real-time updates."
       }
     },
-    "viewLive": "Canlı Görüntüle",
-    "viewCode": "Kodu Görüntüle",
-    "noResults": "Seçilen filtreyle eşleşen proje yok.",
-    "showAll": "Tüm projeleri göster",
-    "viewMoreGithub": "GitHub'da Daha Fazlasını Gör"
+    "viewLive": "View Live",
+    "viewCode": "View Code",
+    "noResults": "No projects match the selected filter.",
+    "showAll": "Show all projects",
+    "viewMoreGithub": "View More on GitHub"
   },
   "contact": {
-    "title": "İletişime Geç",
-    "subtitle": "İşbirliği, sorular veya sadece merhaba demek için iletişime geçmekten çekinmeyin!",
-    "contactInfo": "İletişim Bilgileri",
+    "title": "Get In Touch",
+    "subtitle": "Feel free to reach out for collaborations, questions, or just to say hello!",
+    "contactInfo": "Contact Information",
     "infoDetails": {
-      "email": "E-posta",
-      "location": "Konum",
-      "phone": "Telefon"
+      "email": "Email",
+      "location": "Location",
+      "phone": "Phone"
     },
-    "connectWithMe": "Benimle Bağlantı Kur",
-    "availableFor": "Müsaitlik Durumu",
+    "connectWithMe": "Connect With Me",
+    "availableFor": "Available For",
     "availabilityTypes": {
-      "freelance": "Serbest Projeler",
-      "fulltime": "Tam Zamanlı Pozisyonlar",
-      "collaborations": "İşbirlikleri",
-      "consulting": "Danışmanlık"
+      "freelance": "Freelance Projects",
+      "fulltime": "Full-time Positions",
+      "collaborations": "Collaborations",
+      "consulting": "Consulting"
     },
     "form": {
-      "title": "Bana Mesaj Gönder",
-      "name": "Adınız",
-      "email": "E-posta Adresiniz",
-      "subject": "Konu",
-      "message": "Mesaj",
-      "namePlaceholder": "Ahmet Yılmaz",
-      "emailPlaceholder": "ahmet@ornek.com",
-      "subjectPlaceholder": "Proje Danışma",
-      "messagePlaceholder": "Potansiyel bir proje hakkında görüşmek istiyorum...",
-      "sendButton": "Mesaj Gönder",
-      "sending": "Gönderiliyor...",
-      "successMessage": "Mesajınız başarıyla gönderildi! En kısa sürede size geri döneceğim.",
-      "errorMessage": "Mesajınız gönderilirken bir hata oluştu. Lütfen daha sonra tekrar deneyin."
+      "title": "Send Me a Message",
+      "name": "Your Name",
+      "email": "Email Address",
+      "subject": "Subject",
+      "message": "Message",
+      "namePlaceholder": "John Doe",
+      "emailPlaceholder": "john@example.com",
+      "subjectPlaceholder": "Project Inquiry",
+      "messagePlaceholder": "I'd like to discuss a potential project...",
+      "sendButton": "Send Message",
+      "sending": "Sending...",
+      "successMessage": "Your message has been sent successfully! I'll get back to you soon.",
+      "errorMessage": "There was an error sending your message. Please try again later."
     }
   },
   "footer": {
-    "copyright": "© 2025 İsminiz. Tüm hakları saklıdır.",
-    "madeWith": "❤️ ve React ile yapıldı"
+    "copyright": "© 2025 Your Name. All rights reserved.",
+    "madeWith": "Made with ❤️ and React"
   },
   "languageSwitcher": {
-    "en": "İngilizce",
-    "tr": "Türkçe"
+    "en": "English",
+    "tr": "Turkish"
+  },
+  
+  "mindMap": {
+    "title": "My Mind Map",
+    "subtitle": "Explore my skills and interests through this interactive visualization.",
+    "clickToView": "Click to view details",
+    "skillsLabel": "Skills",
+    "relatedLinksLabel": "Related Links",
+    "nodes": {
+      "main": {
+        "label": "Me",
+        "title": "About Me",
+        "subtitle": "Creative Developer & Digital Designer",
+        "description": "<p>I'm a creative developer with 5+ years of experience building engaging digital experiences that blend artful design with technical precision.</p><p>My passion lies at the intersection of code and creativity, where I build immersive, interactive web applications with particular expertise in data visualization and user interface design.</p><p>I'm constantly exploring new technologies and techniques to push the boundaries of what's possible on the web, focusing on performance, accessibility, and delightful user experiences.</p>",
+        "skills": ["React", "JavaScript", "Creative Coding", "UI/UX Design", "Data Visualization"],
+        "links": {
+          "portfolio": "View Portfolio",
+          "contact": "Contact Me"
+        }
+      },
+      "frontend": {
+        "label": "Frontend",
+        "title": "Frontend Development",
+        "subtitle": "Building modern, responsive user interfaces",
+        "description": "<p>I specialize in crafting modern frontend experiences using the latest web technologies. My approach focuses on creating responsive, accessible, and performant interfaces that work across all devices.</p><p>My expertise includes modern JavaScript frameworks like React and Vue.js, along with advanced CSS techniques including animations, Grid, and Flexbox layouts. I prioritize creating semantic markup and accessible interfaces that work for all users.</p>",
+        "skills": ["React", "Vue.js", "JavaScript/TypeScript", "HTML5/CSS3", "Responsive Design", "Web Accessibility", "Tailwind CSS", "Performance Optimization"],
+        "links": {
+          "portfolio": "Related Project: Portfolio Website",
+          "frontend": "See Frontend Work" 
+        }
+      },
+      "design": {
+        "label": "Design",
+        "title": "UI/UX Design",
+        "subtitle": "Creating intuitive and appealing user experiences",
+        "description": "<p>My design philosophy centers on creating intuitive, accessible, and aesthetically pleasing interfaces. I bridge the gap between visual design and technical implementation to ensure a cohesive user experience.</p><p>Working with tools like Figma and Adobe Creative Suite, I create design systems, prototypes, and visual assets that bring ideas to life. I'm particularly interested in creating designs that aren't just beautiful, but also practical and implementable.</p>",
+        "skills": ["UI Design", "UX Research", "Figma", "Adobe Creative Suite", "Design Systems", "Prototyping", "Interaction Design", "Accessibility"],
+        "links": {
+          "portfolio": "View Design Work"
+        }
+      },
+      "backend": {
+        "label": "Backend",
+        "title": "Backend Development",
+        "subtitle": "Building robust server-side solutions",
+        "description": "<p>I develop scalable backend systems that power modern web applications. My focus is on creating clean, maintainable APIs and efficient database designs that support the frontend experience.</p><p>While my primary expertise is in frontend development, I'm comfortable working across the full stack, which helps me create more integrated solutions and better understand system architecture as a whole.</p>",
+        "skills": ["Node.js", "Express", "RESTful APIs", "GraphQL", "Database Design", "Authentication", "Python/Django", "API Design"],
+        "links": {
+          "portfolio": "Related Project: Data Dashboard"
+        }
+      },
+      "dataviz": {
+        "label": "Data Viz",
+        "title": "Data Visualization",
+        "subtitle": "Turning complex data into intuitive visual stories",
+        "description": "<p>I specialize in transforming complex datasets into clear, interactive visualizations that tell compelling stories. Using tools like D3.js and modern charting libraries, I create custom visualizations that help users explore and understand data intuitively.</p><p>My approach combines technical precision with design principles to ensure visualizations are not only accurate but also aesthetically pleasing and accessible to non-technical audiences.</p>",
+        "skills": ["D3.js", "SVG", "Canvas", "Chart.js", "Data Analysis", "Interactive Visualizations", "Dashboards", "Information Design"],
+        "links": {
+          "neuralnet": "Related Project: Neural Network Visualization",
+          "datadashboard": "Related Project: Data Dashboard"
+        }
+      },
+      "animation": {
+        "label": "Animation",
+        "title": "Web Animation",
+        "subtitle": "Creating engaging motion experiences",
+        "description": "<p>I create smooth, purposeful animations that enhance user experience and bring interfaces to life. Focusing on performance and accessibility, I implement animations that guide users, provide feedback, and add delight without being distracting.</p><p>My toolkit includes CSS animations, JavaScript animation libraries, SVG animation, and WebGL for more complex 3D effects when appropriate.</p>",
+        "skills": ["CSS Animations", "GSAP", "Framer Motion", "SVG Animation", "Three.js", "Motion Design", "Interaction Design", "Performance Optimization"],
+        "links": {
+          "visualizer": "Related Project: Audio Visualizer"
+        }
+      },
+      "masters": {
+        "label": "Masters Degree",
+        "title": "Masters in Computer Science",
+        "subtitle": "University of Technology, 2015-2017",
+        "description": "<p>My graduate studies focused on interactive visualization techniques and artificial intelligence applications. This multidisciplinary program combined computer science theory with practical applications in data visualization and machine learning.</p><p>My thesis project explored novel methods for visualizing neural networks for educational purposes, which led directly to my professional work in data visualization.</p>",
+        "skills": ["Academic Research", "Machine Learning", "Computer Graphics", "Algorithm Design", "Technical Writing", "Data Analysis"],
+        "links": {
+          "neuralnet": "Related Project: Neural Network Visualization"
+        }
+      },
+      "bachelors": {
+        "label": "Bachelors",
+        "title": "Bachelor's in Software Engineering",
+        "subtitle": "State Technical University, 2011-2015",
+        "description": "<p>My undergraduate education provided me with a strong foundation in computer science principles, software engineering methodologies, and practical programming skills.</p><p>During this time, I developed my interest in frontend development and UI/UX design through various course projects and extracurricular activities.</p>",
+        "skills": ["Software Development", "Computer Science Fundamentals", "Database Systems", "Web Technologies", "Software Architecture"],
+        "links": {}
+      },
+      "courses": {
+        "label": "Online Courses",
+        "title": "Continuous Learning",
+        "subtitle": "Professional development through online education",
+        "description": "<p>I believe in lifelong learning and regularly take online courses to stay current with emerging technologies and design trends.</p><p>These specialized courses have helped me deepen my expertise in areas like advanced animation techniques, data visualization, and modern frontend frameworks.</p>",
+        "skills": ["Self-directed Learning", "Technical Skill Development", "Creative Coding", "Professional Development"],
+        "links": {}
+      },
+      "portfolio": {
+        "label": "Portfolio",
+        "title": "Portfolio Website",
+        "subtitle": "Personal website with interactive features",
+        "description": "<p>This portfolio website showcases my skills and projects through interactive elements like the mind map visualization you're currently exploring. It features a responsive design, smooth animations, and multilingual support.</p><p>Built with React, Tailwind CSS, and custom animations, this project demonstrates my approach to creating engaging and accessible web experiences.</p>",
+        "skills": ["React", "Tailwind CSS", "i18n", "D3.js", "Responsive Design", "Custom Animations"],
+        "links": {
+          "source": "View Website Source"
+        }
+      },
+      "datadashboard": {
+        "label": "Data Dashboard",
+        "title": "Interactive Data Dashboard",
+        "subtitle": "Real-time data visualization platform",
+        "description": "<p>A comprehensive dashboard for visualizing and analyzing complex datasets. This application features multiple interactive visualization components, real-time data updates, and customizable views.</p><p>The dashboard demonstrates my skills in both frontend and backend development, with a focus on creating intuitive ways to explore and understand data.</p>",
+        "skills": ["React", "D3.js", "Node.js", "Firebase", "State Management", "Data Analysis"],
+        "links": {
+          "portfolio": "View in Portfolio"
+        }
+      },
+      "visualizer": {
+        "label": "Audio Visualizer",
+        "title": "Interactive Audio Visualizer",
+        "subtitle": "Creative visualization of music and sound",
+        "description": "<p>This project transforms audio input into captivating visual displays using the Web Audio API and WebGL. Users can upload their own music or use the microphone to create unique visual patterns that respond to the audio's frequency and amplitude.</p><p>The project demonstrates my creativity and technical skills in audio processing, animation, and interactive design.</p>",
+        "skills": ["JavaScript", "Web Audio API", "Three.js", "WebGL", "Creative Coding", "Responsive Animation"],
+        "links": {
+          "portfolio": "View in Portfolio"
+        }
+      },
+      "neuralnet": {
+        "label": "Neural Network",
+        "title": "Neural Network Visualization",
+        "subtitle": "Educational tool for understanding AI",
+        "description": "<p>An interactive visualization tool that demystifies how neural networks learn. This project allows users to observe the learning process in real-time, with animated data flows and weight adjustments that make the abstract concepts of machine learning more tangible.</p><p>Inspired by my master's thesis, this tool has been used in educational settings to help students understand the fundamentals of artificial intelligence.</p>",
+        "skills": ["D3.js", "JavaScript", "Machine Learning", "Educational Design", "Interactive Visualization"],
+        "links": {
+          "portfolio": "View in Portfolio"
+        }
+      },
+      "ai": {
+        "label": "AI & ML",
+        "title": "Artificial Intelligence & Machine Learning",
+        "subtitle": "Interest in intelligent systems",
+        "description": "<p>I'm deeply interested in how AI and machine learning can be made more accessible and understandable through thoughtful visualization and interface design.</p><p>My background in both technical implementation and design helps me create experiences that bridge the gap between complex AI concepts and intuitive user interfaces.</p>",
+        "skills": ["Machine Learning Concepts", "Neural Networks", "Data Science", "Ethical AI"],
+        "links": {
+          "neuralnet": "See Neural Network Visualization"
+        }
+      },
+      "interactive": {
+        "label": "Interactive Art",
+        "title": "Interactive Art & Creative Coding",
+        "subtitle": "Exploring the intersection of art and technology",
+        "description": "<p>I'm passionate about the creative potential of code and how it can be used to create interactive art experiences. I experiment with generative art, interactive installations, and creative visualizations that respond to user input or environmental data.</p><p>This interest influences my professional work by encouraging innovative approaches to design challenges and user interaction patterns.</p>",
+        "skills": ["Creative Coding", "Generative Art", "p5.js", "Interactive Installations", "Algorithmic Design"],
+        "links": {
+          "visualizer": "See Audio Visualizer"
+        }
+      },
+      "music": {
+        "label": "Music",
+        "title": "Music & Audio",
+        "subtitle": "Passion for music and audio technology",
+        "description": "<p>My interest in music extends to how it can be visualized and experienced through technology. I enjoy exploring the intersection of audio processing, visualization, and interactive design.</p><p>This passion has influenced projects like my audio visualizer and informs my approach to creating immersive, multisensory digital experiences.</p>",
+        "skills": ["Audio Processing", "Music Production", "Sound Design", "Web Audio API"],
+        "links": {
+          "visualizer": "See Audio Visualizer"
+        }
+      },
+      "space": {
+        "label": "Space",
+        "title": "Space & Astronomy",
+        "subtitle": "Fascination with cosmic exploration",
+        "description": "<p>I'm fascinated by space exploration and astronomy, which inspires many of my design aesthetics and visualization projects. The cosmic theme you see throughout my portfolio reflects this interest.</p><p>I enjoy finding ways to represent astronomical data and concepts in interactive, accessible formats.</p>",
+        "skills": ["Astronomy Visualization", "Scientific Data Representation", "Space-Inspired Design"],
+        "links": {
+          "dataviz": "See Data Visualization Work"
+        }
+      }
+    }
   }
 }

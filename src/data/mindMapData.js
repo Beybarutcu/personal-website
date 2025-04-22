@@ -1,38 +1,38 @@
 // src/data/mindMapData.js
 
-// Mind map structure with nodes and connections
+// Mind map structure with nodes and connections using i18n key references
 export const mindMapData = {
   // Nodes representing different aspects
   nodes: [
     // Center node (self)
-    { id: 'main', label: 'Me', labelEn: 'Me', labelTr: 'Ben', type: 'main', size: 25 },
+    { id: 'main', type: 'main', size: 25 },
     
     // Skills nodes
-    { id: 'frontend', label: 'Frontend', labelEn: 'Frontend', labelTr: 'Önyüz', type: 'skills', size: 20 },
-    { id: 'design', label: 'Design', labelEn: 'Design', labelTr: 'Tasarım', type: 'skills', size: 18 },
-    { id: 'backend', label: 'Backend', labelEn: 'Backend', labelTr: 'Arkayüz', type: 'skills', size: 16 },
-    { id: 'dataviz', label: 'Data Viz', labelEn: 'Data Viz', labelTr: 'Veri Görsel.', type: 'skills', size: 20 },
-    { id: 'animation', label: 'Animation', labelEn: 'Animation', labelTr: 'Animasyon', type: 'skills', size: 15 },
+    { id: 'frontend', type: 'skills', size: 20 },
+    { id: 'design', type: 'skills', size: 18 },
+    { id: 'backend', type: 'skills', size: 16 },
+    { id: 'dataviz', type: 'skills', size: 20 },
+    { id: 'animation', type: 'skills', size: 15 },
     
     // Education nodes
-    { id: 'masters', label: 'Masters Degree', labelEn: 'Masters Degree', labelTr: 'Yüksek Lisans', type: 'education', size: 18 },
-    { id: 'bachelors', label: 'Bachelors', labelEn: 'Bachelors', labelTr: 'Lisans', type: 'education', size: 16 },
-    { id: 'courses', label: 'Online Courses', labelEn: 'Online Courses', labelTr: 'Online Kurslar', type: 'education', size: 14 },
+    { id: 'masters', type: 'education', size: 18 },
+    { id: 'bachelors', type: 'education', size: 16 },
+    { id: 'courses', type: 'education', size: 14 },
     
     // Project nodes
-    { id: 'portfolio', label: 'Portfolio', labelEn: 'Portfolio', labelTr: 'Portfolyo', type: 'projects', size: 18 },
-    { id: 'datadashboard', label: 'Data Dashboard', labelEn: 'Data Dashboard', labelTr: 'Veri Paneli', type: 'projects', size: 16 },
-    { id: 'visualizer', label: 'Audio Visualizer', labelEn: 'Audio Visualizer', labelTr: 'Ses Görselleştirici', type: 'projects', size: 14 },
-    { id: 'neuralnet', label: 'Neural Network', labelEn: 'Neural Network', labelTr: 'Sinir Ağı', type: 'projects', size: 16 },
+    { id: 'portfolio', type: 'projects', size: 18 },
+    { id: 'datadashboard', type: 'projects', size: 16 },
+    { id: 'visualizer', type: 'projects', size: 14 },
+    { id: 'neuralnet', type: 'projects', size: 16 },
     
     // Interest nodes
-    { id: 'ai', label: 'AI & ML', labelEn: 'AI & ML', labelTr: 'YZ & ML', type: 'interests', size: 18 },
-    { id: 'interactive', label: 'Interactive Art', labelEn: 'Interactive Art', labelTr: 'Etkileşimli Sanat', type: 'interests', size: 16 },
-    { id: 'music', label: 'Music', labelEn: 'Music', labelTr: 'Müzik', type: 'interests', size: 14 },
-    { id: 'space', label: 'Space', labelEn: 'Space', labelTr: 'Uzay', type: 'interests', size: 15 }
+    { id: 'ai', type: 'interests', size: 18 },
+    { id: 'interactive', type: 'interests', size: 16 },
+    { id: 'music', type: 'interests', size: 14 },
+    { id: 'space', type: 'interests', size: 15 }
   ],
   
-  // Links between nodes
+  // Links between nodes (unchanged as these are language-independent)
   links: [
     // Main node connections
     { source: 'main', target: 'frontend', weight: 4 },
