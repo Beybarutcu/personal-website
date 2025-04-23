@@ -90,7 +90,11 @@ const ClusterLink = ({
       strokeOpacity={getOpacity()}
       strokeDasharray={getStrokeDashArray()}
       fill="none"
-      initial="initial"
+      initial={{ 
+        pathLength: 0, 
+        opacity: 0.1, // Set an initial opacity value
+        strokeWidth: 0 
+      }}
       animate="animate"
       variants={lineVariants}
     />

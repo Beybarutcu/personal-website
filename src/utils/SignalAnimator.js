@@ -228,6 +228,14 @@ export class SignalAnimator {
     // More subtle ambient pulsing for all node glows
     if (this.nodeGlows) {
       this.nodeGlows
+        // First set a default opacity to avoid the undefined error
+        .style('opacity', function(d) {
+          // Set initial opacity if it doesn't exist
+          if (typeof d3.select(this).attr('opacity') === 'undefined') {
+            return 0.2; // Default opacity
+          }
+          return null; // Don't change if already set
+        })
         .attr('opacity', d => {
           if (d.id === this.activeNodeId) {
             return 0.6 + 0.15 * Math.sin(Date.now() * 0.0015);

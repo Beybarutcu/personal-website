@@ -152,8 +152,9 @@ const ClusterNode = ({
         style={{ 
           pointerEvents: 'none',
           textShadow: '0 1px 3px rgba(0, 0, 0, 0.6)',
-          opacity: 0.9 // Initialize opacity here in style
+          opacity: 0.9 // Ensure opacity is initialized here
         }}
+        initial={{ opacity: 0.9 }} // Also set initial opacity here
         animate={{ 
           scale: getScale(),
           opacity: hover || isActive ? 1 : 0.9
