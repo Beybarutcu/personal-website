@@ -1,16 +1,16 @@
-// src/App.jsx - Modified version with debugging and proper HomePage integration
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import HomePage from './pages/HomePage';
 import LoadingIndicator from './components/ui/LoadingIndicator';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Navbar from './components/layout/Navbar';
+import HomePage from './pages/HomePage';
 import Hero from './components/sections/Hero';
 import About from './components/sections/About';
 import Projects from './components/sections/Projects';
 import Contact from './components/sections/Contact';
 import CosmicBackground from './components/ui/CosmicBackground';
+
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -60,13 +60,12 @@ const App = () => {
             {/* Hero Section */}
             <Hero language={language} />
             
-            {/* Mind Map Home Section - Ensure this section uses correct z-index */}
-            <div className="relative z-20">
-              <HomePage 
-                currentLanguage={language} 
-                onLanguageChange={handleLanguageChange} 
-              />
-            </div>
+            {/* Use HomePage without visualization */}
+            <HomePage 
+              currentLanguage={language} 
+              onLanguageChange={handleLanguageChange}
+              showMindMap={false}
+            />
             
             {/* Other sections */}
             <About language={language} />

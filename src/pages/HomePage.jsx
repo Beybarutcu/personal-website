@@ -1,19 +1,10 @@
 // src/pages/HomePage.jsx
 import React from 'react';
-import { mindMapData } from '../data/mindMapData';
-import MindMapVisualization from '../components/visualization/MindMapVisualization';
+import { useTranslation } from 'react-i18next';
+import ScrollReveal from '../components/ui/ScrollReveal';
 
 const HomePage = ({ currentLanguage, onLanguageChange }) => {
-  return (
-    <div className="relative z-20 w-full h-screen overflow-hidden">
-      {/* Main Mind Map Visualization */}
-      <MindMapVisualization 
-        data={mindMapData}
-        language={currentLanguage}
-        className="w-full h-full pointer-events-auto"
-      />
-    </div>
-  );
+  const { t } = useTranslation();
 };
 
 export default HomePage;

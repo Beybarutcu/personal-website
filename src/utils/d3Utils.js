@@ -22,248 +22,153 @@ export const useD3 = (renderFn, dependencies = []) => {
 };
 
 /**
- * Standard transition presets
+ * Utility functions for working with D3 transitions and animations
  */
 export const transitions = {
-  // Standard duration values
   duration: {
-    fast: 300,
+    fast: 200,
     medium: 500,
-    slow: 800,
-    verySlow: 1500
+    slow: 800
   },
   
-  // Easing functions
-  easing: {
-    smooth: d3.easeCubicInOut,
-    bounce: d3.easeElasticOut,
-    back: d3.easeBackOut,
-    gentle: d3.easeQuadInOut
-  },
-  
-  // Fade in with customizable duration
-  fadeIn: (selection, duration = 500, delay = 0, opacity = 1) => {
-    return selection
-      .style('opacity', 0)
+  // Fade in transition for D3 selections
+  fadeIn: (selection, duration = 500, delay = 0) => {
+    selection
       .transition()
       .delay(delay)
       .duration(duration)
-      .ease(d3.easeCubicOut)
-      .style('opacity', opacity);
+      .style('opacity', 1);
   },
   
-  // Fade out
-  fadeOut: (selection, duration = 300, delay = 0) => {
-    return selection
-      .transition()
-      .delay(delay)
-      .duration(duration)
-      .ease(d3.easeCubicIn)
-      .style('opacity', 0);
-  },
-  
-  // Slide up with a duration
-  slideUp: (selection, duration = 800, delay = 0) => {
-    return selection
-      .style('opacity', 0)
-      .style('transform', 'translateY(20px)')
-      .transition()
-      .delay(delay)
-      .duration(duration)
-      .ease(d3.easeBackOut.overshoot(1.5))
-      .style('opacity', 1)
-      .style('transform', 'translateY(0)');
-  },
-  
-  // Slide down (for menus, etc.)
-  slideDown: (selection, duration = 500, delay = 0) => {
-    return selection
-      .style('opacity', 0)
-      .style('transform', 'translateY(-20px)')
-      .transition()
-      .delay(delay)
-      .duration(duration)
-      .ease(d3.easeBackOut)
-      .style('opacity', 1)
-      .style('transform', 'translateY(0)');
-  },
-  
-  // Scale in (for elements that should grow into view)
-  scaleIn: (selection, duration = 500, delay = 0) => {
-    return selection
-      .style('opacity', 0)
-      .style('transform', 'scale(0.8)')
-      .transition()
-      .delay(delay)
-      .duration(duration)
-      .ease(d3.easeBackOut)
-      .style('opacity', 1)
-      .style('transform', 'scale(1)');
-  },
-  
-  // Pulse effect for elements that need attention
-  pulse: (selection, minScale = 1, maxScale = 1.05, duration = 1500) => {
-    (function repeat() {
-      selection
-        .transition()
-        .duration(duration)
-        .ease(d3.easeSinInOut)
-        .style('transform', `scale(${maxScale})`)
-        .transition()
-        .duration(duration)
-        .ease(d3.easeSinInOut)
-        .style('transform', `scale(${minScale})`)
-        .on('end', repeat);
-    })();
-    
-    return selection;
-  },
-  
-  // Glow effect for highlighting elements
-  glow: (selection, duration = 1500, color = 'rgba(255, 255, 255, 0.8)') => {
-    (function repeat() {
-      selection
-        .transition()
-        .duration(duration)
-        .ease(d3.easeSinInOut)
-        .style('filter', `drop-shadow(0 0 8px ${color})`)
-        .transition()
-        .duration(duration)
-        .ease(d3.easeSinInOut)
-        .style('filter', 'drop-shadow(0 0 0px transparent)')
-        .on('end', repeat);
-    })();
-    
-    return selection;
-  },
-  
-  // Typewriter effect for text
-  typewriter: (selection, text, duration = 1500) => {
-    const length = text.length;
-    
-    selection.text('');
-    
-    for (let i = 0; i < length; i++) {
-      selection
-        .transition()
-        .delay(i * (duration / length))
-        .on('start', function() {
-          d3.select(this).text(d => text.substring(0, i + 1));
-        });
-    }
-    
-    return selection;
-  },
-  
-  // Path drawing animation for SVG paths
-  drawPath: (selection, duration = 1200) => {
-    const length = selection.node().getTotalLength();
-    
-    return selection
-      .attr('stroke-dasharray', length)
-      .attr('stroke-dashoffset', length)
-      .transition()
-      .duration(duration)
-      .ease(d3.easeLinear)
-      .attr('stroke-dashoffset', 0);
-  },
-  
-  // Staggered animations for lists
-  stagger: (selection, transitionFn, staggerDelay = 50) => {
+  // Apply staggered animations to elements in a selection
+  stagger: (selection, callback, staggerDelay = 50) => {
     selection.each(function(d, i) {
-      const node = d3.select(this);
-      transitionFn(node, i * staggerDelay);
+      callback(d3.select(this), i * staggerDelay);
     });
-    
-    return selection;
   },
   
-  // Cosmic twinkling effect for background stars
-  twinkle: (selection, minOpacity = 0.3, maxOpacity = 1, minDuration = 2000, maxDuration = 5000) => {
-    selection.each(function() {
-      const star = d3.select(this);
-      
-      function randomDuration() {
-        return Math.random() * (maxDuration - minDuration) + minDuration;
-      }
-      
-      (function twinkle() {
-        const duration = randomDuration();
-        
-        star
-          .style('opacity', minOpacity)
-          .transition()
-          .duration(duration / 2)
-          .ease(d3.easeSinInOut)
-          .style('opacity', maxOpacity)
-          .transition()
-          .duration(duration / 2)
-          .ease(d3.easeSinInOut)
-          .style('opacity', minOpacity)
-          .on('end', twinkle);
-      })();
-    });
-    
-    return selection;
+  // Create a continuous pulsing animation
+  pulse: (selection, minOpacity = 0.4, maxOpacity = 0.8, duration = 1500) => {
+    selection
+      .transition()
+      .duration(duration)
+      .attr('opacity', minOpacity)
+      .transition()
+      .duration(duration)
+      .attr('opacity', maxOpacity)
+      .on('end', function() {
+        transitions.pulse(d3.select(this), minOpacity, maxOpacity, duration);
+      });
   }
 };
 
 /**
- * Apply sequential animations to a selection
- * @param {d3.Selection} selection - D3 selection to animate
- * @param {Array} animationSequence - Array of animation functions
- * @returns {d3.Selection} - The original selection
+ * Utility functions for force-directed graphs
  */
-export const sequence = (selection, animationSequence) => {
-  let lastTransition = selection;
+export const forceGraph = {
+  // Create and configure a force simulation
+  createSimulation: (nodes, links, width, height) => {
+    return d3.forceSimulation(nodes)
+      .force("link", d3.forceLink(links).id(d => d.id))
+      .force("charge", d3.forceManyBody())
+      .force("center", d3.forceCenter(width / 2, height / 2))
+      .force("x", d3.forceX(width / 2))
+      .force("y", d3.forceY(height / 2))
+      .force("collision", d3.forceCollide().radius(d => d.radius * 1.2));
+  },
   
-  animationSequence.forEach(animFn => {
-    lastTransition = animFn(lastTransition);
-  });
-  
-  return selection;
-};
-
-/**
- * Generate a random starburst pattern
- * @param {d3.Selection} container - D3 selection of container element
- * @param {number} count - Number of particles
- * @param {Object} options - Configuration options
- */
-export const createStarburst = (container, count = 20, options = {}) => {
-  const defaults = {
-    x: 0,
-    y: 0,
-    minRadius: 2,
-    maxRadius: 5,
-    minDistance: 30,
-    maxDistance: 100,
-    duration: 1000,
-    colors: ['#ffffff', '#f8f8f8', '#eeeeee']
-  };
-  
-  const config = { ...defaults, ...options };
-  
-  for (let i = 0; i < count; i++) {
-    const angle = Math.random() * Math.PI * 2;
-    const distance = config.minDistance + Math.random() * (config.maxDistance - config.minDistance);
-    const targetX = config.x + Math.cos(angle) * distance;
-    const targetY = config.y + Math.sin(angle) * distance;
-    const radius = config.minRadius + Math.random() * (config.maxRadius - config.minRadius);
-    const color = config.colors[Math.floor(Math.random() * config.colors.length)];
+  // Configure forces with specific settings for interest cluster
+  configureClusterForces: (simulation, options = {}) => {
+    const {
+      linkDistance = 100,
+      linkStrength = 0.7,
+      chargeStrength = -300,
+      centerStrength = 0.1,
+      xStrength = 0.1,
+      yStrength = 0.1,
+      collisionStrength = 0.7
+    } = options;
     
-    container.append('circle')
-      .attr('cx', config.x)
-      .attr('cy', config.y)
-      .attr('r', radius)
-      .attr('fill', color)
-      .style('opacity', 1)
-      .transition()
-      .duration(config.duration)
-      .ease(d3.easeBackOut)
-      .attr('cx', targetX)
-      .attr('cy', targetY)
-      .style('opacity', 0)
-      .remove();
+    simulation.force("link")
+      .distance(d => {
+        // Custom distance based on node types
+        if (d.source.type === "main" && d.target.type === "category") return linkDistance * 1.5;
+        if (d.source.type === "category" && d.target.type === "detail") return linkDistance;
+        return linkDistance * 0.8;
+      })
+      .strength(linkStrength);
+    
+    simulation.force("charge")
+      .strength(d => {
+        // Custom charge based on node type
+        if (d.type === "main") return chargeStrength * 2;
+        if (d.type === "category") return chargeStrength * 1.5;
+        return chargeStrength;
+      });
+    
+    simulation.force("center").strength(centerStrength);
+    simulation.force("x").strength(xStrength);
+    simulation.force("y").strength(yStrength);
+    simulation.force("collision").strength(collisionStrength);
+    
+    return simulation;
+  },
+  
+  // Apply constraints to keep nodes within bounds
+  applyBoundaryForces: (nodes, width, height, padding = 20) => {
+    nodes.forEach(node => {
+      // Apply constraints
+      const r = node.radius + padding;
+      if (node.x < r) node.x = r;
+      if (node.x > width - r) node.x = width - r;
+      if (node.y < r) node.y = r;
+      if (node.y > height - r) node.y = height - r;
+    });
+  },
+  
+  // Set initial positions for nodes in a more structured way
+  setInitialPositions: (nodes, width, height) => {
+    const mainNode = nodes.find(node => node.type === "main");
+    const categoryNodes = nodes.filter(node => node.type === "category");
+    const detailNodes = nodes.filter(node => node.type === "detail");
+    
+    // Center main node
+    if (mainNode) {
+      mainNode.x = width / 2;
+      mainNode.y = height / 2;
+      mainNode.fx = width / 2; // Fix position initially
+      mainNode.fy = height / 2;
+      
+      // Release after simulation has settled
+      setTimeout(() => {
+        mainNode.fx = null;
+        mainNode.fy = null;
+      }, 2000);
+    }
+    
+    // Arrange categories in a circle around main node
+    const radius = Math.min(width, height) * 0.25;
+    categoryNodes.forEach((node, i) => {
+      const angle = (i / categoryNodes.length) * 2 * Math.PI;
+      node.x = width / 2 + radius * Math.cos(angle);
+      node.y = height / 2 + radius * Math.sin(angle);
+    });
+    
+    // Position detail nodes near their categories
+    detailNodes.forEach(node => {
+      const parent = categoryNodes.find(cat => cat.id === node.category);
+      if (parent) {
+        const angle = Math.random() * 2 * Math.PI;
+        const distance = 70 + Math.random() * 30;
+        node.x = parent.x + distance * Math.cos(angle);
+        node.y = parent.y + distance * Math.sin(angle);
+      } else {
+        // If no parent, position randomly
+        node.x = Math.random() * width;
+        node.y = Math.random() * height;
+      }
+    });
+    
+    return nodes;
   }
 };

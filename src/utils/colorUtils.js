@@ -2,51 +2,99 @@
  * Utility functions for working with colors in the mind map visualization
  */
 
-// Get color based on node type
-export const getNodeColor = (type, intensity = 0.5) => {
-  const colorMap = {
-    main: getGradientColor('#6366f1', '#8b5cf6', intensity),
-    skills: getGradientColor('#8b5cf6', '#3b82f6', intensity),
-    interests: getGradientColor('#ef4444', '#f97316', intensity),
-    education: getGradientColor('#3b82f6', '#14b8a6', intensity),
-    projects: getGradientColor('#3b82f6', '#06b6d4', intensity)
-  };
-  
-  return colorMap[type] || colorMap.main;
+// Define color constants for the new design
+export const COLORS = {
+  NODE_INNER: '#f97316', // Orange for inner circle
+  NODE_OUTER: '#ffffff', // White for outer circle
+  NODE_GLOW: '#ffffff',  // White for the glowing effect
+  LINK_DEFAULT: '#ffffff', // Solid white for links
+  LINK_ACTIVE: '#ffffff', // Bright white for active links
+  SIGNAL: '#ffffff', // White for signals
 };
 
-// Create gradient color between two hex colors
+// Get color based on node type
+export const getNodeColor = (type, intensity = 0.5) => {
+  // Use orange for all node types now, with adjustable intensity
+  return COLORS.NODE_INNER;
+};
+
+// Create gradient color between two hex colors with safety checks
 export const getGradientColor = (color1, color2, ratio) => {
   ratio = Math.min(1, Math.max(0, ratio));
   
-  // Parse the hex colors to RGB
-  const r1 = parseInt(color1.substring(1, 3), 16);
-  const g1 = parseInt(color1.substring(3, 5), 16);
-  const b1 = parseInt(color1.substring(5, 7), 16);
+  if (!color1 || !color2 || typeof color1 !== 'string' || typeof color2 !== 'string') {
+    return '#6366f1';  
+  }
   
-  const r2 = parseInt(color2.substring(1, 3), 16);
-  const g2 = parseInt(color2.substring(3, 5), 16);
-  const b2 = parseInt(color2.substring(5, 7), 16);
+  // Parse hex colors to RGB
+  const parseHex = (hex) => {
+    const cleanHex = hex.replace('#', '');
+    const r = parseInt(cleanHex.substring(0, 2), 16);
+    const g = parseInt(cleanHex.substring(2, 4), 16);
+    const b = parseInt(cleanHex.substring(4, 6), 16);
+    return [r, g, b];
+  };
   
-  // Calculate the interpolated color
-  const r = Math.round(r1 * (1 - ratio) + r2 * ratio);
-  const g = Math.round(g1 * (1 - ratio) + g2 * ratio);
-  const b = Math.round(b1 * (1 - ratio) + b2 * ratio);
+  // Convert RGB back to hex
+  const rgbToHex = (r, g, b) => {
+    return '#' + [r, g, b]
+      .map(x => Math.round(x))
+      .map(x => Math.max(0, Math.min(255, x)))
+      .map(x => x.toString(16).padStart(2, '0'))
+      .join('');
+  };
   
-  // Convert back to hex
-  return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+  try {
+    const rgb1 = parseHex(color1);
+    const rgb2 = parseHex(color2);
+    const resultRgb = rgb1.map((c1, i) => Math.round(c1 * (1 - ratio) + rgb2[i] * ratio));
+    return rgbToHex(...resultRgb);
+  } catch (error) {
+    console.error('Error creating gradient color:', error);
+    return '#6366f1'; // Fallback color
+  }
 };
 
 // Convert hex color to rgba string
 export const hexToRgba = (hex, alpha = 1) => {
-  const r = parseInt(hex.substring(1, 3), 16);
-  const g = parseInt(hex.substring(3, 5), 16);
-  const b = parseInt(hex.substring(5, 7), 16);
-  
-  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  if (!hex || typeof hex !== 'string' || !hex.startsWith('#')) {
+    return `rgba(100, 100, 100, ${alpha})`; // Fallback color
+  }
+
+  try {
+    const r = parseInt(hex.substring(1, 3), 16);
+    const g = parseInt(hex.substring(3, 5), 16);
+    const b = parseInt(hex.substring(5, 7), 16);
+    
+    // Check if RGB values are valid numbers
+    if (isNaN(r) || isNaN(g) || isNaN(b)) {
+      return `rgba(100, 100, 100, ${alpha})`;
+    }
+    
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  } catch (e) {
+    console.error('Error parsing hex color:', hex, e);
+    return `rgba(100, 100, 100, ${alpha})`;
+  }
 };
 
 // Generate a glow effect CSS value for a given color
 export const getGlowEffect = (color, intensity = 0.5) => {
   return `0 0 ${10 * intensity}px ${intensity * 5}px ${hexToRgba(color, intensity * 0.5)}`;
+};
+
+// Get color brightness (0-255) to determine if text should be light or dark
+export const getColorBrightness = (hexColor) => {
+  const r = parseInt(hexColor.substring(1, 3), 16);
+  const g = parseInt(hexColor.substring(3, 5), 16);
+  const b = parseInt(hexColor.substring(5, 7), 16);
+  
+  // Calculate perceived brightness using the formula:
+  // (R * 299 + G * 587 + B * 114) / 1000
+  return (r * 299 + g * 587 + b * 114) / 1000;
+};
+
+// Determine if a color needs light or dark text
+export const needsLightText = (hexColor) => {
+  return getColorBrightness(hexColor) < 128;
 };

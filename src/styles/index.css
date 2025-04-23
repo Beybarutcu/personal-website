@@ -58,15 +58,6 @@ body {
   opacity: 1;
 }
 
-/* Visualization loading state */
-.viz-loading {
-  filter: blur(5px);
-  transition: filter 0.5s ease-out;
-}
-.viz-loaded {
-  filter: blur(0);
-}
-
 /* Remove any conflicting styling from the original index.css */
 /* For example, replacing the original button styles with ones that work with Tailwind */
 button:focus,
@@ -83,5 +74,120 @@ html {
 @media (max-width: 640px) {
   html {
     font-size: 14px;
+  }
+}
+
+/* Tooltip animations */
+.tooltip-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.tooltip-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 200ms, transform 200ms;
+}
+
+.tooltip-exit {
+  opacity: 1;
+}
+
+.tooltip-exit-active {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 200ms, transform 200ms;
+}
+
+/* Content panel animations */
+.panel-enter {
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+.panel-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.panel-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.panel-exit-active {
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 300ms, transform 300ms;
+}
+
+/* Comet animation for background effects */
+@keyframes comet {
+  0% {
+    opacity: 0;
+    transform: rotate(45deg) translateX(-5vw) translateY(-5vh);
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(45deg) translateX(105vw) translateY(105vh);
+  }
+}
+
+/* Interest Cluster Styles */
+.cluster-visualization {
+  background: transparent;
+  overflow: visible;
+}
+
+.cluster-node {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.cluster-node:hover {
+  transform: scale(1.08);
+}
+
+.cluster-node-main {
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+}
+
+.cluster-node-main circle {
+  transform-origin: center;
+  animation: pulse-soft 4s ease-in-out infinite;
+}
+
+.cluster-node circle {
+  transition: fill 0.3s ease, r 0.3s ease, filter 0.3s ease;
+}
+
+.cluster-node text {
+  pointer-events: none;
+  user-select: none;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.cluster-link {
+  transition: stroke 0.3s ease, stroke-opacity 0.3s ease, stroke-width 0.3s ease;
+  pointer-events: none;
+  stroke-linecap: round;
+}
+
+/* Gentle pulsing animation for main node */
+@keyframes pulse-soft {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
   }
 }

@@ -36,7 +36,7 @@
   }
 }
 
-/* Custom animations for mind map elements */
+/* Custom general animations */
 @keyframes pulse-glow {
   0%, 100% {
     filter: brightness(1);
@@ -63,22 +63,7 @@
   animation: float 6s ease-in-out infinite;
 }
 
-/* Particle effects */
-.particle {
-  position: absolute;
-  pointer-events: none;
-}
-
-/* Mind map node styling */
-.node-active {
-  stroke-width: 3px;
-  filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.5));
-}
-
-.node-connected {
-  stroke-width: 2px;
-  filter: drop-shadow(0 0 5px rgba(139, 92, 246, 0.3));
-}
+/* Removed mind map specific animations */
 
 /* Glass effect styling */
 .glass {
