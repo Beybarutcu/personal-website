@@ -104,6 +104,9 @@
   },
   
   "mindMap": {
+    "loading": "Loading visualization...",
+    "clickNodes": "Click nodes to explore",
+    "dragNodes": "Drag to rearrange",
     "title": "My Mind Map",
     "subtitle": "Explore my skills and interests through this interactive visualization.",
     "clickToView": "Click to view details",

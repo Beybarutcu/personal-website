@@ -1,281 +1,195 @@
-/* Enhanced animations.css */
+/* Mind Map specific animations - Add to enhanced-animations.css */
 
-/* Fade In Animation */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+/* Simplified animation for node interactions */
+@keyframes nodeGlowSubtle {
+  0%, 100% {
+    box-shadow: 0 0 2px rgba(255, 255, 255, 0.2);
   }
-  
-  .animate-fadeIn {
-    animation: fadeIn 1s ease-out forwards;
+  50% {
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
   }
-  
-  /* Fade In Up Animation - Enhanced with easing */
-  @keyframes fadeSlideUp {
-    from {
-      opacity: 0;
-      transform: translateY(40px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+}
+
+.node-glow-subtle {
+  animation: nodeGlowSubtle 3s ease-in-out infinite;
+}
+
+/* Minimalist link animation */
+@keyframes linkFadeIn {
+  from {
+    stroke-dashoffset: 100;
+    opacity: 0;
   }
-  
-  .animate-fadeSlideUp {
-    animation: fadeSlideUp 0.9s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+  to {
+    stroke-dashoffset: 0;
+    opacity: 1;
   }
-  
-  /* Fade In Right Animation */
-  @keyframes fadeSlideRight {
-    from {
-      opacity: 0;
-      transform: translateX(-40px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
+}
+
+.link-fade-in {
+  stroke-dasharray: 100;
+  animation: linkFadeIn 1s ease forwards;
+}
+
+/* Clean fade-in animation for nodes */
+@keyframes cleanFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
   }
-  
-  .animate-fadeSlideRight {
-    animation: fadeSlideRight 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
-  
-  /* Fade In Left Animation */
-  @keyframes fadeSlideLeft {
-    from {
-      opacity: 0;
-      transform: translateX(40px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
+}
+
+.clean-fade-in {
+  animation: cleanFadeIn 0.5s ease forwards;
+}
+
+/* Subtle hover effect */
+@keyframes subtleHover {
+  0%, 100% {
+    transform: translateY(0);
   }
-  
-  .animate-fadeSlideLeft {
-    animation: fadeSlideLeft 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+  50% {
+    transform: translateY(-2px);
   }
-  
-  /* Advanced Star Twinkle Animation */
-  @keyframes starTwinkle {
-    0% {
-      opacity: 0.3;
-      transform: scale(0.7);
-    }
-    50% {
-      opacity: 1;
-      transform: scale(1.05);
-    }
-    100% {
-      opacity: 0.3;
-      transform: scale(0.7);
-    }
+}
+
+.subtle-hover:hover {
+  animation: subtleHover 2s ease infinite;
+}
+
+/* Soft text fade */
+@keyframes softTextFade {
+  from {
+    opacity: 0;
+    filter: blur(5px);
   }
-  
-  .animate-starTwinkle {
-    animation: starTwinkle 10s ease-in-out infinite;
+  to {
+    opacity: 1;
+    filter: blur(0);
   }
-  
-  /* Floating Vertical Animation with Easing */
-  @keyframes float-y {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-20px);
-    }
+}
+
+.soft-text-fade {
+  animation: softTextFade 0.8s ease forwards;
+}
+
+/* Active node indicator */
+@keyframes activeNodePulse {
+  0%, 100% {
+    opacity: 0.7;
   }
-  
-  .animate-float-y {
-    animation: float-y 12s ease-in-out infinite;
+  50% {
+    opacity: 1;
   }
-  
-  /* Floating Horizontal Animation with Easing */
-  @keyframes float-x {
-    0%, 100% {
-      transform: translateX(0);
-    }
-    50% {
-      transform: translateX(-20px);
-    }
+}
+
+.active-node-indicator {
+  animation: activeNodePulse 2s ease-in-out infinite;
+}
+
+/* Minimalist entrance animation for panel */
+@keyframes panelSlideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
   }
-  
-  .animate-float-x {
-    animation: float-x 15s ease-in-out infinite;
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
-  
-  /* Enhanced Bounce Animation */
-  @keyframes bounce {
-    0%, 100% {
-      transform: translateY(0);
-      animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
-    }
-    50% {
-      transform: translateY(-15px);
-      animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
-    }
-  }
-  
-  .animate-bounce {
-    animation: bounce 2s infinite;
-  }
-  
-  /* Pulse Animation with Scale */
-  @keyframes pulse-scale {
-    0%, 100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-    50% {
-      opacity: 0.7;
-      transform: scale(1.1);
-    }
-  }
-  
-  .animate-pulse-scale {
-    animation: pulse-scale 3s ease-in-out infinite;
-  }
-  
-  /* Smooth Spin Animation */
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-  
-  .animate-spin {
-    animation: spin 6s linear infinite;
-  }
-  
-  .animate-spin-slow {
-    animation: spin 10s linear infinite;
-  }
-  
-  .animate-spin-reverse {
-    animation: spin 10s linear infinite reverse;
-  }
-  
-  /* Text Highlight Reveal */
-  @keyframes textHighlight {
-    0% {
-      background-position: 0% center;
-    }
-    100% {
-      background-position: 200% center;
-    }
-  }
-  
-  .animate-text-highlight {
-    background: linear-gradient(to right, #f97316, #f59e0b, #f97316);
-    background-size: 200% auto;
-    color: transparent;
-    -webkit-background-clip: text;
-    background-clip: text;
-    animation: textHighlight 4s linear infinite;
-  }
-  
-  /* Gradient Flow Animation */
-  @keyframes gradientFlow {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-  
-  .animate-gradient-flow {
-    background: linear-gradient(270deg, #f97316, #9333ea, #06b6d4);
-    background-size: 200% 200%;
-    animation: gradientFlow 15s ease infinite;
-  }
-  
-  /* Border Glow Animation */
-  @keyframes borderGlow {
-    0%, 100% {
-      border-color: rgba(249, 115, 22, 0.3);
-      box-shadow: 0 0 5px rgba(249, 115, 22, 0.3);
-    }
-    50% {
-      border-color: rgba(249, 115, 22, 0.6);
-      box-shadow: 0 0 15px rgba(249, 115, 22, 0.5);
-    }
-  }
-  
-  .animate-border-glow {
-    animation: borderGlow 4s ease-in-out infinite;
-  }
-  
-  /* Typing Cursor Animation */
-  @keyframes typing-cursor {
-    0%, 100% {
-      border-right-color: transparent;
-    }
-    50% {
-      border-right-color: #f97316;
-    }
-  }
-  
-  .animate-typing-cursor {
-    border-right: 2px solid;
-    animation: typing-cursor 1s step-end infinite;
-  }
-  
-  /* Wave Animation for Text */
-  @keyframes wave {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    25% {
-      transform: translateY(-8px);
-    }
-    75% {
-      transform: translateY(4px);
-    }
-  }
-  
-  .wave-text span {
-    display: inline-block;
-    animation: wave 2s ease-in-out infinite;
-    animation-delay: calc(0.1s * var(--char-index));
-  }
-  
-  /* Shine Effect Animation */
-  @keyframes shine {
-    from {
-      background-position: -100% 0;
-    }
-    to {
-      background-position: 200% 0;
-    }
-  }
-  
-  .animate-shine {
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .animate-shine::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      90deg, 
-      rgba(255, 255, 255, 0) 0%, 
-      rgba(255, 255, 255, 0.1) 50%, 
-      rgba(255, 255, 255, 0) 100%
-    );
-    transform: translateX(-100%);
-    animation: shine 5s infinite;
-  }
+}
+
+.panel-slide-up {
+  animation: panelSlideUp 0.4s ease forwards;
+}
+
+/* Clean styles for the mind map visualization */
+.mind-map-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+}
+
+.node {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.node:hover {
+  transform: scale(1.05);
+}
+
+.node-label {
+  font-family: sans-serif;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  fill: white;
+  user-select: none;
+  pointer-events: none;
+}
+
+.link {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke-opacity 0.3s ease;
+}
+
+/* Clean node styles */
+.node-main {
+  fill: rgba(249, 115, 22, 0.2);
+  stroke: #f97316;
+}
+
+.node-category {
+  fill: rgba(255, 255, 255, 0.1);
+  stroke: white;
+}
+
+.node-detail {
+  fill: rgba(255, 255, 255, 0.05);
+  stroke: white;
+}
+
+/* Node detail panel */
+.detail-panel {
+  background: rgba(23, 23, 23, 0.8);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: white;
+  padding: 1.5rem;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.detail-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.detail-subtitle {
+  color: rgba(249, 115, 22, 0.8);
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.detail-content {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+
+.skill-tag {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
