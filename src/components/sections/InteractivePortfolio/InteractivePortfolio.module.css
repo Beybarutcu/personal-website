@@ -5,11 +5,13 @@
     width: 100%;
     position: relative;
     z-index: 10;
+    font-family: 'Montserrat', 'Segoe UI', 'Roboto', sans-serif; /* Casual minimal font */
   }
   
   .sectionHeading {
     text-align: center;
     margin-bottom: 2rem;
+    font-family: 'Montserrat', 'Segoe UI', 'Roboto', sans-serif; /* Casual minimal font */
   }
   
   .interactivePortfolioContainer {
@@ -17,7 +19,7 @@
     height: 90vh;
     position: relative;
     overflow: hidden;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Montserrat', 'Segoe UI', 'Roboto', sans-serif; /* Casual minimal font */
     margin: 0 auto;
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
@@ -42,58 +44,77 @@
     transition: opacity 0.3s;
   }
   
-  /* Content panel */
-  .contentPanel {
-    position: absolute;
-    background-color: rgba(30, 30, 30, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    color: white;
-    padding: 20px;
-    width: 300px;
-    min-height: 150px;
-    pointer-events: auto;
-    z-index: 200;
-    transform-origin: center;
-    transform: scale(0.8);
-    transition: opacity 0.3s, transform 0.3s, width 0.3s, height 0.3s;
-    backdrop-filter: blur(5px);
-    /* Make it rectangular */
+  /* Node group styling */
+  .nodeGroup {
+    cursor: pointer;
+  }
+  
+  /* Node circle styling */
+  .nodeCircle {
+    transition: all 0.5s ease;
+  }
+  
+  /* Node rectangle styling */
+  .nodeRect {
+    transition: all 0.5s ease;
+  }
+  
+  /* Panel content */
+  .panelContent {
+    overflow: visible;
+    pointer-events: all;
+    transition: opacity 0.3s ease;
+  }
+  
+  .panelContainer {
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+    font-family: 'Montserrat', 'Segoe UI', 'Roboto', sans-serif; /* Casual minimal font */
   }
   
   .panelHeader {
-    font-size: 22px;
-    font-weight: bold;
-    margin-bottom: 15px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    padding-bottom: 10px;
+    font-size: 18px;
+    font-weight: 500; /* Not too bold for a minimal look */
+    margin-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Lighter border for minimal look */
+    padding-bottom: 8px;
     color: #ffffff;
+    font-family: 'Montserrat', 'Segoe UI', 'Roboto', sans-serif; /* Casual minimal font */
   }
   
-  .panelContent {
-    font-size: 16px;
-    line-height: 1.6;
+  .panelBody {
+    font-size: 14px;
+    line-height: 1.5;
     flex-grow: 1;
     overflow-y: auto;
-    max-height: 300px;
     padding-right: 5px;
+    font-weight: 300; /* Lighter weight for minimal look */
+    font-family: 'Montserrat', 'Segoe UI', 'Roboto', sans-serif; /* Casual minimal font */
   }
   
   .panelClose {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 5px;
+    right: 5px;
     font-size: 20px;
     cursor: pointer;
     opacity: 0.7;
     transition: opacity 0.2s;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.2);
   }
   
   .panelClose:hover {
     opacity: 1;
+    background-color: rgba(255, 255, 255, 0.2);
   }
   
   /* Link styling */
@@ -109,7 +130,6 @@
   /* Node styling */
   .nodes circle {
     transition: fill-opacity 0.3s, r 0.3s;
-    cursor: pointer;
   }
   
   .nodes text {
@@ -128,16 +148,11 @@
       height: 70vh;
     }
     
-    .contentPanel {
-      max-width: 250px;
-      padding: 15px;
-    }
-    
     .panelHeader {
       font-size: 16px;
     }
     
-    .panelContent {
+    .panelBody {
       font-size: 12px;
     }
   }
