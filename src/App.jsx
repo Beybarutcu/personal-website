@@ -9,10 +9,10 @@ import Navbar from './components/layout/Navbar';
 
 // Section Components
 import Hero from './components/sections/Hero';
+import InteractivePortfolio from './components/sections/InteractivePortfolio/InteractivePortfolio';
 import About from './components/sections/About';
 import Projects from './components/sections/Projects';
 import Contact from './components/sections/Contact';
-import EnhancedMindMapSection from './components/sections/EnhancedMindMapSection';
 
 // UI Components
 import LoadingIndicator from './components/ui/LoadingIndicator';
@@ -70,7 +70,9 @@ function App() {
       {/* Main content - Rearranged to put EnhancedMindMapSection right after Hero */}
       <main className="flex-grow pt-16">
         <Hero language={language} />
-        <EnhancedMindMapSection language={language} />
+        <section className="portfolio-section">
+          <InteractivePortfolio />
+        </section>
         <About language={language} />
         <Projects language={language} />
         <Contact language={language} />
