@@ -1,5 +1,5 @@
 // src/components/sections/Hero.jsx
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChevronDown, Code, Briefcase } from 'lucide-react';
 
@@ -14,89 +14,12 @@ const Hero = ({ language }) => {
     backgroundImage: 'linear-gradient(to right, #f97316, #fb923c)'
   };
 
-  // Function to create comet effect with smoother timing
-  const createComet = () => {
-    if (!document.querySelector('.hero-comet-container')) return;
-    
-    const comet = document.createElement('div');
-    comet.className = 'absolute bg-white rounded-full opacity-0 pointer-events-none';
-    
-    // Random properties for the comet with enhanced values
-    const size = 2 + Math.random() * 3;
-    const angle = Math.PI / 4 + (Math.random() * Math.PI / 4); // Angle between π/4 and π/2
-    const duration = 2 + Math.random() * 3; // 2-5 seconds
-    const delay = Math.random() * 8; // 0-8 seconds for more organic timing
-    
-    // Position the comet off-screen
-    const startX = Math.random() * 100;
-    const startY = -10;
-    
-    // Improved style for the comet with better glow effect
-    comet.style.width = `${size}px`;
-    comet.style.height = `${size}px`;
-    comet.style.left = `${startX}vw`;
-    comet.style.top = `${startY}vh`;
-    comet.style.boxShadow = `0 0 20px 2px rgba(255, 255, 255, 0.8), 0 0 30px 10px rgba(255, 255, 255, 0.5)`;
-    comet.style.zIndex = '1';
-    
-    // Animation with cubic-bezier for smoother motion
-    comet.style.animation = `cometEnhanced ${duration}s cubic-bezier(0.4, 0.0, 0.2, 1) ${delay}s forwards`;
-    comet.style.transform = `rotate(${angle}rad)`;
-    
-    // Add to DOM
-    document.querySelector('.hero-comet-container')?.appendChild(comet);
-    
-    // Clean up after animation
-    setTimeout(() => {
-      comet.remove();
-    }, (duration + delay) * 1000);
-  };
-  
-  // Create comets periodically
-  useEffect(() => {
-    // Create comets with more natural intervals
-    const cometInterval = setInterval(() => {
-      if (Math.random() > 0.7) { // 30% chance to create a comet
-        createComet();
-      }
-    }, 3000); // Shorter interval for more frequent comets
-    
-    // Initial comets
-    for (let i = 0; i < 3; i++) { // Start with more comets
-      setTimeout(() => createComet(), i * 800); // Staggered initial comets
-    }
-    
-    return () => clearInterval(cometInterval);
-  }, []);
-
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background layer with stars - enhanced with more stars */}
-      <div className="absolute inset-0 star-field">
-        {Array.from({ length: 150 }).map((_, i) => (
-          <div
-            key={`star-${i}`}
-            className="star animate-starTwinkle absolute bg-white rounded-full"
-            style={{
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              width: `${Math.random() * 2 + 1}px`,
-              height: `${Math.random() * 2 + 1}px`,
-              opacity: Math.random() * 0.7 + 0.3,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${Math.random() * 5 + 2}s`,
-              boxShadow: Math.random() > 0.92 ? '0 0 4px rgba(255, 255, 255, 0.8)' : 'none' // Occasional glowing stars
-            }}
-          />
-        ))}
-      </div>
-      
-      {/* Comet container */}
-      <div className="hero-comet-container absolute inset-0"></div>
-      
       {/* Content with enhanced animations */}
       <div className="container mx-auto px-6 z-10 relative">
-        <div className="flex flex-col items-center text-center">
+        {/* Added negative margin-top to move the content up a bit */}
+        <div className="flex flex-col items-center text-center mt-[-40px]">
           {/* Greeting with enhanced animation */}
           <div className="overflow-hidden mb-2">
             <h2 
@@ -160,9 +83,9 @@ const Hero = ({ language }) => {
         </div>
       </div>
       
-      {/* Cosmic background elements - Enhanced positioning and animation */}
+      {/* Cosmic background elements - Keeping only the gradient orbs */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        {/* Animated gradient orbs - Now positioned around the center text */}
+        {/* Animated gradient orbs - positioned around the center text */}
         <div className="absolute w-64 h-64 rounded-full bg-purple-500/20 blur-3xl" 
              style={{ 
                top: '30%', 
@@ -183,9 +106,9 @@ const Hero = ({ language }) => {
              }}></div>
       </div>
       
-      {/* Scroll indicator - centered at the bottom with delayed fade-in */}
+      {/* Scroll indicator - positioned higher up from the bottom with delayed fade-in */}
       <div 
-        className="absolute bottom-8 left-0 right-0 flex flex-col items-center z-10 opacity-0"
+        className="absolute bottom-16 left-0 right-0 flex flex-col items-center z-10 opacity-0"
         style={{ animation: 'fadeIn 1s ease-out 1.8s forwards' }}
       >
         <span className="text-gray-400 text-sm mb-2">{t('hero.scrollDown')}</span>
@@ -194,25 +117,8 @@ const Hero = ({ language }) => {
         </div>
       </div>
       
-      {/* Add CSS for enhanced comet animation */}
+      {/* Keep the CSS animations */}
       <style>{`
-        @keyframes cometEnhanced {
-          0% {
-            opacity: 0;
-            transform: rotate(45deg) translateX(-10vw) translateY(-10vh);
-          }
-          5% {
-            opacity: 1;
-          }
-          95% {
-            opacity: 1;
-          }
-          100% {
-            opacity: 0;
-            transform: rotate(45deg) translateX(110vw) translateY(110vh);
-          }
-        }
-        
         @keyframes fadeSlideUp {
           0% {
             opacity: 0;

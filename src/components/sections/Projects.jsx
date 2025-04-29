@@ -10,61 +10,6 @@ const Projects = ({ language }) => {
   const [visibleCount, setVisibleCount] = useState(4);
   const [selectedProject, setSelectedProject] = useState(null);
   
-  // Function to create comet effect
-  const createComet = () => {
-    if (!document.querySelector('.projects-comet-container')) return;
-    
-    const comet = document.createElement('div');
-    comet.className = 'absolute bg-white rounded-full opacity-0 pointer-events-none';
-    
-    // Random properties for the comet
-    const size = 2 + Math.random() * 3;
-    const angle = Math.PI / 4 + (Math.random() * Math.PI / 4);
-    const duration = 2 + Math.random() * 3;
-    const delay = Math.random() * 10;
-    
-    // Position the comet off-screen
-    const startX = Math.random() * 100;
-    const startY = -10;
-    
-    // Style the comet
-    comet.style.width = `${size}px`;
-    comet.style.height = `${size}px`;
-    comet.style.left = `${startX}vw`;
-    comet.style.top = `${startY}vh`;
-    comet.style.boxShadow = `0 0 20px 2px rgba(255, 255, 255, 0.7), 0 0 30px 10px rgba(255, 255, 255, 0.5)`;
-    comet.style.zIndex = '1';
-    
-    // Animation
-    comet.style.animation = `comet ${duration}s linear ${delay}s forwards`;
-    comet.style.transform = `rotate(${angle}rad)`;
-    
-    // Add to DOM
-    document.querySelector('.projects-comet-container')?.appendChild(comet);
-    
-    // Clean up after animation
-    setTimeout(() => {
-      comet.remove();
-    }, (duration + delay) * 1000);
-  };
-  
-  // Create comets periodically
-  useEffect(() => {
-    // Create comets periodically
-    const cometInterval = setInterval(() => {
-      if (Math.random() > 0.8) { // 20% chance to create a comet
-        createComet();
-      }
-    }, 8000);
-    
-    // Initial comet
-    if (Math.random() > 0.5) {
-      createComet();
-    }
-    
-    return () => clearInterval(cometInterval);
-  }, []);
-  
   // Sample project data - would typically come from your projectsData.js file
   const projects = [
     {
@@ -179,30 +124,8 @@ const Projects = ({ language }) => {
   
   return (
     <section id="portfolio" className="relative py-20 overflow-hidden">
-      {/* Cosmic Background */}
+      {/* Keep only the gradient orbs */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        {/* Star background */}
-        <div className="absolute inset-0">
-          {Array.from({ length: 50 }).map((_, i) => (
-            <div
-              key={`project-star-${i}`}
-              className="absolute rounded-full bg-white animate-starTwinkle"
-              style={{
-                width: `${Math.random() * 2 + 0.5}px`,
-                height: `${Math.random() * 2 + 0.5}px`,
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-                opacity: Math.random() * 0.7 + 0.2,
-                animationDelay: `${Math.random() * 5}s`,
-                animationDuration: `${Math.random() * 5 + 2}s`
-              }}
-            />
-          ))}
-        </div>
-        
-        {/* Comet container */}
-        <div className="projects-comet-container absolute inset-0"></div>
-        
         {/* Gradient orbs with a different color scheme */}
         <div className="absolute top-1/4 right-1/3 w-96 h-96 rounded-full bg-fuchsia-500/10 blur-3xl animate-float-y" 
              style={{ animationDelay: "0.7s" }}></div>
