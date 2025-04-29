@@ -1,158 +1,155 @@
-/* InteractivePortfolio.module.css */
+/* Updated InteractivePortfolio.module.css without section border shading */
 
 .sectionContainer {
-    padding: 4rem 1rem;
-    width: 100%;
-    position: relative;
-    z-index: 10;
-    font-family: 'Montserrat', 'Segoe UI', 'Roboto', sans-serif; /* Casual minimal font */
-  }
-  
-  .sectionHeading {
-    text-align: center;
-    margin-bottom: 2rem;
-    font-family: 'Montserrat', 'Segoe UI', 'Roboto', sans-serif; /* Casual minimal font */
-  }
-  
+  padding: 4rem 1rem;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+  font-family: 'Montserrat', 'Segoe UI', 'Roboto', sans-serif;
+  /* Removed any border or shadow */
+}
+
+.sectionHeading {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-family: 'Montserrat', 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.interactivePortfolioContainer {
+  width: 100%;
+  height: 90vh;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Montserrat', 'Segoe UI', 'Roboto', sans-serif;
+  margin: 0 auto;
+  border-radius: 0; /* Removed border radius */
+  box-shadow: none; /* Removed box shadow */
+}
+
+.portfolioVisualization {
+  width: 100%;
+  height: 100%;
+  background-color: transparent; /* Remove background color to use site background */
+}
+
+/* Node group styling */
+.nodeGroup {
+  cursor: pointer;
+}
+
+/* Node circle styling */
+.nodeCircle {
+  transition: all 0.5s ease;
+}
+
+/* Node inner circle styling */
+.nodeInnerCircle {
+  transition: all 0.5s ease;
+}
+
+/* Node rectangle styling */
+.nodeRect {
+  transition: all 0.5s ease;
+}
+
+/* Panel content */
+.panelContent {
+  overflow: visible;
+  pointer-events: all;
+  transition: opacity 0.3s ease;
+}
+
+.panelContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: 'Montserrat', 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.panelHeader {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 8px;
+  color: #ffffff;
+  font-family: 'Montserrat', 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.panelBody {
+  font-size: 14px;
+  line-height: 1.5;
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 5px;
+  font-weight: 300;
+  font-family: 'Montserrat', 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.panelClose {
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.panelClose:hover {
+  opacity: 1;
+}
+
+/* Link styling */
+.links line {
+  stroke-opacity: 0.5;
+  transition: stroke-opacity 0.3s;
+}
+
+.links line:hover {
+  stroke-opacity: 0.9;
+}
+
+/* Node styling */
+.nodes circle {
+  transition: fill-opacity 0.3s, r 0.3s;
+}
+
+.nodes text {
+  pointer-events: none;
+  user-select: none;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+/* Particle styling */
+.particles circle {
+  filter: blur(1px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
   .interactivePortfolioContainer {
-    width: 100%;
-    height: 90vh;
-    position: relative;
-    overflow: hidden;
-    font-family: 'Montserrat', 'Segoe UI', 'Roboto', sans-serif; /* Casual minimal font */
-    margin: 0 auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  }
-  
-  .portfolioVisualization {
-    width: 100%;
-    height: 100%;
-    background-color: #111111;
-  }
-  
-  /* Node tooltip */
-  .nodeTooltip {
-    position: absolute;
-    padding: 8px 12px;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    border-radius: 6px;
-    pointer-events: none;
-    font-size: 14px;
-    z-index: 100;
-    transition: opacity 0.3s;
-  }
-  
-  /* Node group styling */
-  .nodeGroup {
-    cursor: pointer;
-  }
-  
-  /* Node circle styling */
-  .nodeCircle {
-    transition: all 0.5s ease;
-  }
-  
-  /* Node rectangle styling */
-  .nodeRect {
-    transition: all 0.5s ease;
-  }
-  
-  /* Panel content */
-  .panelContent {
-    overflow: visible;
-    pointer-events: all;
-    transition: opacity 0.3s ease;
-  }
-  
-  .panelContainer {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    font-family: 'Montserrat', 'Segoe UI', 'Roboto', sans-serif; /* Casual minimal font */
+    height: 70vh;
   }
   
   .panelHeader {
     font-size: 18px;
-    font-weight: 500; /* Not too bold for a minimal look */
-    margin-bottom: 12px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Lighter border for minimal look */
-    padding-bottom: 8px;
-    color: #ffffff;
-    font-family: 'Montserrat', 'Segoe UI', 'Roboto', sans-serif; /* Casual minimal font */
   }
   
   .panelBody {
-    font-size: 14px;
-    line-height: 1.5;
-    flex-grow: 1;
-    overflow-y: auto;
-    padding-right: 5px;
-    font-weight: 300; /* Lighter weight for minimal look */
-    font-family: 'Montserrat', 'Segoe UI', 'Roboto', sans-serif; /* Casual minimal font */
+    font-size: 13px;
+  }
+}
+
+/* Smaller screens */
+@media (max-width: 480px) {
+  .interactivePortfolioContainer {
+    height: 60vh;
   }
   
-  .panelClose {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    font-size: 20px;
-    cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 0.2s;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background-color: rgba(0, 0, 0, 0.2);
+  .panelHeader {
+    font-size: 16px;
   }
   
-  .panelClose:hover {
-    opacity: 1;
-    background-color: rgba(255, 255, 255, 0.2);
+  .panelBody {
+    font-size: 12px;
   }
-  
-  /* Link styling */
-  .links line {
-    stroke-opacity: 0.3;
-    transition: stroke-opacity 0.3s;
-  }
-  
-  .links line:hover {
-    stroke-opacity: 0.8;
-  }
-  
-  /* Node styling */
-  .nodes circle {
-    transition: fill-opacity 0.3s, r 0.3s;
-  }
-  
-  .nodes text {
-    pointer-events: none;
-    user-select: none;
-  }
-  
-  /* Particle styling */
-  .particles circle {
-    filter: blur(1px);
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .interactivePortfolioContainer {
-      height: 70vh;
-    }
-    
-    .panelHeader {
-      font-size: 16px;
-    }
-    
-    .panelBody {
-      font-size: 12px;
-    }
-  }
+}
