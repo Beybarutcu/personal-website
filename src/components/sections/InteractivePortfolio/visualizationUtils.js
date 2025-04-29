@@ -1,7 +1,6 @@
 // src/components/sections/InteractivePortfolio/visualizationUtils.js
 import * as d3 from 'd3';
 
-
 // Update to setupVisualizations - create groups but don't use particles
 export function setupVisualizations(svgElement, width, height, data) {
     // Create SVG element first WITHOUT zoom behavior
@@ -19,31 +18,41 @@ export function setupVisualizations(svgElement, width, height, data) {
     const nodeGroup = svg.append("g").attr("class", "nodes");
     
     // Define a simple programmatic zoom to be used only by our code,
-    // not triggered by user interactions with the background
-    const zoom = d3.zoom()
-      .scaleExtent([0.5, 5])
-      .on("zoom", (event) => {
-        // Apply the transformation to all elements
-        nodeGroup.attr("transform", event.transform);
-        linkGroup.attr("transform", event.transform);
-        particleGroup.attr("transform", event.transform);
-      });
-    
-    // Disable all default zoom behaviors
-    svg.on(".zoom", null);
-    svg.call(zoom.transform, d3.zoomIdentity); // Reset to identity transformation
-    
-    // Disable dblclick zoom specifically - this prevents the double-click zoom behavior
-    svg.on("dblclick.zoom", null);
-    
-    // Catch and disable any attempted drag on the SVG itself - capture phase
-    svg.on("mousedown", function(event) {
-      // Only prevent default and stop propagation if it's the background or SVG itself
-      if (event.target === svgElement || event.target.tagName === "rect") {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-    }, true);
+// not triggered by user interactions with the background
+const zoom = d3.zoom()
+.scaleExtent([0.5, 5])
+.on("zoom", (event) => {
+  // Apply the transformation to all elements
+  nodeGroup.attr("transform", event.transform);
+  linkGroup.attr("transform", event.transform);
+  particleGroup.attr("transform", event.transform);
+});
+
+// Disable all default zoom behaviors
+svg.on(".zoom", null);
+svg.call(zoom.transform, d3.zoomIdentity); // Reset to identity transformation
+
+// Disable dblclick zoom specifically - this prevents the double-click zoom behavior
+svg.on("dblclick.zoom", null);
+
+// Add passive event listeners for better performance
+// This solves the passive event listener warning
+svg.node().addEventListener('touchstart', function(event) {
+// Empty handler marked as passive
+}, { passive: true });
+
+svg.node().addEventListener('touchmove', function(event) {
+// Empty handler marked as passive
+}, { passive: true });
+
+// Catch and disable any attempted drag on the SVG itself - capture phase
+svg.on("mousedown", function(event) {
+// Only prevent default and stop propagation if it's the background or SVG itself
+if (event.target === svgElement || event.target.tagName === "rect") {
+  event.preventDefault();
+  event.stopPropagation();
+}
+}, true);
     
     // Force simulation with improved settings for a more balanced layout
     // INCREASED distances and forces to spread nodes apart more
@@ -56,7 +65,16 @@ export function setupVisualizations(svgElement, width, height, data) {
       .force("y", d3.forceY(height/2).strength(0.05))
       .velocityDecay(0.3) // Higher decay for more stable positions
       .alphaDecay(0.008) // Slightly slower cooling for better layout
-      .on("tick", () => ticked(links, nodes));
+      .on("tick", () => {
+        // Apply boundary constraints during each tick
+        data.nodes.forEach(node => {
+          const padding = 60; // Padding from edge
+          node.x = Math.max(padding, Math.min(width - padding, node.x));
+          node.y = Math.max(padding, Math.min(height - padding, node.y));
+        });
+        
+        ticked(links, nodes);
+      });
     
     // Create links with enhanced visibility
     const links = linkGroup.selectAll("line")
@@ -129,9 +147,7 @@ function dragended(event, simulation) {
   }
 }
 
-
-
-// Updated createNodeElements function with correct inner circle size
+// 1. Fix for createNodeElements function to ensure inner circle is visible on mobile
 export function createNodeElements(nodes, styles) {
   // Increase node size multiplier for all nodes
   const sizeMultiplier = 1.3; // Increase overall node size by 30%
@@ -148,28 +164,52 @@ export function createNodeElements(nodes, styles) {
     
     // Create gradient - all WHITE as requested
     const gradient = d3.select("svg").select("defs").append("radialGradient")
-  .attr("id", gradientId)
-  .attr("cx", "50%")
-  .attr("cy", "50%")
-  .attr("r", "50%")
-  .attr("fx", "50%")
-  .attr("fy", "50%");
+      .attr("id", gradientId)
+      .attr("cx", "50%")
+      .attr("cy", "50%")
+      .attr("r", "50%")
+      .attr("fx", "50%")
+      .attr("fy", "50%");
 
-gradient.append("stop")
-  .attr("offset", "0%")
-  .attr("stop-color", "#ffffff")
-  .attr("stop-opacity", 1); // merkezde beyaz ve tamamen opak
+    gradient.append("stop")
+      .attr("offset", "0%")
+      .attr("stop-color", "#ffffff")
+      .attr("stop-opacity", 1); // Center white and fully opaque
 
-gradient.append("stop")
-  .attr("offset", "50%")
-  .attr("stop-color", "#ffffff")
-  .attr("stop-opacity", 0.7); // orta kısımda şeffaflaşmaya başlar
+    gradient.append("stop")
+      .attr("offset", "50%")
+      .attr("stop-color", "#ffffff")
+      .attr("stop-opacity", 0.7); // Middle part starts to fade
 
-gradient.append("stop")
-  .attr("offset", "100%")
-  .attr("stop-color", "#ffffff")
-  .attr("stop-opacity", 0.1); // dışta tamamen şeffaf (arka plan siyahsa bu kararma gibi görünür)
+    gradient.append("stop")
+      .attr("offset", "100%")
+      .attr("stop-color", "#ffffff")
+      .attr("stop-opacity", 0.1); // Outer edge almost transparent
+    
+    // Create hover version of gradient with higher opacity
+    const hoverGradientId = `node-hover-gradient-${d.id}`;
+    const hoverGradient = d3.select("svg").select("defs").append("radialGradient")
+      .attr("id", hoverGradientId)
+      .attr("cx", "50%")
+      .attr("cy", "50%")
+      .attr("r", "50%")
+      .attr("fx", "50%")
+      .attr("fy", "50%");
 
+    hoverGradient.append("stop")
+      .attr("offset", "0%")
+      .attr("stop-color", "#ffffff")
+      .attr("stop-opacity", 1); // Center white and fully opaque
+
+    hoverGradient.append("stop")
+      .attr("offset", "50%")
+      .attr("stop-color", "#ffffff")
+      .attr("stop-opacity", 0.9); // More opaque in middle for hover state
+
+    hoverGradient.append("stop")
+      .attr("offset", "100%")
+      .attr("stop-color", "#ffffff")
+      .attr("stop-opacity", 0.3); // More opaque at edges for hover state
       
     // Create a second gradient for the inner circle - with RGB 249, 115, 22 (orange) as requested
     const innerGradientId = `node-inner-gradient-${d.id}`;
@@ -189,8 +229,9 @@ gradient.append("stop")
       .attr("stop-color", "rgb(249, 115, 22)") // Orange color as requested
       .attr("stop-opacity", 1);
       
-    // Associate the gradient with the node
+    // Associate the gradients with the node
     d.gradientId = gradientId;
+    d.hoverGradientId = hoverGradientId;
     d.innerGradientId = innerGradientId;
   });
   
@@ -200,7 +241,7 @@ gradient.append("stop")
   
   // First add the glow effect layer with gradient that starts at the edge of white circle
   nodeGroups.append("circle")
-    .attr("r", d => d.size * 2.4 * sizeMultiplier) // Larger gradient circle
+    .attr("r", d => Math.max(d.size * 2.4 * sizeMultiplier, 10)) // Minimum size for small screens
     .attr("fill", d => `url(#${d.gradientId})`)
     .attr("class", "nodeGlow")
     .style("pointer-events", "none") // Ensure it doesn't interfere with events
@@ -208,7 +249,7 @@ gradient.append("stop")
   
   // Create outer circles for nodes - full opacity white circles
   nodeGroups.append("circle")
-    .attr("r", d => d.size * 1.5 * sizeMultiplier)
+    .attr("r", d => Math.max(d.size * 1.5 * sizeMultiplier, 8)) // Minimum size for small screens
     .attr("fill", "#ffffff")
     .attr("fill-opacity", 1)
     .attr("stroke", "#ffffff")
@@ -217,44 +258,111 @@ gradient.append("stop")
     .attr("class", styles.nodeCircle);
   
   // Add inner circle with custom gradient (orange) - RESTORED TO ORIGINAL SIZE
+  // Force higher z-index by appending AFTER other elements
   nodeGroups.append("circle")
-    .attr("r", d => d.size * 1.2 * sizeMultiplier) // Restored to original size (1.2×)
+    .attr("r", d => Math.max(d.size * 1.2 * sizeMultiplier, 6)) // Minimum size for small screens
     .attr("fill", d => `url(#${d.innerGradientId})`)
     .attr("fill-opacity", 1)
-    .attr("class", styles.nodeInnerCircle);
+    .attr("class", styles.nodeInnerCircle)
+    .style("pointer-events", "none"); // Ensure it doesn't block events
   
-  // Create a text background rect first (below the node)
+  // Calculate text width and height properly
+  const calculateTextWidth = (text) => {
+    // Approximate width calculation based on character count
+    // This is a simple approximation, in a real app you might want to measure actual text width
+    return Math.max(text.length * 7, 40); // Ensure minimum width
+  };
+  
+  // Create a better positioned text background rect
   nodeGroups.append("rect")
     .attr("class", "textBackground")
-    .attr("x", d => -d.name.length * 3.5) // Estimate width based on text length
-    .attr("y", d => d.size * sizeMultiplier + 5) // Position below node
-    .attr("width", d => d.name.length * 7) // Estimate width based on text length
+    .attr("x", d => -calculateTextWidth(d.name) / 2) // Center horizontally
+    .attr("y", d => Math.max(d.size * 1.8 * sizeMultiplier, 12)) // Position further below node with minimum
+    .attr("width", d => calculateTextWidth(d.name)) // More precise width based on text
     .attr("height", 22) // Fixed height
     .attr("rx", 4) // Rounded corners
     .attr("ry", 4) // Rounded corners
-    .attr("fill", "rgba(0, 0, 0, 0.5)") // Semi-transparent black background
-    .attr("opacity", 0.8);
+    .attr("fill", "rgba(0, 0, 0, 0.7)") // Darker background for better readability
+    .attr("opacity", 0.9); // Higher opacity
   
-  // Add node labels with consistent, larger font size - BELOW the node
+  // Add node labels with consistent, larger font size - MOVED BELOW the node
   nodeGroups.append("text")
     .text(d => d.name)
     .attr("class", "nodeLabel")
-    .attr("font-size", d => Math.max(d.size * 0.7, 12) + "px") // Ensure minimum font size of 12px
+    .attr("font-size", "12px") // Fixed font size for consistency
     .attr("text-anchor", "middle")
-    .attr("dy", d => d.size * sizeMultiplier + 18) // Positioned below node
+    .attr("dy", d => Math.max(d.size * 1.8 * sizeMultiplier, 12) + 15) // Vertically centered in background
     .attr("fill", "#ffffff")
     .attr("fill-opacity", 1)
     .attr("font-family", "'Montserrat', 'Segoe UI', 'Roboto', sans-serif")
-    .attr("font-weight", 400) // Slightly bolder for better readability
-    .style("text-shadow", "0px 0px 3px rgba(0,0,0,0.5)"); // Lighter shadow with background
+    .attr("font-weight", 500) // Slightly bolder for better readability
+    .style("text-shadow", "0px 0px 2px rgba(0,0,0,0.5)"); // Subtle shadow for readability
+    
+  // Add hover effects to node groups
+  nodeGroups
+    .on("mouseover", function(event, d) {
+      if (d.isSelected) return; // Skip hover effect if node is selected
+      
+      // Apply hover gradient to glow
+      d3.select(this).select(".nodeGlow")
+        .attr("fill", `url(#${d.hoverGradientId})`)
+        .transition().duration(200)
+        .attr("r", d => Math.max(d.size * 2.6 * sizeMultiplier, 11)); // Slightly larger on hover
+      
+      // Enlarge inner and outer circles slightly
+      d3.select(this).select(`.${styles.nodeCircle}`)
+        .transition().duration(200)
+        .attr("r", d => Math.max(d.size * 1.55 * sizeMultiplier, 8.5));
+        
+      d3.select(this).select(`.${styles.nodeInnerCircle}`)
+        .transition().duration(200)
+        .attr("r", d => Math.max(d.size * 1.25 * sizeMultiplier, 6.5));
+        
+      // Make text background slightly larger
+      d3.select(this).select(".textBackground")
+        .transition().duration(200)
+        .attr("opacity", 1);
+    })
+    .on("mouseout", function(event, d) {
+      if (d.isSelected) return; // Skip reset if node is selected
+      
+      // Reset gradient to normal 
+      d3.select(this).select(".nodeGlow")
+        .attr("fill", `url(#${d.gradientId})`)
+        .transition().duration(300)
+        .attr("r", d => Math.max(d.size * 2.4 * sizeMultiplier, 10));
+      
+      // Reset circle sizes
+      d3.select(this).select(`.${styles.nodeCircle}`)
+        .transition().duration(300)
+        .attr("r", d => Math.max(d.size * 1.5 * sizeMultiplier, 8));
+        
+      d3.select(this).select(`.${styles.nodeInnerCircle}`)
+        .transition().duration(300)
+        .attr("r", d => Math.max(d.size * 1.2 * sizeMultiplier, 6));
+        
+      // Reset text background 
+      d3.select(this).select(".textBackground")
+        .transition().duration(300)
+        .attr("opacity", 0.9);
+    });
 }
 
-// Updated handleNodeTransformation function with color transition and other fixes
-// Updated handleNodeTransformation function with correct inner circle size
+// Updated handleNodeTransformation function with shrinking gradient circle animation
 export function handleNodeTransformation(nodeGroup, d, containerWidth, containerHeight, svg, zoom, styles) {
-  // Making the panel smaller as requested
-  const panelWidth = Math.min(280, containerWidth * 0.6);
-  const panelHeight = Math.min(220, containerHeight * 0.6);
+  // Detect if we're on a small screen (mobile)
+  const isMobile = containerWidth < 768;
+  
+  // Make panel size responsive
+  // For mobile: use larger percentage of screen but cap maximum size
+  // For desktop: use smaller percentage but ensure minimum size
+  const panelWidth = isMobile 
+    ? Math.min(280, Math.max(containerWidth * 0.8, 200)) 
+    : Math.min(280, containerWidth * 0.6);
+    
+  const panelHeight = isMobile 
+    ? Math.min(220, Math.max(containerHeight * 0.7, 180))
+    : Math.min(220, containerHeight * 0.6);
   
   // Thinner border margin
   const borderMargin = 2;
@@ -271,8 +379,10 @@ export function handleNodeTransformation(nodeGroup, d, containerWidth, container
   const nodeY = d.y;
   
   // Check if node is too close to edges and adjust zoom target to keep panel in view
-  const safeX = Math.max(panelWidth/2, Math.min(containerWidth - panelWidth/2, nodeX));
-  const safeY = Math.max(panelHeight/2, Math.min(containerHeight - panelHeight/2, nodeY));
+  // Add more padding for mobile devices
+  const edgePadding = isMobile ? panelWidth * 0.6 : panelWidth * 0.5;
+  const safeX = Math.max(edgePadding, Math.min(containerWidth - edgePadding, nodeX));
+  const safeY = Math.max(edgePadding, Math.min(containerHeight - edgePadding, nodeY));
   
   // IMPORTANT: Fix the position immediately to prevent vibration during transformation
   d.fx = d.x; 
@@ -288,8 +398,26 @@ export function handleNodeTransformation(nodeGroup, d, containerWidth, container
   // Start transformation IMMEDIATELY - don't wait for zoom
   // 1. Prepare the outer white rectangle (initially sized same as circle)
   const sizeMultiplier = 1.3;
-  const innerCircleRadius = d.size * 1.2 * sizeMultiplier; // Correct original size (1.2×)
-  const outerCircleRadius = d.size * 1.5 * sizeMultiplier;
+  // Use Math.max to ensure minimum sizes on small screens
+  const innerCircleRadius = Math.max(d.size * 1.2 * sizeMultiplier, 6);
+  const outerCircleRadius = Math.max(d.size * 1.5 * sizeMultiplier, 8);
+  const glowRadius = Math.max(d.size * 2.4 * sizeMultiplier, 10);
+  
+  // Create a new temporary glow circle that will animate during transition
+  const animatedGlow = nodeGroup.append("circle")
+    .attr("class", "animated-glow")
+    .attr("r", glowRadius * 1.2) // Start slightly larger than the glow
+    .attr("fill", `url(#${d.hoverGradientId})`) // Use the hover gradient for more brightness
+    .style("opacity", 0.7);
+    
+  // Animate the glow circle
+  animatedGlow.transition()
+    .duration(750)
+    .attr("r", glowRadius * 0.1) // Shrink to almost nothing
+    .style("opacity", 0)
+    .on("end", function() {
+      d3.select(this).remove(); // Remove when animation is done
+    });
   
   const outerRect = nodeGroup.append("rect")
     .attr("class", "outerRect")
@@ -321,8 +449,9 @@ export function handleNodeTransformation(nodeGroup, d, containerWidth, container
   outerCircle.style("opacity", 0);
   if (nodeGlow) nodeGlow.style("opacity", 0);
   
-  // Zoom to the safe node position
-  const scale = 2.5;
+  // Adjusted zoom scale for mobile - use less zoom on small screens
+  // This helps prevent content from exceeding container boundaries
+  const scale = isMobile ? 1.8 : 2.5;
   const translate = [
     containerWidth / 2 - safeX * scale, 
     containerHeight / 2 - safeY * scale
@@ -365,18 +494,22 @@ export function handleNodeTransformation(nodeGroup, d, containerWidth, container
   
   // 6. Add content after the rectangles have expanded
   setTimeout(() => {
-    addContentPanel(nodeGroup, d, panelWidth, panelHeight, svg, zoom, styles);
+    addContentPanel(nodeGroup, d, panelWidth, panelHeight, svg, zoom, styles, isMobile);
   }, 900);
 }
 
-// Updated addContentPanel function to ensure content is visible
-function addContentPanel(nodeGroup, d, panelWidth, panelHeight, svg, zoom, styles) {
+// 3. Updated addContentPanel function with mobile optimizations
+function addContentPanel(nodeGroup, d, panelWidth, panelHeight, svg, zoom, styles, isMobile) {
+  // Adjust padding for mobile
+  const hPadding = isMobile ? 8 : 12; // Horizontal padding
+  const vPadding = isMobile ? 8 : 12; // Vertical padding
+  
   // Create content container - minimal padding to maximize content area
   const foreignObject = nodeGroup.append("foreignObject")
-    .attr("x", -panelWidth / 2 + 12) // Small padding for comfort
-    .attr("y", -panelHeight / 2 + 12)
-    .attr("width", panelWidth - 24) // Match inner blue rectangle with small padding
-    .attr("height", panelHeight - 24)
+    .attr("x", -panelWidth / 2 + hPadding) 
+    .attr("y", -panelHeight / 2 + vPadding)
+    .attr("width", panelWidth - (hPadding * 2)) 
+    .attr("height", panelHeight - (vPadding * 2))
     .attr("class", styles.panelContent)
     .style("opacity", 0);
   
@@ -384,6 +517,10 @@ function addContentPanel(nodeGroup, d, panelWidth, panelHeight, svg, zoom, style
   foreignObject.classed("node-panel-content", true);
   
   // Add HTML content - fixed layout for better space utilization
+  // Adjust font sizes for mobile
+  const headerFontSize = isMobile ? "16px" : "18px";
+  const bodyFontSize = isMobile ? "12px" : "14px";
+  
   foreignObject.append("xhtml:div")
     .style("color", "white")
     .style("height", "100%")
@@ -393,33 +530,39 @@ function addContentPanel(nodeGroup, d, panelWidth, panelHeight, svg, zoom, style
     .html(`
       <div class="${styles.panelContainer}">
         <div class="${styles.panelHeader}">
-          <h2 style="margin: 0; font-size: 18px; font-weight: 500;">${d.name}</h2>
+          <h2 style="margin: 0; font-size: ${headerFontSize}; font-weight: 500;">${d.name}</h2>
         </div>
         <div class="${styles.panelBody}">
-          <p style="font-size: 14px; line-height: 1.5; margin-top: 8px;">${d.content || "No content available"}</p>
+          <p style="font-size: ${bodyFontSize}; line-height: 1.5; margin-top: 6px;">${d.content || "No content available"}</p>
         </div>
       </div>
     `);
   
+  // Position close button based on screen size
+  const closeButtonPosition = {
+    x: panelWidth/2 - (isMobile ? 14 : 18),
+    y: -panelHeight/2 + (isMobile ? 14 : 18)
+  };
+  
   // Add close button absolutely positioned in the top right corner
   const closeButton = nodeGroup.append("g")
     .attr("class", "close-button")
-    .attr("transform", `translate(${panelWidth/2 - 18}, ${-panelHeight/2 + 18})`)
+    .attr("transform", `translate(${closeButtonPosition.x}, ${closeButtonPosition.y})`)
     .style("cursor", "pointer");
     
-  // Circle background for close button
+  // Circle background for close button - smaller on mobile
   closeButton.append("circle")
-    .attr("r", 12)
+    .attr("r", isMobile ? 10 : 12)
     .attr("fill", "rgba(255, 255, 255, 0.1)")
     .attr("stroke", "rgba(255, 255, 255, 0.3)")
     .attr("stroke-width", 1);
     
-  // X symbol
+  // X symbol - smaller on mobile
   closeButton.append("text")
     .attr("text-anchor", "middle")
     .attr("dy", "0.35em")
     .attr("fill", "#ffffff")
-    .style("font-size", "16px")
+    .style("font-size", isMobile ? "14px" : "16px")
     .style("font-weight", "bold")
     .text("×");
   
@@ -449,7 +592,7 @@ function addContentPanel(nodeGroup, d, panelWidth, panelHeight, svg, zoom, style
   });
 }
 
-// Updated handleNodeReturn function with correct inner circle size
+// Updated handleNodeReturn function with reverse gradient animation
 export function handleNodeReturn(nodeGroup, d, styles, svg, zoom) {
   // Get references to SVG elements
   const innerCircle = nodeGroup.select(`.${styles.nodeInnerCircle}`);
@@ -468,6 +611,22 @@ export function handleNodeReturn(nodeGroup, d, styles, svg, zoom) {
   const innerCircleRadius = d.size * 1.2 * sizeMultiplier; // Correct original size (1.2×)
   const outerCircleRadius = d.size * 1.5 * sizeMultiplier;
   const glowRadius = d.size * 2.4 * sizeMultiplier; // Enlarged glow circle
+  
+  // Create a new temporary expanding glow circle for return animation
+  const returnGlow = nodeGroup.append("circle")
+    .attr("class", "return-glow")
+    .attr("r", glowRadius * 0.1) // Start very small
+    .attr("fill", `url(#${d.gradientId})`) // Use normal gradient
+    .style("opacity", 0); // Start invisible
+    
+  // Animate the return glow
+  returnGlow.transition()
+    .duration(750)
+    .attr("r", glowRadius * 1.2) // Expand beyond the normal glow
+    .style("opacity", 0.7)
+    .on("end", function() {
+      d3.select(this).transition().duration(300).style("opacity", 0).remove();
+    });
   
   // Interrupt any ongoing transitions
   nodeGroup.selectAll("*").interrupt();
@@ -536,7 +695,7 @@ export function handleNodeReturn(nodeGroup, d, styles, svg, zoom) {
   if (nodeGlow) nodeGlow.style("opacity", 1).attr("r", glowRadius);
   
   // Make text and background visible again
-  nodeGroup.select(".textBackground").style("opacity", 0.8);
+  nodeGroup.select(".textBackground").style("opacity", 0.9);
   nodeGroup.select(".nodeLabel").style("opacity", 1);
   
   // Wait a bit for zoom to settle before shrinking
@@ -582,6 +741,7 @@ export function handleNodeReturn(nodeGroup, d, styles, svg, zoom) {
       });
   }, 200);
 }
+
 export function setupParticleSystem(particleGroup, data, simulation) {
   // Return empty intervals (no actual particles created)
   return { 
