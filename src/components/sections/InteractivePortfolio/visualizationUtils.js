@@ -147,7 +147,7 @@ function dragended(event, simulation) {
   }
 }
 
-// 1. Fix for createNodeElements function to ensure inner circle is visible on mobile
+// Fix 2: Improved createNodeElements function to make inner circle more visible
 export function createNodeElements(nodes, styles) {
   // Increase node size multiplier for all nodes
   const sizeMultiplier = 1.3; // Increase overall node size by 30%
@@ -179,12 +179,12 @@ export function createNodeElements(nodes, styles) {
     gradient.append("stop")
       .attr("offset", "50%")
       .attr("stop-color", "#ffffff")
-      .attr("stop-opacity", 0.7); // Middle part starts to fade
+      .attr("stop-opacity", 0.5); // Middle part starts to fade
 
     gradient.append("stop")
       .attr("offset", "100%")
       .attr("stop-color", "#ffffff")
-      .attr("stop-opacity", 0.1); // Outer edge almost transparent
+      .attr("stop-opacity", 0.05); // Outer edge almost transparent
     
     // Create hover version of gradient with higher opacity
     const hoverGradientId = `node-hover-gradient-${d.id}`;
@@ -212,6 +212,7 @@ export function createNodeElements(nodes, styles) {
       .attr("stop-opacity", 0.3); // More opaque at edges for hover state
       
     // Create a second gradient for the inner circle - with RGB 249, 115, 22 (orange) as requested
+    // Make it more vibrant 
     const innerGradientId = `node-inner-gradient-${d.id}`;
     const innerGradient = d3.select("svg").select("defs").append("radialGradient")
       .attr("id", innerGradientId)
@@ -257,11 +258,21 @@ export function createNodeElements(nodes, styles) {
     .attr("stroke-opacity", 0.3)
     .attr("class", styles.nodeCircle);
   
+  // FIX: Add a background solid color circle behind the gradient inner circle
+  // This ensures the orange is visible even if gradient rendering has issues
+  nodeGroups.append("circle")
+    .attr("r", d => Math.max(d.size * 1.2 * sizeMultiplier, 6)) // Match inner circle size 
+    .attr("fill", "rgb(249, 115, 22)") // Solid orange as fallback
+    .attr("class", "innerCircleBg")
+    .style("pointer-events", "none");
+    
   // Add inner circle with custom gradient (orange) - RESTORED TO ORIGINAL SIZE
   // Force higher z-index by appending AFTER other elements
   nodeGroups.append("circle")
     .attr("r", d => Math.max(d.size * 1.2 * sizeMultiplier, 6)) // Minimum size for small screens
     .attr("fill", d => `url(#${d.innerGradientId})`)
+    .attr("stroke", "rgba(249, 115, 22, 0.7)") // Add subtle orange stroke
+    .attr("stroke-width", 1)
     .attr("fill-opacity", 1)
     .attr("class", styles.nodeInnerCircle)
     .style("pointer-events", "none"); // Ensure it doesn't block events
@@ -318,6 +329,10 @@ export function createNodeElements(nodes, styles) {
         .transition().duration(200)
         .attr("r", d => Math.max(d.size * 1.25 * sizeMultiplier, 6.5));
         
+      d3.select(this).select(".innerCircleBg")
+        .transition().duration(200)
+        .attr("r", d => Math.max(d.size * 1.25 * sizeMultiplier, 6.5));
+        
       // Make text background slightly larger
       d3.select(this).select(".textBackground")
         .transition().duration(200)
@@ -340,6 +355,10 @@ export function createNodeElements(nodes, styles) {
       d3.select(this).select(`.${styles.nodeInnerCircle}`)
         .transition().duration(300)
         .attr("r", d => Math.max(d.size * 1.2 * sizeMultiplier, 6));
+      
+      d3.select(this).select(".innerCircleBg")
+        .transition().duration(300)
+        .attr("r", d => Math.max(d.size * 1.2 * sizeMultiplier, 6));
         
       // Reset text background 
       d3.select(this).select(".textBackground")
@@ -348,21 +367,25 @@ export function createNodeElements(nodes, styles) {
     });
 }
 
-// Updated handleNodeTransformation function with shrinking gradient circle animation
+
+// Fix 1: Completely revised handleNodeTransformation function for mobile
 export function handleNodeTransformation(nodeGroup, d, containerWidth, containerHeight, svg, zoom, styles) {
   // Detect if we're on a small screen (mobile)
   const isMobile = containerWidth < 768;
   
-  // Make panel size responsive
-  // For mobile: use larger percentage of screen but cap maximum size
-  // For desktop: use smaller percentage but ensure minimum size
-  const panelWidth = isMobile 
-    ? Math.min(280, Math.max(containerWidth * 0.8, 200)) 
-    : Math.min(280, containerWidth * 0.6);
-    
-  const panelHeight = isMobile 
-    ? Math.min(220, Math.max(containerHeight * 0.7, 180))
-    : Math.min(220, containerHeight * 0.6);
+  // MUCH more conservative panel sizing for mobile
+  // On small screens, make panel significantly smaller
+  let panelWidth, panelHeight;
+  
+  if (isMobile) {
+    // Mobile: Hard cap panel size to prevent overflow
+    panelWidth = Math.min(containerWidth * 0.7, 240); 
+    panelHeight = Math.min(containerHeight * 0.6, 180);
+  } else {
+    // Desktop: Original sizing
+    panelWidth = Math.min(280, containerWidth * 0.6);
+    panelHeight = Math.min(220, containerHeight * 0.6);
+  }
   
   // Thinner border margin
   const borderMargin = 2;
@@ -378,9 +401,11 @@ export function handleNodeTransformation(nodeGroup, d, containerWidth, container
   const nodeX = d.x;
   const nodeY = d.y;
   
-  // Check if node is too close to edges and adjust zoom target to keep panel in view
-  // Add more padding for mobile devices
-  const edgePadding = isMobile ? panelWidth * 0.6 : panelWidth * 0.5;
+  // More aggressive boundary checking for mobile
+  // Increase edge padding significantly on mobile
+  const edgePadding = isMobile ? panelWidth * 0.7 : panelWidth * 0.5;
+  
+  // Ensure node is not too close to edges with strong constraints
   const safeX = Math.max(edgePadding, Math.min(containerWidth - edgePadding, nodeX));
   const safeY = Math.max(edgePadding, Math.min(containerHeight - edgePadding, nodeY));
   
@@ -398,6 +423,7 @@ export function handleNodeTransformation(nodeGroup, d, containerWidth, container
   // Start transformation IMMEDIATELY - don't wait for zoom
   // 1. Prepare the outer white rectangle (initially sized same as circle)
   const sizeMultiplier = 1.3;
+  
   // Use Math.max to ensure minimum sizes on small screens
   const innerCircleRadius = Math.max(d.size * 1.2 * sizeMultiplier, 6);
   const outerCircleRadius = Math.max(d.size * 1.5 * sizeMultiplier, 8);
@@ -417,6 +443,24 @@ export function handleNodeTransformation(nodeGroup, d, containerWidth, container
     .style("opacity", 0)
     .on("end", function() {
       d3.select(this).remove(); // Remove when animation is done
+    });
+  
+  // FIX: Create a copy of inner circle specifically for the animation
+  // This ensures it stays visible throughout the process
+  const animationInnerCircle = nodeGroup.append("circle")
+    .attr("class", "animation-inner-circle")
+    .attr("r", innerCircleRadius)
+    .attr("fill", `url(#${d.innerGradientId})`)
+    .attr("fill-opacity", 1)
+    .style("pointer-events", "none");
+  
+  // Animate this circle separately
+  animationInnerCircle.transition()
+    .duration(750)
+    .attr("r", innerCircleRadius * 0.1)
+    .style("opacity", 0)
+    .on("end", function() {
+      d3.select(this).remove();
     });
   
   const outerRect = nodeGroup.append("rect")
@@ -444,14 +488,26 @@ export function handleNodeTransformation(nodeGroup, d, containerWidth, container
     .attr("fill", "rgb(249, 115, 22)") // Start with orange color
     .attr("fill-opacity", 1);
   
-  // 3. Hide the original circles and glow
-  innerCircle.style("opacity", 0);
-  outerCircle.style("opacity", 0);
-  if (nodeGlow) nodeGlow.style("opacity", 0);
+  // 3. Hide the original circles and glow but DON'T TOUCH THE INNER CIRCLE on mobile
+  // This helps the inner circle stay visible during transitions
+  if (isMobile) {
+    // Only hide outer elements on mobile
+    outerCircle.style("opacity", 0);
+    if (nodeGlow) nodeGlow.style("opacity", 0);
+    // Keep inner circle visible with reduced opacity
+    innerCircle.style("opacity", 0.3); 
+  } else {
+    // On desktop, behave as before
+    innerCircle.style("opacity", 0);
+    outerCircle.style("opacity", 0);
+    if (nodeGlow) nodeGlow.style("opacity", 0);
+  }
   
-  // Adjusted zoom scale for mobile - use less zoom on small screens
-  // This helps prevent content from exceeding container boundaries
-  const scale = isMobile ? 1.8 : 2.5;
+  // Dramatically reduced zoom scale for mobile - use much less zoom on small screens
+  // This is crucial to prevent content from exceeding container boundaries
+  const scale = isMobile ? 1.4 : 2.5;
+  
+  // Center the node more carefully on mobile
   const translate = [
     containerWidth / 2 - safeX * scale, 
     containerHeight / 2 - safeY * scale
@@ -592,10 +648,10 @@ function addContentPanel(nodeGroup, d, panelWidth, panelHeight, svg, zoom, style
   });
 }
 
-// Updated handleNodeReturn function with reverse gradient animation
 export function handleNodeReturn(nodeGroup, d, styles, svg, zoom) {
   // Get references to SVG elements
   const innerCircle = nodeGroup.select(`.${styles.nodeInnerCircle}`);
+  const innerCircleBg = nodeGroup.select(".innerCircleBg");
   const outerCircle = nodeGroup.select(`.${styles.nodeCircle}`);
   const nodeGlow = nodeGroup.select(".nodeGlow");
   const innerRect = nodeGroup.select(".innerRect");
@@ -608,9 +664,9 @@ export function handleNodeReturn(nodeGroup, d, styles, svg, zoom) {
   
   // Store original sizes for restoration
   const sizeMultiplier = 1.3;
-  const innerCircleRadius = d.size * 1.2 * sizeMultiplier; // Correct original size (1.2×)
-  const outerCircleRadius = d.size * 1.5 * sizeMultiplier;
-  const glowRadius = d.size * 2.4 * sizeMultiplier; // Enlarged glow circle
+  const innerCircleRadius = Math.max(d.size * 1.2 * sizeMultiplier, 6); // Minimum size
+  const outerCircleRadius = Math.max(d.size * 1.5 * sizeMultiplier, 8); // Minimum size
+  const glowRadius = Math.max(d.size * 2.4 * sizeMultiplier, 10); // Minimum size
   
   // Create a new temporary expanding glow circle for return animation
   const returnGlow = nodeGroup.append("circle")
@@ -624,6 +680,22 @@ export function handleNodeReturn(nodeGroup, d, styles, svg, zoom) {
     .duration(750)
     .attr("r", glowRadius * 1.2) // Expand beyond the normal glow
     .style("opacity", 0.7)
+    .on("end", function() {
+      d3.select(this).transition().duration(300).style("opacity", 0).remove();
+    });
+  
+  // FIX: Add a temporary copy of the inner circle for animation
+  // This ensures at least one orange circle stays visible through the transition
+  const tempInnerCircle = nodeGroup.append("circle")
+    .attr("class", "temp-inner-circle")
+    .attr("r", innerCircleRadius * 0.1)
+    .attr("fill", "rgb(249, 115, 22)")
+    .style("opacity", 0);
+    
+  tempInnerCircle.transition()
+    .duration(750)
+    .attr("r", innerCircleRadius)
+    .style("opacity", 0.8)
     .on("end", function() {
       d3.select(this).transition().duration(300).style("opacity", 0).remove();
     });
@@ -689,8 +761,11 @@ export function handleNodeReturn(nodeGroup, d, styles, svg, zoom) {
   const updatedInnerRect = nodeGroup.select(".innerRect");
   const updatedOuterRect = nodeGroup.select(".outerRect");
   
-  // Ensure circles maintain their proper size
+  // FIX: Show inner circles immediately to avoid any gap in visibility
   innerCircle.style("opacity", 1).attr("r", innerCircleRadius);
+  if (!innerCircleBg.empty()) {
+    innerCircleBg.style("opacity", 1).attr("r", innerCircleRadius);
+  }
   outerCircle.style("opacity", 1).attr("r", outerCircleRadius);
   if (nodeGlow) nodeGlow.style("opacity", 1).attr("r", glowRadius);
   
@@ -729,6 +804,9 @@ export function handleNodeReturn(nodeGroup, d, styles, svg, zoom) {
         
         // Ensure circles have correct sizes - important final check
         innerCircle.attr("r", innerCircleRadius);
+        if (!innerCircleBg.empty()) {
+          innerCircleBg.attr("r", innerCircleRadius);
+        }
         outerCircle.attr("r", outerCircleRadius);
         if (nodeGlow) nodeGlow.attr("r", glowRadius);
           
