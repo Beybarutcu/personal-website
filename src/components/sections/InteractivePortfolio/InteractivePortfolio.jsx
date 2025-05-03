@@ -220,19 +220,27 @@ export default function InteractivePortfolio() {
             nodeLabel.style("opacity", 1);
           }
           
-          // Reset hover effects to normal state
+          // Reset hover state with smooth animation like when mouse leaves
           nodeGroup.select(".nodeGlow")
             .attr("fill", `url(#${node.gradientId})`)
+            .transition()
+            .duration(600)  // Increased from 300 to 600 for slower animation
             .attr("r", glowRadius);
             
           nodeGroup.select(`.${styles.nodeCircle}`)
+            .transition()
+            .duration(600)  // Increased from 300 to 600 for slower animation
             .attr("r", outerCircleRadius);
             
           nodeGroup.select(`.${styles.nodeInnerCircle}`)
+            .transition()
+            .duration(600)  // Increased from 300 to 600 for slower animation
             .attr("r", innerCircleRadius);
             
           if (!innerCircleBg.empty()) {
             nodeGroup.select(".innerCircleBg")
+              .transition()
+              .duration(600)  // Increased from 300 to 600 for slower animation
               .attr("r", innerCircleRadius);
           }
           
@@ -402,14 +410,14 @@ export default function InteractivePortfolio() {
           .translate(translate[0], translate[1])
           .scale(scale);
         
-        // Apply zoom
+        // Apply zoom with slower animation
         vis.svg.transition()
-          .duration(500)
+          .duration(1200)  // Increased from 500 to 1200 for slower animation
           .call(vis.zoom.transform, transform);
         
-        // Animate rectangles
+        // Animate rectangles with slower animation
         outerRect.transition()
-          .duration(800)
+          .duration(1500)  // Increased from 800 to 1500 for slower animation
           .attr("x", -panelWidth / 2)
           .attr("y", -panelHeight / 2)
           .attr("width", panelWidth)
@@ -418,7 +426,7 @@ export default function InteractivePortfolio() {
           .attr("ry", 8);
         
         innerRect.transition()
-          .duration(800)
+          .duration(1500)  // Increased from 800 to 1500 for slower animation
           .attr("x", -panelWidth / 2 + borderMargin)
           .attr("y", -panelHeight / 2 + borderMargin)
           .attr("width", panelWidth - (borderMargin * 2))
@@ -496,28 +504,28 @@ export default function InteractivePortfolio() {
               nodeGroup.selectAll(".node-panel-content").remove();
               nodeGroup.selectAll(".close-button").remove();
               
-              // Reset zoom SIMULTANEOUSLY with the rectangle animation
+              // Reset zoom SIMULTANEOUSLY with the rectangle animation with slower animation
               vis.svg.transition()
-                .duration(500)
+                .duration(1200)  // Increased from 500 to 1200 for slower animation
                 .call(vis.zoom.transform, d3.zoomIdentity);
               
               // Add shrinking gradient circle animation
               const glowRadius = Math.max(d.size * 2.4 * sizeMultiplier, 10);
               
-              // Create the shrinking glow effect
+              // Create the shrinking glow effect with slower animation
               const returnGlow = nodeGroup.append("circle")
                 .attr("class", "return-glow")
                 .attr("r", glowRadius * 0.1) // Start small
                 .attr("fill", `url(#${d.gradientId})`) // Use gradient from original node
                 .style("opacity", 0); // Start invisible
               
-              // Animate the glow expanding
+              // Animate the glow expanding with slower animation
               returnGlow.transition()
-                .duration(500)
+                .duration(1000)  // Increased from 500 to 1000 for slower animation
                 .attr("r", glowRadius * 1.2) // Expand beyond normal size
                 .style("opacity", 0.7)
                 .on("end", function() {
-                  d3.select(this).transition().duration(300).style("opacity", 0).remove();
+                  d3.select(this).transition().duration(600).style("opacity", 0).remove();
                 });
                 
               // Create a copy of inner circle for animation
@@ -527,18 +535,18 @@ export default function InteractivePortfolio() {
                 .attr("fill", "rgb(249, 115, 22)")
                 .style("opacity", 0);
                 
-              // Animate the inner circle
+              // Animate the inner circle with slower animation
               tempInnerCircle.transition()
-                .duration(500)
+                .duration(1000)  // Increased from 500 to 1000 for slower animation
                 .attr("r", innerCircleRadius)
                 .style("opacity", 0.8)
                 .on("end", function() {
-                  d3.select(this).transition().duration(300).style("opacity", 0).remove();
+                  d3.select(this).transition().duration(600).style("opacity", 0).remove();
                 });
               
-              // Animate rectangles back to circles
+              // Animate rectangles back to circles with slower animation
               innerRect.transition()
-                .duration(500)
+                .duration(1200)  // Increased from 500 to 1200 for slower animation
                 .attr("x", -innerCircleRadius)
                 .attr("y", -innerCircleRadius)
                 .attr("width", innerCircleRadius * 2)
@@ -548,7 +556,7 @@ export default function InteractivePortfolio() {
                 .attr("fill", "rgb(249, 115, 22)");
               
               outerRect.transition()
-                .duration(500)
+                .duration(1200)  // Increased from 500 to 1200 for slower animation
                 .attr("x", -outerCircleRadius)
                 .attr("y", -outerCircleRadius)
                 .attr("width", outerCircleRadius * 2)
@@ -569,20 +577,26 @@ export default function InteractivePortfolio() {
                   textBackground.style("opacity", 0.9);
                   nodeLabel.style("opacity", 1);
                   
-                  // Reset hover state completely
+                  // Reset hover state with smooth animation like when mouse leaves
                   // Reset the glow to normal size and opacity
                   if (nodeGlow) {
                     nodeGlow
                       .attr("fill", `url(#${d.gradientId})`)
+                      .transition()
+                      .duration(600)  // Increased from 300 to 600 for slower animation
                       .attr("r", glowRadius);
                   }
                   
                   // Reset outer circle to normal size
                   outerCircle
+                    .transition()
+                    .duration(600)  // Increased from 300 to 600 for slower animation
                     .attr("r", outerCircleRadius);
                   
                   // Reset inner circle to normal size
                   innerCircle
+                    .transition()
+                    .duration(600)  // Increased from 300 to 600 for slower animation
                     .attr("r", innerCircleRadius);
                   
                   // Release position
@@ -615,9 +629,9 @@ export default function InteractivePortfolio() {
         const innerCircleRadius = Math.max(d.size * 1.2 * sizeMultiplier, 6);
         const outerCircleRadius = Math.max(d.size * 1.5 * sizeMultiplier, 8);
         
-        // Reset zoom
+        // Reset zoom with slower animation
         vis.svg.transition()
-          .duration(500)
+          .duration(1200)  // Increased from 500 to 1200 for slower animation
           .call(vis.zoom.transform, d3.zoomIdentity);
         
         // Animate rectangles back to circles if they exist
@@ -679,23 +693,31 @@ export default function InteractivePortfolio() {
           }, 100);
         }
         
-        // Reset hover state completely
+        // Reset hover state with smooth animation like when mouse leaves
         const glowRadius = Math.max(d.size * 2.4 * sizeMultiplier, 10);
         
         if (nodeGlow) {
           nodeGlow
             .attr("fill", `url(#${d.gradientId})`)
+            .transition()
+            .duration(600)  // Increased from 300 to 600 for slower animation
             .attr("r", glowRadius);
         }
         
         outerCircle
+          .transition()
+          .duration(600)  // Increased from 300 to 600 for slower animation
           .attr("r", outerCircleRadius);
         
         innerCircle
+          .transition()
+          .duration(600)  // Increased from 300 to 600 for slower animation
           .attr("r", innerCircleRadius);
         
         if (!innerCircleBg.empty()) {
           innerCircleBg
+            .transition()
+            .duration(600)  // Increased from 300 to 600 for slower animation
             .attr("r", innerCircleRadius);
         }
       }
@@ -736,7 +758,8 @@ export default function InteractivePortfolio() {
   return (
     <div className={styles.sectionContainer}>
       <div className={styles.sectionHeading}>
-        <h2 className="text-3xl font-bold mb-8 gradient-text-primary">{t('portfolio.title', 'Interactive Resume')}</h2>
+        <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">InSight</h2>
+        <p className="max-w-3xl mx-auto text-xl text-gray-300">Explore my portfolio through the nodes.</p>
       </div>
       <div className={styles.interactivePortfolioContainer} ref={containerRef}>
         <svg ref={svgRef} className={styles.portfolioVisualization}></svg>
