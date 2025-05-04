@@ -227,7 +227,14 @@ body {
   max-width: 600px;
 }
 
-/* Project card glow effect */
+/* Project card background and glow effect */
+.project-card-bg {
+  background-image: radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+                    radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 100px 100px;
+}
+
 .project-card::before {
   content: "";
   position: absolute;
