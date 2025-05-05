@@ -3,8 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ExternalLink, Github, Eye } from 'lucide-react';
 
-const Projects = ({ language }) => {
-  const { t } = useTranslation();
+const Projects = () => {
+  const { t, i18n } = useTranslation();
+  const currentLanguage = i18n.language;
   const [activeFilter, setActiveFilter] = useState('all');
   const [filteredProjects, setFilteredProjects] = useState([]);
   const [visibleCount, setVisibleCount] = useState(4);
@@ -102,7 +103,7 @@ const Projects = ({ language }) => {
     
     // Reset visible count when filter changes
     setVisibleCount(4);
-  }, [activeFilter, language]);
+  }, [activeFilter, currentLanguage]);
   
   const handleFilterClick = (filterId) => {
     setActiveFilter(filterId);
@@ -225,35 +226,17 @@ const Projects = ({ language }) => {
   );
 };
 
-// Project Card Component with Orange Highlight for Technologies and without View Live button
+// Project Card Component with Simplified Background
 const ProjectCard = ({ project, onClick, t }) => {
   return (
     <div 
       className="group bg-gray-800/40 backdrop-blur-md rounded-xl border border-gray-700/50 overflow-hidden shadow-xl transition-transform hover:transform hover:scale-[1.02] cursor-pointer"
       onClick={onClick}
     >
-      {/* Placeholder for project image - would be replaced with actual image */}
+      {/* Simplified background with project-card-bg class */}
       <div className="h-56 bg-gradient-to-br from-gray-700 to-gray-900 relative overflow-hidden">
         {/* Create a monochromatic space-themed placeholder if no image */}
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-700/30 to-gray-900/30"></div>
-        
-        {/* Placeholder stars */}
-        {Array.from({ length: 30 }).map((_, i) => {
-          const size = Math.random() * 1.5 + 0.5;
-          return (
-            <div 
-              key={i}
-              className="absolute rounded-full bg-white"
-              style={{
-                width: `${size}px`,
-                height: `${size}px`,
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-                opacity: Math.random() * 0.8 + 0.2
-              }}
-            />
-          );
-        })}
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-700/30 to-gray-900/30 project-card-bg"></div>
         
         {/* View overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
@@ -311,7 +294,7 @@ const ProjectCard = ({ project, onClick, t }) => {
   );
 };
 
-// Project Modal Component
+// Project Modal Component with Simplified Background
 const ProjectModal = ({ project, onClose, t }) => {
   // Close when clicking outside the content
   const handleBackdropClick = (e) => {
@@ -341,28 +324,10 @@ const ProjectModal = ({ project, onClose, t }) => {
       onClick={handleBackdropClick}
     >
       <div className="bg-gray-800/90 backdrop-blur-md rounded-xl border border-gray-700/50 overflow-hidden shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
-        {/* Project Header with large image */}
+        {/* Project Header with simplified background */}
         <div className="h-80 bg-gradient-to-br from-gray-700 to-gray-900 relative overflow-hidden">
-          {/* Create a monochromatic space-themed placeholder if no image */}
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-700/30 to-gray-900/30"></div>
-          
-          {/* Placeholder stars */}
-          {Array.from({ length: 50 }).map((_, i) => {
-            const size = Math.random() * 2 + 0.5;
-            return (
-              <div 
-                key={i}
-                className="absolute rounded-full bg-white"
-                style={{
-                  width: `${size}px`,
-                  height: `${size}px`,
-                  top: `${Math.random() * 100}%`,
-                  left: `${Math.random() * 100}%`,
-                  opacity: Math.random() * 0.8 + 0.2
-                }}
-              />
-            );
-          })}
+          {/* Simplified background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-700/30 to-gray-900/30 project-card-bg"></div>
           
           {/* Title overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/70 to-transparent flex flex-col justify-end p-8">

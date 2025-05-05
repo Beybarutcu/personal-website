@@ -3,8 +3,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChevronDown, Code, Briefcase } from 'lucide-react';
 
-const Hero = ({ language }) => {
-  const { t } = useTranslation();
+const Hero = () => {
+  const { t, i18n } = useTranslation();
+  const currentLanguage = i18n.language;
   
   // Define a style object for the gradient text with improved rendering
   const titleStyle = {
@@ -116,29 +117,6 @@ const Hero = ({ language }) => {
           <ChevronDown className="text-gray-400" size={24} />
         </div>
       </div>
-      
-      {/* Keep the CSS animations */}
-      <style>{`
-        @keyframes fadeSlideUp {
-          0% {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        @keyframes fadeIn {
-          0% {
-            opacity: 0;
-          }
-          100% {
-            opacity: 1;
-          }
-        }
-      `}</style>
     </section>
   );
 };

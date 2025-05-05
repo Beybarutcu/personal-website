@@ -11,7 +11,6 @@ import "./styles/index.css"; // Tailwind directives
 import "./styles/custom-base.css";
 import "./styles/custom-theme.css"; // Our enhanced theme
 import "./styles/animations.css";
-import "./styles/transitions.css";
 import "./App.css";
 
 // Create a preloader for smooth initial loading

@@ -67,15 +67,15 @@ function App() {
       />
       <Navbar currentLanguage={language} />
       
-      {/* Main content - Rearranged to put EnhancedMindMapSection right after Hero */}
+      {/* Main content - Removed unnecessary language props */}
       <main className="flex-grow pt-16">
-        <Hero language={language} />
+        <Hero />
         <section className="portfolio-section">
           <InteractivePortfolio />
         </section>
-        <About language={language} />
-        <Projects language={language} />
-        <Contact language={language} />
+        <About />
+        <Projects />
+        <Contact />
       </main>
       
       {/* Footer */}

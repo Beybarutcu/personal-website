@@ -22,8 +22,9 @@ const XLogo = ({ size = 20 }) => (
   </svg>
 );
 
-const Contact = ({ language }) => {
-  const { t } = useTranslation();
+const Contact = () => {
+  const { t, i18n } = useTranslation();
+  const currentLanguage = i18n.language;
   const [formData, setFormData] = useState({
     name: '',
     email: '',
