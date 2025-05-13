@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { useTranslation } from 'react-i18next';
 import styles from './InteractivePortfolio.module.css';
-import { sampleData, categoryColors } from './data';
+import { sampleData } from './data';
 import { 
   setupVisualizations,
   createNodeElements,
@@ -87,14 +87,43 @@ export default function InteractivePortfolio() {
     const width = dimensions.width;
     const height = dimensions.height;
     
-    const vis = setupVisualizations(svgRef.current, width, height, sampleData);
+    // Localize node data before setting up visualization
+    // Create a copy of the sample data with localized node names
+    // but preserve the reference structure for links
+    const nodesById = {};
+    
+    // First create localized nodes and build a lookup map
+    const localizedNodes = sampleData.nodes.map(node => {
+      const localizedNode = {
+        ...node,
+        name: t(node.name), // Translate the node name
+        content: '', // Will be populated when node is clicked
+      };
+      // Store in lookup map for link creation
+      nodesById[node.id] = localizedNode;
+      return localizedNode;
+    });
+    
+    // Then create links that reference the actual node objects
+    const localizedLinks = sampleData.links.map(link => ({
+      source: nodesById[link.source] || link.source,
+      target: nodesById[link.target] || link.target,
+      value: link.value
+    }));
+    
+    const localizedData = {
+      nodes: localizedNodes,
+      links: localizedLinks
+    };
+    
+    const vis = setupVisualizations(svgRef.current, width, height, localizedData);
     
     // Create node elements (circles, etc.)
     createNodeElements(vis.nodes, styles);
     
     // Set up the particle system with improved handling
     const particleSystem = setupParticleSystem(
-      vis.particleGroup, sampleData, vis.simulation
+      vis.particleGroup, localizedData, vis.simulation
     );
     
     // Direct implementation of node click handler
@@ -488,6 +517,17 @@ export default function InteractivePortfolio() {
               const headerFontSize = isMobile ? "16px" : "18px";
               const bodyFontSize = isMobile ? "12px" : "14px";
               
+              // Get node content from translations based on contentKey
+              const nodeContent = d.contentKey ? {
+                title: t(`${d.contentKey}.title`),
+                subtitle: t(`${d.contentKey}.subtitle`),
+                description: t(`${d.contentKey}.description`)
+              } : {
+                title: d.name,
+                subtitle: "",
+                description: "No content available"
+              };
+              
               // Add content
               foreignObject.append("xhtml:div")
                 .style("color", "white")
@@ -498,10 +538,11 @@ export default function InteractivePortfolio() {
                 .html(`
                   <div class="${styles.panelContainer}" style="width: 100%; height: 100%;">
                     <div class="${styles.panelHeader}" style="padding-bottom: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.2);">
-                      <h2 style="margin: 0; font-size: ${headerFontSize}; font-weight: 500;">${d.name}</h2>
+                      <h2 style="margin: 0; font-size: ${headerFontSize}; font-weight: 500;">${nodeContent.title}</h2>
+                      ${nodeContent.subtitle ? `<p style="margin: 4px 0 0; font-size: ${bodyFontSize}; font-weight: 300; opacity: 0.8;">${nodeContent.subtitle}</p>` : ''}
                     </div>
                     <div class="${styles.panelBody}" style="flex-grow: 1; overflow-y: auto;">
-                      <p style="font-size: ${bodyFontSize}; line-height: 1.5; margin-top: 6px;">${d.content || "No content available"}</p>
+                      <div style="font-size: ${bodyFontSize}; line-height: 1.5; margin-top: 6px;">${nodeContent.description}</div>
                     </div>
                   </div>
                 `);
@@ -826,13 +867,13 @@ export default function InteractivePortfolio() {
         visualization.particleSystem.cleanup();
       }
     };
-  }, [dimensions]);
+  }, [dimensions, t]); // Add t to dependencies
   
   return (
     <div className={styles.sectionContainer} ref={sectionRef}>
       <div className={styles.sectionHeading}>
-        <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">InSight</h2>
-        <p className="max-w-3xl mx-auto text-xl text-gray-300">Explore my portfolio through the nodes.</p>
+        <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">{t('portfolio.mindMapTitle')}</h2>
+        <p className="max-w-3xl mx-auto text-xl text-gray-300">{t('portfolio.mindMapDescription')}</p>
       </div>
       <div className={styles.interactivePortfolioContainer} ref={containerRef}>
         <svg ref={svgRef} className={styles.portfolioVisualization}></svg>

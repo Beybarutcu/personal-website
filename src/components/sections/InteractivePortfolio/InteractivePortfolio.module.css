@@ -59,6 +59,7 @@
   transition: opacity 0.3s ease;
 }
 
+/* Enhanced Panel Styling */
 .panelContainer {
   width: 100%;
   height: 100%;
@@ -66,26 +67,129 @@
   flex-direction: column;
   overflow: hidden;
   font-family: 'Montserrat', 'Segoe UI', 'Roboto', sans-serif;
+  color: #ffffff;
 }
 
 .panelHeader {
   font-size: 20px;
   font-weight: 500;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  padding-bottom: 8px;
+  padding-bottom: 10px;
   color: #ffffff;
   font-family: 'Montserrat', 'Segoe UI', 'Roboto', sans-serif;
 }
 
-.panelBody {
+.panelTitle {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+}
+
+.panelSubtitle {
+  margin: 4px 0 0;
   font-size: 14px;
-  line-height: 1.5;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
+  font-style: italic;
+}
+
+.panelBody {
   flex-grow: 1;
   overflow-y: auto;
-  padding-right: 5px;
+  overflow-x: hidden;
+  padding-right: 6px;
+  font-size: 14px;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.95);
   font-weight: 300;
   font-family: 'Montserrat', 'Segoe UI', 'Roboto', sans-serif;
+}
+
+/* Make HTML content from translations render properly */
+.panelBody p {
+  margin: 0 0 8px;
+}
+
+.panelBody p:last-of-type {
+  margin-bottom: 12px;
+}
+
+/* Skills section */
+.panelSkills {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.skillsTitle {
+  font-size: 15px;
+  font-weight: 500;
+  margin: 0 0 6px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.skillsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  margin-bottom: 10px;
+}
+
+.skillItem {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+  padding-right: 8px;
+  line-height: 1.4;
+}
+
+/* Links section */
+.panelLinks {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.linksTitle {
+  font-size: 15px;
+  font-weight: 500;
+  margin: 0 0 6px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.linksList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.linkItem {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.4;
+}
+
+/* Scrollbar customization */
+.panelBody::-webkit-scrollbar {
+  width: 6px;
+}
+
+.panelBody::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.panelBody::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+}
+
+.panelBody::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .panelClose {
@@ -134,8 +238,26 @@
     font-size: 18px;
   }
   
+  .panelTitle {
+    font-size: 16px;
+  }
+  
+  .panelSubtitle {
+    font-size: 12px;
+  }
+  
   .panelBody {
+    font-size: 12px;
+  }
+  
+  .skillsTitle,
+  .linksTitle {
     font-size: 13px;
+  }
+  
+  .skillItem, 
+  .linkItem {
+    font-size: 11px;
   }
 }
 
