@@ -936,6 +936,14 @@ export default function InteractivePortfolio() {
       <div className={styles.sectionHeading}>
         <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">{t('portfolio.mindMapTitle')}</h2>
         <p className="max-w-3xl mx-auto text-xl text-gray-300">{t('portfolio.mindMapDescription')}</p>
+        <div className={styles.interactionInstructions}>
+          <span className={styles.instructionItem}>
+            <span className={styles.instructionIcon}>🔍</span> {t('mindMap.clickNodes')}
+          </span>
+          <span className={styles.instructionItem}>
+            <span className={styles.instructionIcon}>✋</span> {t('mindMap.dragNodes')}
+          </span>
+        </div>
       </div>
       <div className={styles.interactivePortfolioContainer} ref={containerRef}>
         <svg ref={svgRef} className={styles.portfolioVisualization}></svg>
