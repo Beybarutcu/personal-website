@@ -42,7 +42,7 @@
   "portfolio": {
     "title": "My Work",
     "subtitle": "Explore a selection of my projects showcasing my skills in web development, design, and interactive data visualization.",
-    "mindMapTitle": "Interactive Mind Map",
+    "mindMapTitle": "InSight",
     "mindMapDescription": "Explore my thoughts, skills and interests through this interactive visualization. Click on nodes to learn more.",
     "filters": {
       "all": "All Projects",
@@ -160,6 +160,7 @@
         "title": "Data Visualization",
         "subtitle": "Turning complex data into intuitive visual stories",
         "description": "<p>I specialize in transforming complex datasets into clear, interactive visualizations that tell compelling stories. Using tools like D3.js and modern charting libraries, I create custom visualizations that help users explore and understand data intuitively.</p><p>My approach combines technical precision with design principles to ensure visualizations are not only accurate but also aesthetically pleasing and accessible to non-technical audiences.</p>",
+        "image": "/images/dataviz-thumbnail.jpg",
         "skills": ["D3.js", "SVG", "Canvas", "Chart.js", "Data Analysis", "Interactive Visualizations", "Dashboards", "Information Design"],
         "links": {
           "neuralnet": "Related Project: Neural Network Visualization",
@@ -237,6 +238,7 @@
         "title": "Neural Network Visualization",
         "subtitle": "Educational tool for understanding AI",
         "description": "<p>An interactive visualization tool that demystifies how neural networks learn. This project allows users to observe the learning process in real-time, with animated data flows and weight adjustments that make the abstract concepts of machine learning more tangible.</p><p>Inspired by my master's thesis, this tool has been used in educational settings to help students understand the fundamentals of artificial intelligence.</p>",
+        "image": "/images/neuralnet-thumbnail.jpg",
         "skills": ["D3.js", "JavaScript", "Machine Learning", "Educational Design", "Interactive Visualization"],
         "links": {
           "portfolio": "View in Portfolio"

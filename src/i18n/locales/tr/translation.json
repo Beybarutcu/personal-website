@@ -42,7 +42,7 @@
   "portfolio": {
     "title": "Çalışmalarım",
     "subtitle": "Web geliştirme, tasarım ve interaktif veri görselleştirme konularındaki becerilerimi sergileyen projelerimi keşfedin.",
-    "mindMapTitle": "İnteraktif Zihin Haritası",
+    "mindMapTitle": "InSight",
     "mindMapDescription": "Bu interaktif görselleştirme ile düşüncelerimi, becerilerimi ve ilgi alanlarımı keşfedin. Daha fazla bilgi için düğümlere tıklayın.",
     "filters": {
       "all": "Tüm Projeler",
@@ -102,7 +102,6 @@
     "en": "İngilizce",
     "tr": "Türkçe"
   },
-  
   "mindMap": {
     "loading": "Görselleştirme yükleniyor...",
     "clickNodes": "Keşfetmek için düğümlere tıklayın",
@@ -160,6 +159,7 @@
         "title": "Veri Görselleştirme",
         "subtitle": "Karmaşık verileri sezgisel görsel hikayelere dönüştürme",
         "description": "<p>Karmaşık veri kümelerini, kullanıcıların verileri sezgisel olarak keşfetmelerine ve anlamalarına yardımcı olan net, etkileşimli görselleştirmelere dönüştürmekte uzmanım. D3.js ve modern grafik kütüphaneleri gibi araçları kullanarak özel görselleştirmeler oluşturuyorum.</p><p>Yaklaşımım, görselleştirmelerin yalnızca doğru değil, aynı zamanda estetik açıdan hoş ve teknik olmayan kitlelere erişilebilir olmasını sağlamak için teknik hassasiyeti tasarım ilkeleriyle birleştiriyor.</p>",
+        "image": "/images/dataviz-thumbnail.jpg",
         "skills": ["D3.js", "SVG", "Canvas", "Chart.js", "Veri Analizi", "Etkileşimli Görselleştirmeler", "Gösterge Panelleri", "Bilgi Tasarımı"],
         "links": {
           "neuralnet": "İlgili Proje: Sinir Ağı Görselleştirmesi",
@@ -237,6 +237,7 @@
         "title": "Sinir Ağı Görselleştirmesi",
         "subtitle": "Yapay zekayı anlamak için eğitim aracı",
         "description": "<p>Sinir ağlarının nasıl öğrendiğini açıklayan etkileşimli bir görselleştirme aracı. Bu proje, kullanıcıların öğrenme sürecini gerçek zamanlı olarak gözlemlemelerine olanak tanır, makine öğrenmesinin soyut kavramlarını daha somut hale getiren animasyonlu veri akışları ve ağırlık ayarlamaları ile.</p><p>Yüksek lisans tezimden esinlenen bu araç, öğrencilerin yapay zekanın temellerini anlamalarına yardımcı olmak için eğitim ortamlarında kullanılmıştır.</p>",
+        "image": "/images/neuralnet-thumbnail.jpg",
         "skills": ["D3.js", "JavaScript", "Makine Öğrenmesi", "Eğitim Tasarımı", "Etkileşimli Görselleştirme"],
         "links": {
           "portfolio": "Portföyde Görüntüle"

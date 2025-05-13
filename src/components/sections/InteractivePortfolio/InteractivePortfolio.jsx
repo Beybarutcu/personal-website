@@ -18,6 +18,41 @@ const ANIMATION_SPEEDS = {
   reset: 400     // For returning to initial state
 };
 
+// Utility function to truncate long descriptions
+function truncateDescription(description, maxLength = 300) {
+  // Strip HTML tags for accurate character count
+  const plainText = description.replace(/<\/?[^>]+(>|$)/g, "");
+  
+  if (plainText.length <= maxLength) return description;
+  
+  // Find the last complete sentence that fits within the limit
+  const sentences = plainText.match(/[^.!?]+[.!?]+/g) || [];
+  let truncated = "";
+  let currentLength = 0;
+  
+  for (const sentence of sentences) {
+    if (currentLength + sentence.length <= maxLength) {
+      truncated += sentence;
+      currentLength += sentence.length;
+    } else {
+      break;
+    }
+  }
+  
+  // If we couldn't get complete sentences, fall back to character truncation
+  if (truncated.length === 0) {
+    truncated = plainText.substring(0, maxLength - 3) + "...";
+  }
+  
+  // Return with original HTML formatting for the kept part if possible
+  // This is a simplified approach - for more complex HTML, you might need a proper HTML parser
+  if (description.includes("<p>")) {
+    return `<p>${truncated}</p>`;
+  }
+  
+  return truncated;
+}
+
 export default function InteractivePortfolio() {
   const { t } = useTranslation();
   const svgRef = useRef(null);
@@ -350,7 +385,33 @@ export default function InteractivePortfolio() {
           const panelWidth = isMobile ? Math.min(width * 0.7, 240) : Math.min(280, width * 0.6);
           const panelHeight = isMobile ? Math.min(height * 0.6, 180) : Math.min(220, height * 0.6);
           const borderMargin = 2;
-          
+          const hPadding = isMobile ? 8 : 12; // Define padding variables earlier
+          const vPadding = isMobile ? 8 : 12; // Define vPadding here
+
+          // Function to check if skills are available and should be shown
+          const shouldShowSkills = (d) => {
+            if (!d.contentKey) return false;
+            try {
+              const skills = t(`${d.contentKey}.skills`, { returnObjects: true });
+              return Array.isArray(skills) && skills.length > 0 && d.category !== 'main';
+            } catch (e) {
+              return false;
+            }
+          };
+
+          // Get node content without image
+          const nodeContent = d.contentKey ? {
+            title: t(`${d.contentKey}.title`),
+            subtitle: t(`${d.contentKey}.subtitle`),
+            // Truncate the description to ensure it fits
+            description: truncateDescription(t(`${d.contentKey}.description`), 
+              isMobile ? 120 : 200) // Shorter for mobile
+          } : {
+            title: d.name,
+            subtitle: "",
+            description: "No content available"
+          };
+
           // Create gradient animation for expansion
           // Get gradient IDs (assuming they're stored on the node data)
           if (!d.gradientId) {
@@ -517,32 +578,33 @@ export default function InteractivePortfolio() {
               const headerFontSize = isMobile ? "16px" : "18px";
               const bodyFontSize = isMobile ? "12px" : "14px";
               
-              // Get node content from translations based on contentKey
-              const nodeContent = d.contentKey ? {
-                title: t(`${d.contentKey}.title`),
-                subtitle: t(`${d.contentKey}.subtitle`),
-                description: t(`${d.contentKey}.description`)
-              } : {
-                title: d.name,
-                subtitle: "",
-                description: "No content available"
-              };
-              
-              // Add content
+              // Add content with enhanced typography and layout
               foreignObject.append("xhtml:div")
                 .style("color", "white")
                 .style("height", "100%")
-                .style("overflow", "auto")
+                .style("overflow", "hidden")
                 .style("display", "flex")
                 .style("flex-direction", "column")
                 .html(`
-                  <div class="${styles.panelContainer}" style="width: 100%; height: 100%;">
-                    <div class="${styles.panelHeader}" style="padding-bottom: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.2);">
-                      <h2 style="margin: 0; font-size: ${headerFontSize}; font-weight: 500;">${nodeContent.title}</h2>
-                      ${nodeContent.subtitle ? `<p style="margin: 4px 0 0; font-size: ${bodyFontSize}; font-weight: 300; opacity: 0.8;">${nodeContent.subtitle}</p>` : ''}
+                  <div class="${styles.panelContainer}">
+                    <div class="${styles.panelHeader}">
+                      <h2 class="${styles.panelTitle}">${nodeContent.title}</h2>
+                      ${nodeContent.subtitle ? `<p class="${styles.panelSubtitle}">${nodeContent.subtitle}</p>` : ''}
                     </div>
-                    <div class="${styles.panelBody}" style="flex-grow: 1; overflow-y: auto;">
-                      <div style="font-size: ${bodyFontSize}; line-height: 1.5; margin-top: 6px;">${nodeContent.description}</div>
+                    <div class="${styles.panelBody}">
+                      <div class="${styles.descriptionContainer}">${nodeContent.description}</div>
+                      ${shouldShowSkills(d) ? `
+                        <div class="${styles.panelSkills}">
+                          <h3 class="${styles.skillsTitle}">${t('mindMap.skillsLabel')}</h3>
+                          <div class="${styles.skillsList}">
+                            ${t(`${d.contentKey}.skills`, { returnObjects: true })
+                              .slice(0, isMobile ? 4 : 6) // Display fewer skills to prevent overflow
+                              .map(skill => 
+                                `<div class="${styles.skillItem}"><span style="color: rgb(249, 115, 22);">•</span>&nbsp;${skill}</div>`
+                              ).join('')}
+                          </div>
+                        </div>
+                      ` : ''}
                     </div>
                   </div>
                 `);
@@ -561,14 +623,14 @@ export default function InteractivePortfolio() {
               
               closeButton.append("circle")
                 .attr("r", isMobile ? 10 : 12)
-                .attr("fill", "rgba(255, 255, 255, 0.1)")
-                .attr("stroke", "rgba(255, 255, 255, 0.3)")
-                .attr("stroke-width", 1);
+                .attr("fill", "rgba(15, 23, 42, 0.7)") // Dark background
+                .attr("stroke", "rgba(249, 115, 22, 0.7)") // Orange border
+                .attr("stroke-width", 1.5);
               
               closeButton.append("text")
                 .attr("text-anchor", "middle")
                 .attr("dy", "0.35em")
-                .attr("fill", "#ffffff")
+                .attr("fill", "rgb(249, 115, 22)") // Orange text
                 .style("font-size", isMobile ? "14px" : "16px")
                 .style("font-weight", "bold")
                 .text("×");
