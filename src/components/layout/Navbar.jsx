@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Home, User, Briefcase, Mail, ArrowUp } from 'lucide-react';
+import InsightIcon from '../icons/InsightIcon'; // Import the custom icon
 
 const Navbar = ({ currentLanguage }) => {
   const { t } = useTranslation();
@@ -21,7 +22,7 @@ const Navbar = ({ currentLanguage }) => {
       }
       
       // Get all sections for intersection detection
-      const sections = ['home', 'about', 'portfolio', 'contact'];
+      const sections = ['home', 'portfolio', 'about', 'projects', 'contact'];
       let currentActive = 'home';
       
       // Find which section is in view
@@ -62,10 +63,11 @@ const Navbar = ({ currentLanguage }) => {
       <nav className="fixed left-6 top-1/2 transform -translate-y-1/2 z-30 hidden md:flex">
         <ul className="flex flex-col gap-6">
           {[
-            { id: 'home', icon: Home },
-            { id: 'about', icon: User },
-            { id: 'portfolio', icon: Briefcase },
-            { id: 'contact', icon: Mail }
+            { id: 'home', icon: Home, label: t('navigation.home') },
+            { id: 'portfolio', icon: InsightIcon, label: 'InSight', isCustomIcon: true }, // Using custom icon
+            { id: 'about', icon: User, label: t('navigation.about') },
+            { id: 'projects', icon: Briefcase, label: 'Projects' },
+            { id: 'contact', icon: Mail, label: t('navigation.contact') }
           ].map(item => {
             const Icon = item.icon;
             const isActive = activeSection === item.id;
@@ -75,7 +77,8 @@ const Navbar = ({ currentLanguage }) => {
                 <a 
                   href={`#${item.id}`}
                   className={`relative block group`}
-                  aria-label={t(`navigation.${item.id}`)}
+                  aria-label={item.label}
+                  title={item.id === 'portfolio' ? 'InSight (Interactive Portfolio)' : item.label}
                 >
                   <span className={`
                     absolute left-0 top-1/2 -translate-y-1/2 w-0 h-0.5 group-hover:w-6 transition-all duration-300
@@ -98,7 +101,7 @@ const Navbar = ({ currentLanguage }) => {
                     opacity-0 group-hover:opacity-100 transition-opacity duration-300
                     text-sm ${isActive ? 'text-white' : 'text-gray-400'}
                   `}>
-                    {t(`navigation.${item.id}`)}
+                    {item.label}
                   </span>
                 </a>
               </li>
@@ -111,10 +114,11 @@ const Navbar = ({ currentLanguage }) => {
       <nav className="fixed bottom-0 left-0 right-0 z-30 md:hidden bg-gray-900/90 backdrop-blur-md border-t border-gray-800/50">
         <ul className="flex justify-around">
           {[
-            { id: 'home', icon: Home },
-            { id: 'about', icon: User },
-            { id: 'portfolio', icon: Briefcase },
-            { id: 'contact', icon: Mail }
+            { id: 'home', icon: Home, label: t('navigation.home') },
+            { id: 'portfolio', icon: InsightIcon, label: 'InSight', isCustomIcon: true }, // Using custom icon
+            { id: 'about', icon: User, label: t('navigation.about') },
+            { id: 'projects', icon: Briefcase, label: 'Projects' },
+            { id: 'contact', icon: Mail, label: t('navigation.contact') }
           ].map(item => {
             const Icon = item.icon;
             const isActive = activeSection === item.id;
@@ -124,7 +128,7 @@ const Navbar = ({ currentLanguage }) => {
                 <a 
                   href={`#${item.id}`}
                   className={`flex flex-col items-center px-3 `}
-                  aria-label={t(`navigation.${item.id}`)}
+                  aria-label={item.label}
                 >
                   <Icon 
                     size={20} 
@@ -134,7 +138,7 @@ const Navbar = ({ currentLanguage }) => {
                     } 
                   />
                   <span className={`text-xs mt-1 ${isActive ? 'text-white' : 'text-gray-400'}`}>
-                    {t(`navigation.${item.id}`)}
+                    {item.label}
                   </span>
                 </a>
               </li>

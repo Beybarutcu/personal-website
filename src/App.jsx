@@ -67,15 +67,23 @@ function App() {
       />
       <Navbar currentLanguage={language} />
       
-      {/* Main content - Removed unnecessary language props */}
+      {/* Main content - Make sure section IDs match navigation targets */}
       <main className="flex-grow pt-16">
-        <Hero />
-        <section className="portfolio-section">
+        <section id="home">
+          <Hero />
+        </section>
+        <section id="portfolio" className="portfolio-section">
           <InteractivePortfolio />
         </section>
-        <About />
-        <Projects />
-        <Contact />
+        <section id="about">
+          <About />
+        </section>
+        <section id="projects">
+          <Projects />
+        </section>
+        <section id="contact">
+          <Contact />
+        </section>
       </main>
       
       {/* Footer */}

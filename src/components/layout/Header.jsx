@@ -39,27 +39,23 @@ const Header = ({ currentLanguage, onLanguageChange }) => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-        {/* Logo/Brand with fixed hover color */}
-        <a href="#" className="flex items-center group">
-          <h1 className="text-2xl md:text-3xl font-bold relative">
-            {/* The key fix is using "bg-clip-text" in the base state AND in the hover state */}
-            <span 
-              className="bg-clip-text text-transparent bg-gradient-to-r from-orange-500 to-orange-400 
-                         hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-r hover:from-orange-500 hover:to-orange-400"
-            >
-              {currentLanguage === 'tr' ? 'Zihin Haritam' : 'My Mind Map'}
-            </span>
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 group-hover:w-full transition-all duration-300"></span>
-          </h1>
-        </a>
+        {/* Empty div to maintain flex layout, since we removed the logo */}
+        <div className="w-8"></div>
         
-        {/* Desktop Navigation */}
+        {/* Desktop Navigation - now includes InSight */}
         <nav className="hidden md:flex items-center gap-8">
           <a 
             href="#home" 
             className="text-gray-300 hover:text-white transition-colors relative group"
           >
             {t('navigation.home')}
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
+          </a>
+          <a 
+            href="#portfolio" 
+            className="text-gray-300 hover:text-white transition-colors relative group"
+          >
+            InSight
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
           </a>
           <a 
@@ -70,10 +66,10 @@ const Header = ({ currentLanguage, onLanguageChange }) => {
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
           </a>
           <a 
-            href="#portfolio" 
+            href="#projects" 
             className="text-gray-300 hover:text-white transition-colors relative group"
           >
-            {t('navigation.portfolio')}
+            Projects
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
           </a>
           <a 
@@ -109,7 +105,7 @@ const Header = ({ currentLanguage, onLanguageChange }) => {
         </div>
       </div>
       
-      {/* Mobile Navigation Overlay */}
+      {/* Mobile Navigation Overlay - now includes InSight */}
       <div 
         className={`fixed inset-0 bg-gray-900/95 backdrop-blur-lg z-30 transition-opacity duration-300 md:hidden ${
           mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
@@ -129,6 +125,13 @@ const Header = ({ currentLanguage, onLanguageChange }) => {
               {t('navigation.home')}
             </a>
             <a 
+              href="#portfolio" 
+              className="text-2xl text-gray-300 hover:text-white transition-colors"
+              onClick={closeMobileMenu}
+            >
+              InSight
+            </a>
+            <a 
               href="#about" 
               className="text-2xl text-gray-300 hover:text-white transition-colors"
               onClick={closeMobileMenu}
@@ -136,11 +139,11 @@ const Header = ({ currentLanguage, onLanguageChange }) => {
               {t('navigation.about')}
             </a>
             <a 
-              href="#portfolio" 
+              href="#projects" 
               className="text-2xl text-gray-300 hover:text-white transition-colors"
               onClick={closeMobileMenu}
             >
-              {t('navigation.portfolio')}
+              Projects
             </a>
             <a 
               href="#contact" 

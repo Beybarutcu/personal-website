@@ -1,6 +1,26 @@
 // src/components/sections/InteractivePortfolio/visualizationUtils.js
 import * as d3 from 'd3';
 
+// Function to center the portfolio section in the viewport
+export function centerPortfolioSection(sectionRef) {
+  if (sectionRef.current) {
+    const sectionRect = sectionRef.current.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    
+    // If the section isn't fully visible in the viewport, scroll to it
+    if (sectionRect.top < 0 || sectionRect.bottom > windowHeight) {
+      // Calculate the ideal position: centered in the viewport
+      const idealScrollPosition = sectionRect.top + window.pageYOffset - (windowHeight / 2) + (sectionRect.height / 2);
+      
+      // Smooth scroll to that position
+      window.scrollTo({
+        top: idealScrollPosition,
+        behavior: 'smooth'
+      });
+    }
+  }
+}
+
 // Updated setupVisualizations with improved physics settings to prevent vibration
 export function setupVisualizations(svgElement, width, height, data) {
     // Create SVG element first WITHOUT zoom behavior
@@ -364,10 +384,236 @@ export function createNodeElements(nodes, styles) {
     });
 }
 
-// Setup a minimal particle system (all particles removed as they were unnecessary)
-export function setupParticleSystem() {
-  return { 
-    particleInterval: null, 
-    motionInterval: null 
+// Replace your current setupParticleSystem function with this improved version
+
+// Add this improved setupParticleSystem function to your visualizationUtils.js file
+// Make sure to keep all your other functions like setupVisualizations, createNodeElements, etc.
+
+export function setupParticleSystem(particleGroup, data, simulation) {
+  if (!particleGroup || !data || !data.links || !simulation) {
+    console.warn("Missing required parameters for particle system");
+    return { 
+      particleInterval: null, 
+      motionInterval: null,
+      cleanup: () => {} // Empty cleanup function to prevent errors
+    };
+  }
+  
+  // Create a reference to store active particles
+  const activeParticles = [];
+  
+  // Signal configuration
+  const signalConfig = {
+    size: 2.5,            // Size of the signal dots
+    speed: 0.012,         // Speed of signal travel (reduced for smoother motion)
+    spawnRate: 750,      // Average time between signal spawns in ms
+    maxSignals: 16,        // Maximum number of signals active at once
+    duration: 2500,       // How long a signal lives in ms (increased slightly)
+    color: "#ffffff",     // Color of signals
+    glow: true,           // Whether signals have a glow effect
+    randomizeStart: true, // Whether to start signals at random positions on links
+    minLinkValue: 0.5,    // Only create signals on links with value >= this
+    opacityMax: 0.6,      // Maximum opacity of particles
+    useRaf: true          // Use requestAnimationFrame instead of setInterval for smoother animation
+  };
+  
+  // Function to create a new signal/particle
+  const createSignal = () => {
+    // Don't exceed max signals
+    if (activeParticles.length >= signalConfig.maxSignals) {
+      return;
+    }
+    
+    // Get valid links (ones with both source and target nodes defined)
+    const validLinks = data.links.filter(link => 
+      link.source && 
+      link.target && 
+      typeof link.source !== 'string' && // Make sure it's a node object, not just an ID
+      typeof link.target !== 'string' &&
+      link.source.id !== link.target.id &&
+      (link.value === undefined || link.value >= signalConfig.minLinkValue)
+    );
+    
+    if (validLinks.length === 0) return;
+    
+    // Randomly select a link to add a signal to
+    const linkIndex = Math.floor(Math.random() * validLinks.length);
+    const link = validLinks[linkIndex];
+    
+    // Create the signal particle
+    const signalParticle = particleGroup.append("circle")
+      .attr("r", signalConfig.size)
+      .attr("fill", signalConfig.color)
+      .style("opacity", 0)
+      .attr("class", "signal-particle"); // Add a class for easier selection
+    
+    // Add glow effect if enabled
+    if (signalConfig.glow) {
+      signalParticle.style("filter", "drop-shadow(0 0 2px rgba(255, 255, 255, 0.8))");
+    }
+    
+    // Random starting position along the link if enabled
+    const progress = signalConfig.randomizeStart ? Math.random() * 0.3 : 0;
+    
+    // Store particle data with reference to the actual source and target nodes
+    const particle = {
+      element: signalParticle,
+      source: link.source, // Store direct references to nodes
+      target: link.target,
+      progress: progress,  // Position along the path (0-1)
+      lastProgress: progress, // For interpolation
+      speed: signalConfig.speed * (0.8 + Math.random() * 0.4), // Slight speed variation
+      createdAt: Date.now(),
+      lastUpdate: Date.now(),
+      duration: signalConfig.duration * (0.8 + Math.random() * 0.4) // Slight duration variation
+    };
+    
+    // Update the initial position
+    updateParticlePosition(particle);
+    
+    // Track this particle
+    activeParticles.push(particle);
+    
+    // Fade in the particle
+    signalParticle.transition()
+      .duration(200)
+      .style("opacity", signalConfig.opacityMax);
+  };
+  
+  // Function to update a single particle's position
+  const updateParticlePosition = (particle) => {
+    if (!particle || !particle.source || !particle.target) return;
+    
+    const sourceX = particle.source.x;
+    const sourceY = particle.source.y;
+    const targetX = particle.target.x;
+    const targetY = particle.target.y;
+    
+    // Make sure source and target positions are defined
+    if (sourceX === undefined || sourceY === undefined || 
+        targetX === undefined || targetY === undefined) {
+      return;
+    }
+    
+    // Calculate current position
+    const x = sourceX + (targetX - sourceX) * particle.progress;
+    const y = sourceY + (targetY - sourceY) * particle.progress;
+    
+    // Update signal position
+    particle.element.attr("cx", x).attr("cy", y);
+  };
+  
+  // Function to update all signal positions with smooth interpolation
+  const updateSignals = (timestamp) => {
+    const currentTime = Date.now();
+    
+    // Update each particle's position
+    for (let i = activeParticles.length - 1; i >= 0; i--) {
+      const particle = activeParticles[i];
+      
+      // Calculate time since last update for smooth movement
+      const deltaTime = currentTime - particle.lastUpdate;
+      particle.lastUpdate = currentTime;
+      
+      // Check if particle has expired
+      if (currentTime - particle.createdAt > particle.duration) {
+        // Fade out and remove expired particles
+        particle.element.transition()
+          .duration(200)
+          .style("opacity", 0)
+          .on("end", function() {
+            d3.select(this).remove();
+          });
+        
+        // Remove from active particles
+        activeParticles.splice(i, 1);
+        continue;
+      }
+      
+      // Store last progress for interpolation
+      particle.lastProgress = particle.progress;
+      
+      // Update progress based on elapsed time for smooth movement
+      // This makes the animation speed independent of frame rate
+      const progressDelta = (particle.speed * deltaTime) / 16.67; // Normalized for 60fps
+      particle.progress += progressDelta;
+      
+      // Remove if reached end (progress > 1)
+      if (particle.progress >= 1) {
+        // Fade out when reaching target
+        particle.element.transition()
+          .duration(200)
+          .style("opacity", 0)
+          .on("end", function() {
+            d3.select(this).remove();
+          });
+        
+        // Remove from active particles
+        activeParticles.splice(i, 1);
+        continue;
+      }
+      
+      // Update the particle position based on source and target nodes
+      updateParticlePosition(particle);
+    }
+    
+    // Continue animation loop if using requestAnimationFrame
+    if (signalConfig.useRaf) {
+      rafId = window.requestAnimationFrame(updateSignals);
+    }
+  };
+  
+  // Variables to track animation methods
+  let particleInterval;
+  let motionInterval;
+  let rafId;
+  
+  // Set up animation based on configuration
+  if (signalConfig.useRaf) {
+    // Use requestAnimationFrame for smoother animation
+    rafId = window.requestAnimationFrame(updateSignals);
+    particleInterval = setInterval(createSignal, signalConfig.spawnRate);
+    motionInterval = null; // Not used with RAF
+  } else {
+    // Use interval-based animation (fallback)
+    particleInterval = setInterval(createSignal, signalConfig.spawnRate);
+    motionInterval = setInterval(updateSignals, 16); // ~60fps
+  }
+  
+  // Update particles when nodes are dragged (crucial for keeping particles on links)
+  const onTick = () => {
+    // Update all active particles' positions when simulation ticks
+    activeParticles.forEach(updateParticlePosition);
+  };
+  
+  // Add the tick listener to the simulation
+  simulation.on("tick.particles", onTick);
+  
+  // After a short delay, create initial signals for immediate visual feedback
+  setTimeout(() => {
+    // Create a few initial signals
+    for (let i = 0; i < Math.min(3, signalConfig.maxSignals); i++) {
+      createSignal();
+    }
+  }, 500);
+  
+  // Return cleanup functions
+  return {
+    particleInterval,
+    motionInterval,
+    cleanup: () => {
+      // Clear intervals
+      if (particleInterval) clearInterval(particleInterval);
+      if (motionInterval) clearInterval(motionInterval);
+      
+      // Cancel animation frame if using RAF
+      if (rafId) window.cancelAnimationFrame(rafId);
+      
+      // Remove tick listener from simulation
+      simulation.on("tick.particles", null);
+      
+      // Remove all existing particles
+      particleGroup.selectAll(".signal-particle").remove();
+    }
   };
 }
