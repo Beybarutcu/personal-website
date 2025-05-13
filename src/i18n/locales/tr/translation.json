@@ -1,285 +1,285 @@
 {
   "navigation": {
-    "home": "Home",
-    "about": "About",
-    "portfolio": "Portfolio",
-    "contact": "Contact"
+    "home": "Ana Sayfa",
+    "about": "Hakkımda",
+    "portfolio": "Portföy",
+    "contact": "İletişim"
   },
   "hero": {
-    "greeting": "Hello, I'm",
-    "title": "Creative Developer",
-    "description": "I build captivating digital experiences that blend innovative design with cutting-edge technology to create memorable user journeys.",
-    "viewWork": "View My Work",
-    "contactMe": "Contact Me",
-    "scrollDown": "Scroll Down"
+    "greeting": "Merhaba, Ben",
+    "title": "Yaratıcı Geliştirici",
+    "description": "Yenilikçi tasarımı keskin teknoloji ile birleştirerek, akılda kalıcı kullanıcı deneyimleri oluşturuyorum.",
+    "viewWork": "Çalışmalarımı Gör",
+    "contactMe": "İletişime Geç",
+    "scrollDown": "Aşağı Kaydır"
   },
   "about": {
-    "title": "About Me",
-    "subtitle": "Creative developer with a passion for building interactive and visually stunning digital experiences.",
-    "whoIAm": "Who I Am",
-    "bioP1": "I'm a creative developer with 5+ years of experience crafting engaging digital experiences that blend artful design with technical precision.",
-    "bioP2": "My passion lies at the intersection of code and creativity, where I build immersive, interactive web applications with particular expertise in data visualization and user interface design.",
-    "bioP3": "I'm constantly exploring new technologies and techniques to push the boundaries of what's possible on the web, focusing on performance, accessibility, and delightful user experiences.",
+    "title": "Hakkımda",
+    "subtitle": "İnteraktif ve görsel açıdan etkileyici dijital deneyimler oluşturma tutkusu olan yaratıcı geliştirici.",
+    "whoIAm": "Ben Kimim",
+    "bioP1": "5+ yıllık deneyime sahip, sanatsal tasarımı teknik hassasiyetle birleştiren etkileyici dijital deneyimler yaratan yaratıcı bir geliştiriciyim.",
+    "bioP2": "Tutkum, özellikle veri görselleştirme ve kullanıcı arayüzü tasarımı konusunda uzmanlığa sahip olduğum sürükleyici, etkileşimli web uygulamaları oluşturduğum kod ve yaratıcılığın kesiştiği yerde yatıyor.",
+    "bioP3": "Web'de mümkün olanın sınırlarını zorlamak için sürekli olarak yeni teknolojileri ve teknikleri keşfediyor, performans, erişilebilirlik ve keyifli kullanıcı deneyimlerine odaklanıyorum.",
     "personalDetails": {
-      "name": "Name",
-      "email": "Email",
-      "location": "Location",
-      "availability": "Availability"
+      "name": "İsim",
+      "email": "E-posta",
+      "location": "Konum",
+      "availability": "Uygunluk"
     },
-    "downloadResume": "Download Resume",
+    "downloadResume": "Özgeçmişi İndir",
     "tabs": {
-      "skills": "Skills & Expertise",
-      "experience": "Work Experience",
-      "education": "Education"
+      "skills": "Beceriler & Uzmanlıklar",
+      "experience": "İş Deneyimi",
+      "education": "Eğitim"
     },
     "skillCategories": {
-      "frontend": "Frontend",
-      "backend": "Backend",
-      "design": "Design",
-      "data": "Data"
+      "frontend": "Önyüz",
+      "backend": "Arkayüz",
+      "design": "Tasarım",
+      "data": "Veri"
     }
   },
   "portfolio": {
-    "title": "My Work",
-    "subtitle": "Explore a selection of my projects showcasing my skills in web development, design, and interactive data visualization.",
-    "mindMapTitle": "Interactive Mind Map",
-    "mindMapDescription": "Explore my thoughts, skills and interests through this interactive visualization. Click on nodes to learn more.",
+    "title": "Çalışmalarım",
+    "subtitle": "Web geliştirme, tasarım ve interaktif veri görselleştirme konularındaki becerilerimi sergileyen projelerimi keşfedin.",
+    "mindMapTitle": "İnteraktif Zihin Haritası",
+    "mindMapDescription": "Bu interaktif görselleştirme ile düşüncelerimi, becerilerimi ve ilgi alanlarımı keşfedin. Daha fazla bilgi için düğümlere tıklayın.",
     "filters": {
-      "all": "All Projects",
-      "featured": "Featured"
+      "all": "Tüm Projeler",
+      "featured": "Öne Çıkanlar"
     },
     "projects": {
       "neuralNetwork": {
-        "title": "Neural Network Visualization",
-        "description": "An interactive D3.js visualization of neural networks with real-time simulation of network learning. Explore connections between nodes, observe weights changing, and see how data flows through the network.",
-        "details": "Built with React and D3.js, this visualization demonstrates advanced concepts in interactive data visualization, animation techniques, and real-time updates."
+        "title": "Sinir Ağı Görselleştirmesi",
+        "description": "Ağın öğrenme sürecinin gerçek zamanlı simülasyonu ile sinir ağlarının interaktif D3.js görselleştirmesi. Düğümler arasındaki bağlantıları keşfedin, ağırlıkların değişimini gözlemleyin ve verilerin ağ boyunca nasıl aktığını görün.",
+        "details": "React ve D3.js ile oluşturulan bu görselleştirme, interaktif veri görselleştirme, animasyon teknikleri ve gerçek zamanlı güncellemeler konusundaki ileri kavramları göstermektedir."
       }
     },
-    "viewLive": "View Live",
-    "viewCode": "View Code",
-    "noResults": "No projects match the selected filter.",
-    "showAll": "Show all projects",
-    "viewMoreGithub": "View More on GitHub"
+    "viewLive": "Canlı Görüntüle",
+    "viewCode": "Kodu Görüntüle",
+    "noResults": "Seçilen filtreyle eşleşen proje bulunamadı.",
+    "showAll": "Tüm projeleri göster",
+    "viewMoreGithub": "GitHub'da Daha Fazla Görüntüle"
   },
   "contact": {
-    "title": "Get In Touch",
-    "subtitle": "Feel free to reach out for collaborations, questions, or just to say hello!",
-    "contactInfo": "Contact Information",
+    "title": "İletişime Geç",
+    "subtitle": "İşbirliği, sorular veya sadece merhaba demek için iletişime geçmekten çekinmeyin!",
+    "contactInfo": "İletişim Bilgileri",
     "infoDetails": {
-      "email": "Email",
-      "location": "Location",
-      "phone": "Phone"
+      "email": "E-posta",
+      "location": "Konum",
+      "phone": "Telefon"
     },
-    "connectWithMe": "Connect With Me",
-    "availableFor": "Available For",
+    "connectWithMe": "Benimle Bağlantı Kur",
+    "availableFor": "Müsait Olduğum İşler",
     "availabilityTypes": {
-      "freelance": "Freelance Projects",
-      "fulltime": "Full-time Positions",
-      "collaborations": "Collaborations",
-      "consulting": "Consulting"
+      "freelance": "Serbest Projeler",
+      "fulltime": "Tam Zamanlı Pozisyonlar",
+      "collaborations": "İşbirlikleri",
+      "consulting": "Danışmanlık"
     },
     "form": {
-      "title": "Send Me a Message",
-      "name": "Your Name",
-      "email": "Email Address",
-      "subject": "Subject",
-      "message": "Message",
+      "title": "Bana Mesaj Gönder",
+      "name": "Adınız",
+      "email": "E-posta Adresiniz",
+      "subject": "Konu",
+      "message": "Mesaj",
       "namePlaceholder": "John Doe",
       "emailPlaceholder": "john@example.com",
-      "subjectPlaceholder": "Project Inquiry",
-      "messagePlaceholder": "I'd like to discuss a potential project...",
-      "sendButton": "Send Message",
-      "sending": "Sending...",
-      "successMessage": "Your message has been sent successfully! I'll get back to you soon.",
-      "errorMessage": "There was an error sending your message. Please try again later."
+      "subjectPlaceholder": "Proje Sorusu",
+      "messagePlaceholder": "Potansiyel bir proje hakkında konuşmak istiyorum...",
+      "sendButton": "Mesaj Gönder",
+      "sending": "Gönderiliyor...",
+      "successMessage": "Mesajınız başarıyla gönderildi! En kısa sürede size geri döneceğim.",
+      "errorMessage": "Mesajınızı gönderirken bir hata oluştu. Lütfen daha sonra tekrar deneyin."
     }
   },
   "footer": {
-    "copyright": "© 2025 Your Name. All rights reserved.",
-    "madeWith": "Made with ❤️ and React"
+    "copyright": "© 2025 Adınız. Tüm hakları saklıdır.",
+    "madeWith": "❤️ ve React ile yapıldı"
   },
   "languageSwitcher": {
-    "en": "English",
-    "tr": "Turkish"
+    "en": "İngilizce",
+    "tr": "Türkçe"
   },
   
   "mindMap": {
-    "loading": "Loading visualization...",
-    "clickNodes": "Click nodes to explore",
-    "dragNodes": "Drag to rearrange",
-    "title": "My Mind Map",
-    "subtitle": "Explore my skills and interests through this interactive visualization.",
-    "clickToView": "Click to view details",
-    "skillsLabel": "Skills",
-    "relatedLinksLabel": "Related Links",
+    "loading": "Görselleştirme yükleniyor...",
+    "clickNodes": "Keşfetmek için düğümlere tıklayın",
+    "dragNodes": "Yeniden düzenlemek için sürükleyin",
+    "title": "Zihin Haritam",
+    "subtitle": "Bu interaktif görselleştirme ile becerilerimi ve ilgi alanlarımı keşfedin.",
+    "clickToView": "Detayları görmek için tıklayın",
+    "skillsLabel": "Beceriler",
+    "relatedLinksLabel": "İlgili Bağlantılar",
     "nodes": {
       "main": {
-        "label": "Me",
-        "title": "About Me",
-        "subtitle": "Creative Developer & Digital Designer",
-        "description": "<p>I'm a creative developer with 5+ years of experience building engaging digital experiences that blend artful design with technical precision.</p><p>My passion lies at the intersection of code and creativity, where I build immersive, interactive web applications with particular expertise in data visualization and user interface design.</p><p>I'm constantly exploring new technologies and techniques to push the boundaries of what's possible on the web, focusing on performance, accessibility, and delightful user experiences.</p>",
-        "skills": ["React", "JavaScript", "Creative Coding", "UI/UX Design", "Data Visualization"],
+        "label": "Ben",
+        "title": "Hakkımda",
+        "subtitle": "Yaratıcı Geliştirici & Dijital Tasarımcı",
+        "description": "<p>Sanatsal tasarımı teknik hassasiyetle birleştiren etkileyici dijital deneyimler yaratan 5+ yıllık deneyime sahip yaratıcı bir geliştiriciyim.</p><p>Tutkum, özellikle veri görselleştirme ve kullanıcı arayüzü tasarımı konusunda uzmanlığa sahip olduğum sürükleyici, etkileşimli web uygulamaları oluşturduğum kod ve yaratıcılığın kesiştiği yerde yatıyor.</p><p>Web'de mümkün olanın sınırlarını zorlamak için sürekli olarak yeni teknolojileri ve teknikleri keşfediyor, performans, erişilebilirlik ve keyifli kullanıcı deneyimlerine odaklanıyorum.</p>",
+        "skills": ["React", "JavaScript", "Yaratıcı Kodlama", "UI/UX Tasarım", "Veri Görselleştirme"],
         "links": {
-          "portfolio": "View Portfolio",
-          "contact": "Contact Me"
+          "portfolio": "Portföyü Görüntüle",
+          "contact": "Benimle İletişime Geç"
         }
       },
       "frontend": {
-        "label": "Frontend",
-        "title": "Frontend Development",
-        "subtitle": "Building modern, responsive user interfaces",
-        "description": "<p>I specialize in crafting modern frontend experiences using the latest web technologies. My approach focuses on creating responsive, accessible, and performant interfaces that work across all devices.</p><p>My expertise includes modern JavaScript frameworks like React and Vue.js, along with advanced CSS techniques including animations, Grid, and Flexbox layouts. I prioritize creating semantic markup and accessible interfaces that work for all users.</p>",
-        "skills": ["React", "Vue.js", "JavaScript/TypeScript", "HTML5/CSS3", "Responsive Design", "Web Accessibility", "Tailwind CSS", "Performance Optimization"],
+        "label": "Önyüz",
+        "title": "Önyüz Geliştirme",
+        "subtitle": "Modern, duyarlı kullanıcı arayüzleri oluşturma",
+        "description": "<p>En son web teknolojilerini kullanarak modern önyüz deneyimleri oluşturmada uzmanım. Yaklaşımım, tüm cihazlarda çalışan duyarlı, erişilebilir ve performanslı arayüzler oluşturmaya odaklanıyor.</p><p>Uzmanlığım React ve Vue.js gibi modern JavaScript çerçevelerinin yanı sıra animasyonlar, Grid ve Flexbox düzenleri dahil olmak üzere gelişmiş CSS tekniklerini içeriyor. Tüm kullanıcılar için çalışan anlamsal işaretleme ve erişilebilir arayüzler oluşturmaya öncelik veriyorum.</p>",
+        "skills": ["React", "Vue.js", "JavaScript/TypeScript", "HTML5/CSS3", "Duyarlı Tasarım", "Web Erişilebilirliği", "Tailwind CSS", "Performans Optimizasyonu"],
         "links": {
-          "portfolio": "Related Project: Portfolio Website",
-          "frontend": "See Frontend Work" 
+          "portfolio": "İlgili Proje: Portföy Web Sitesi",
+          "frontend": "Önyüz Çalışmalarını Gör" 
         }
       },
       "design": {
-        "label": "Design",
-        "title": "UI/UX Design",
-        "subtitle": "Creating intuitive and appealing user experiences",
-        "description": "<p>My design philosophy centers on creating intuitive, accessible, and aesthetically pleasing interfaces. I bridge the gap between visual design and technical implementation to ensure a cohesive user experience.</p><p>Working with tools like Figma and Adobe Creative Suite, I create design systems, prototypes, and visual assets that bring ideas to life. I'm particularly interested in creating designs that aren't just beautiful, but also practical and implementable.</p>",
-        "skills": ["UI Design", "UX Research", "Figma", "Adobe Creative Suite", "Design Systems", "Prototyping", "Interaction Design", "Accessibility"],
+        "label": "Tasarım",
+        "title": "UI/UX Tasarımı",
+        "subtitle": "Sezgisel ve çekici kullanıcı deneyimleri oluşturma",
+        "description": "<p>Tasarım felsefem, sezgisel, erişilebilir ve estetik açıdan hoş arayüzler oluşturmaya odaklanıyor. Tutarlı bir kullanıcı deneyimi sağlamak için görsel tasarım ve teknik uygulama arasındaki boşluğu dolduruyorum.</p><p>Figma ve Adobe Creative Suite gibi araçlarla çalışarak, fikirlere hayat veren tasarım sistemleri, prototipler ve görsel varlıklar oluşturuyorum. Özellikle yalnızca güzel değil, aynı zamanda pratik ve uygulanabilir tasarımlar oluşturmakla ilgileniyorum.</p>",
+        "skills": ["UI Tasarımı", "UX Araştırması", "Figma", "Adobe Creative Suite", "Tasarım Sistemleri", "Prototipleme", "Etkileşim Tasarımı", "Erişilebilirlik"],
         "links": {
-          "portfolio": "View Design Work"
+          "portfolio": "Tasarım Çalışmalarını Görüntüle"
         }
       },
       "backend": {
-        "label": "Backend",
-        "title": "Backend Development",
-        "subtitle": "Building robust server-side solutions",
-        "description": "<p>I develop scalable backend systems that power modern web applications. My focus is on creating clean, maintainable APIs and efficient database designs that support the frontend experience.</p><p>While my primary expertise is in frontend development, I'm comfortable working across the full stack, which helps me create more integrated solutions and better understand system architecture as a whole.</p>",
-        "skills": ["Node.js", "Express", "RESTful APIs", "GraphQL", "Database Design", "Authentication", "Python/Django", "API Design"],
+        "label": "Arkayüz",
+        "title": "Arkayüz Geliştirme",
+        "subtitle": "Sağlam sunucu taraflı çözümler oluşturma",
+        "description": "<p>Modern web uygulamalarını destekleyen ölçeklenebilir arkayüz sistemleri geliştiriyorum. Odak noktam, önyüz deneyimini destekleyen temiz, bakımı yapılabilir API'ler ve verimli veritabanı tasarımları oluşturmaktır.</p><p>Birincil uzmanlığım önyüz geliştirmede olsa da, tam yığın boyunca çalışma konusunda rahatım, bu da daha entegre çözümler oluşturmama ve sistem mimarisini bir bütün olarak daha iyi anlamama yardımcı oluyor.</p>",
+        "skills": ["Node.js", "Express", "RESTful API'ler", "GraphQL", "Veritabanı Tasarımı", "Kimlik Doğrulama", "Python/Django", "API Tasarımı"],
         "links": {
-          "portfolio": "Related Project: Data Dashboard"
+          "portfolio": "İlgili Proje: Veri Gösterge Paneli"
         }
       },
       "dataviz": {
-        "label": "Data Viz",
-        "title": "Data Visualization",
-        "subtitle": "Turning complex data into intuitive visual stories",
-        "description": "<p>I specialize in transforming complex datasets into clear, interactive visualizations that tell compelling stories. Using tools like D3.js and modern charting libraries, I create custom visualizations that help users explore and understand data intuitively.</p><p>My approach combines technical precision with design principles to ensure visualizations are not only accurate but also aesthetically pleasing and accessible to non-technical audiences.</p>",
-        "skills": ["D3.js", "SVG", "Canvas", "Chart.js", "Data Analysis", "Interactive Visualizations", "Dashboards", "Information Design"],
+        "label": "Veri Görsel.",
+        "title": "Veri Görselleştirme",
+        "subtitle": "Karmaşık verileri sezgisel görsel hikayelere dönüştürme",
+        "description": "<p>Karmaşık veri kümelerini, kullanıcıların verileri sezgisel olarak keşfetmelerine ve anlamalarına yardımcı olan net, etkileşimli görselleştirmelere dönüştürmekte uzmanım. D3.js ve modern grafik kütüphaneleri gibi araçları kullanarak özel görselleştirmeler oluşturuyorum.</p><p>Yaklaşımım, görselleştirmelerin yalnızca doğru değil, aynı zamanda estetik açıdan hoş ve teknik olmayan kitlelere erişilebilir olmasını sağlamak için teknik hassasiyeti tasarım ilkeleriyle birleştiriyor.</p>",
+        "skills": ["D3.js", "SVG", "Canvas", "Chart.js", "Veri Analizi", "Etkileşimli Görselleştirmeler", "Gösterge Panelleri", "Bilgi Tasarımı"],
         "links": {
-          "neuralnet": "Related Project: Neural Network Visualization",
-          "datadashboard": "Related Project: Data Dashboard"
+          "neuralnet": "İlgili Proje: Sinir Ağı Görselleştirmesi",
+          "datadashboard": "İlgili Proje: Veri Gösterge Paneli"
         }
       },
       "animation": {
-        "label": "Animation",
-        "title": "Web Animation",
-        "subtitle": "Creating engaging motion experiences",
-        "description": "<p>I create smooth, purposeful animations that enhance user experience and bring interfaces to life. Focusing on performance and accessibility, I implement animations that guide users, provide feedback, and add delight without being distracting.</p><p>My toolkit includes CSS animations, JavaScript animation libraries, SVG animation, and WebGL for more complex 3D effects when appropriate.</p>",
-        "skills": ["CSS Animations", "GSAP", "Framer Motion", "SVG Animation", "Three.js", "Motion Design", "Interaction Design", "Performance Optimization"],
+        "label": "Animasyon",
+        "title": "Web Animasyonu",
+        "subtitle": "Etkileyici hareket deneyimleri oluşturma",
+        "description": "<p>Kullanıcı deneyimini geliştiren ve arayüzlere hayat veren pürüzsüz, amaçlı animasyonlar oluşturuyorum. Performans ve erişilebilirliğe odaklanarak, kullanıcılara rehberlik eden, geri bildirim sağlayan ve dikkat dağıtıcı olmadan keyif katan animasyonlar uyguluyorum.</p><p>Araç setim CSS animasyonlarını, JavaScript animasyon kütüphanelerini, SVG animasyonunu ve uygun olduğunda daha karmaşık 3D efektler için WebGL'yi içerir.</p>",
+        "skills": ["CSS Animasyonları", "GSAP", "Framer Motion", "SVG Animasyonu", "Three.js", "Hareket Tasarımı", "Etkileşim Tasarımı", "Performans Optimizasyonu"],
         "links": {
-          "visualizer": "Related Project: Audio Visualizer"
+          "visualizer": "İlgili Proje: Ses Görselleştirici"
         }
       },
       "masters": {
-        "label": "Masters Degree",
-        "title": "Masters in Computer Science",
-        "subtitle": "University of Technology, 2015-2017",
-        "description": "<p>My graduate studies focused on interactive visualization techniques and artificial intelligence applications. This multidisciplinary program combined computer science theory with practical applications in data visualization and machine learning.</p><p>My thesis project explored novel methods for visualizing neural networks for educational purposes, which led directly to my professional work in data visualization.</p>",
-        "skills": ["Academic Research", "Machine Learning", "Computer Graphics", "Algorithm Design", "Technical Writing", "Data Analysis"],
+        "label": "Yüksek Lisans",
+        "title": "Bilgisayar Bilimlerinde Yüksek Lisans",
+        "subtitle": "Teknoloji Üniversitesi, 2015-2017",
+        "description": "<p>Lisansüstü çalışmalarım, etkileşimli görselleştirme teknikleri ve yapay zeka uygulamaları üzerine odaklandı. Bu disiplinler arası program, bilgisayar bilimi teorisini veri görselleştirme ve makine öğrenmesi konusundaki pratik uygulamalarla birleştirdi.</p><p>Tez projem, eğitim amaçlı sinir ağlarını görselleştirmek için yeni yöntemleri araştırdı, bu da doğrudan veri görselleştirme konusundaki profesyonel çalışmalarıma yol açtı.</p>",
+        "skills": ["Akademik Araştırma", "Makine Öğrenmesi", "Bilgisayar Grafikleri", "Algoritma Tasarımı", "Teknik Yazım", "Veri Analizi"],
         "links": {
-          "neuralnet": "Related Project: Neural Network Visualization"
+          "neuralnet": "İlgili Proje: Sinir Ağı Görselleştirmesi"
         }
       },
       "bachelors": {
-        "label": "Bachelors",
-        "title": "Bachelor's in Software Engineering",
-        "subtitle": "State Technical University, 2011-2015",
-        "description": "<p>My undergraduate education provided me with a strong foundation in computer science principles, software engineering methodologies, and practical programming skills.</p><p>During this time, I developed my interest in frontend development and UI/UX design through various course projects and extracurricular activities.</p>",
-        "skills": ["Software Development", "Computer Science Fundamentals", "Database Systems", "Web Technologies", "Software Architecture"],
+        "label": "Lisans",
+        "title": "Yazılım Mühendisliğinde Lisans",
+        "subtitle": "Devlet Teknik Üniversitesi, 2011-2015",
+        "description": "<p>Lisans eğitimim, bilgisayar bilimi prensipleri, yazılım mühendisliği metodolojileri ve pratik programlama becerileri konusunda sağlam bir temel sağladı.</p><p>Bu süre zarfında, çeşitli ders projeleri ve ders dışı faaliyetler yoluyla önyüz geliştirmeye ve UI/UX tasarımına olan ilgimi geliştirdim.</p>",
+        "skills": ["Yazılım Geliştirme", "Bilgisayar Bilimi Temelleri", "Veritabanı Sistemleri", "Web Teknolojileri", "Yazılım Mimarisi"],
         "links": {}
       },
       "courses": {
-        "label": "Online Courses",
-        "title": "Continuous Learning",
-        "subtitle": "Professional development through online education",
-        "description": "<p>I believe in lifelong learning and regularly take online courses to stay current with emerging technologies and design trends.</p><p>These specialized courses have helped me deepen my expertise in areas like advanced animation techniques, data visualization, and modern frontend frameworks.</p>",
-        "skills": ["Self-directed Learning", "Technical Skill Development", "Creative Coding", "Professional Development"],
+        "label": "Online Kurslar",
+        "title": "Sürekli Öğrenme",
+        "subtitle": "Online eğitim yoluyla profesyonel gelişim",
+        "description": "<p>Yaşam boyu öğrenmeye inanıyorum ve yeni ortaya çıkan teknolojiler ve tasarım trendleriyle güncel kalmak için düzenli olarak online kurslar alıyorum.</p><p>Bu özelleştirilmiş kurslar, gelişmiş animasyon teknikleri, veri görselleştirme ve modern önyüz çerçeveleri gibi alanlarda uzmanlığımı derinleştirmeme yardımcı oldu.</p>",
+        "skills": ["Öz Yönelimli Öğrenme", "Teknik Beceri Geliştirme", "Yaratıcı Kodlama", "Profesyonel Gelişim"],
         "links": {}
       },
       "portfolio": {
-        "label": "Portfolio",
-        "title": "Portfolio Website",
-        "subtitle": "Personal website with interactive features",
-        "description": "<p>This portfolio website showcases my skills and projects through interactive elements like the mind map visualization you're currently exploring. It features a responsive design, smooth animations, and multilingual support.</p><p>Built with React, Tailwind CSS, and custom animations, this project demonstrates my approach to creating engaging and accessible web experiences.</p>",
-        "skills": ["React", "Tailwind CSS", "i18n", "D3.js", "Responsive Design", "Custom Animations"],
+        "label": "Portföy",
+        "title": "Portföy Web Sitesi",
+        "subtitle": "Etkileşimli özelliklere sahip kişisel web sitesi",
+        "description": "<p>Bu portföy web sitesi, şu anda keşfettiğiniz zihin haritası görselleştirmesi gibi etkileşimli unsurlar aracılığıyla becerilerimi ve projelerimi sergiliyor. Duyarlı tasarım, pürüzsüz animasyonlar ve çok dilli destek içerir.</p><p>React, Tailwind CSS ve özel animasyonlarla oluşturulan bu proje, çekici ve erişilebilir web deneyimleri oluşturma yaklaşımımı gösteriyor.</p>",
+        "skills": ["React", "Tailwind CSS", "i18n", "D3.js", "Duyarlı Tasarım", "Özel Animasyonlar"],
         "links": {
-          "source": "View Website Source"
+          "source": "Web Sitesi Kaynağını Görüntüle"
         }
       },
       "datadashboard": {
-        "label": "Data Dashboard",
-        "title": "Interactive Data Dashboard",
-        "subtitle": "Real-time data visualization platform",
-        "description": "<p>A comprehensive dashboard for visualizing and analyzing complex datasets. This application features multiple interactive visualization components, real-time data updates, and customizable views.</p><p>The dashboard demonstrates my skills in both frontend and backend development, with a focus on creating intuitive ways to explore and understand data.</p>",
-        "skills": ["React", "D3.js", "Node.js", "Firebase", "State Management", "Data Analysis"],
+        "label": "Veri Paneli",
+        "title": "Etkileşimli Veri Gösterge Paneli",
+        "subtitle": "Gerçek zamanlı veri görselleştirme platformu",
+        "description": "<p>Karmaşık veri kümelerini görselleştirmek ve analiz etmek için kapsamlı bir gösterge paneli. Bu uygulama, birden fazla etkileşimli görselleştirme bileşeni, gerçek zamanlı veri güncellemeleri ve özelleştirilebilir görünümler içerir.</p><p>Gösterge paneli, verileri keşfetmek ve anlamak için sezgisel yollar oluşturmaya odaklanarak hem önyüz hem de arkayüz geliştirme becerilerimi gösteriyor.</p>",
+        "skills": ["React", "D3.js", "Node.js", "Firebase", "Durum Yönetimi", "Veri Analizi"],
         "links": {
-          "portfolio": "View in Portfolio"
+          "portfolio": "Portföyde Görüntüle"
         }
       },
       "visualizer": {
-        "label": "Audio Visualizer",
-        "title": "Interactive Audio Visualizer",
-        "subtitle": "Creative visualization of music and sound",
-        "description": "<p>This project transforms audio input into captivating visual displays using the Web Audio API and WebGL. Users can upload their own music or use the microphone to create unique visual patterns that respond to the audio's frequency and amplitude.</p><p>The project demonstrates my creativity and technical skills in audio processing, animation, and interactive design.</p>",
-        "skills": ["JavaScript", "Web Audio API", "Three.js", "WebGL", "Creative Coding", "Responsive Animation"],
+        "label": "Ses Görsel.",
+        "title": "Etkileşimli Ses Görselleştiricisi",
+        "subtitle": "Müzik ve sesin yaratıcı görselleştirmesi",
+        "description": "<p>Bu proje, Web Audio API ve WebGL kullanarak ses girişini büyüleyici görsel gösterimlere dönüştürüyor. Kullanıcılar kendi müziklerini yükleyebilir veya sesin frekansına ve genliğine yanıt veren benzersiz görsel desenler oluşturmak için mikrofonu kullanabilir.</p><p>Proje, ses işleme, animasyon ve etkileşimli tasarım konusundaki yaratıcılığımı ve teknik becerilerimi gösteriyor.</p>",
+        "skills": ["JavaScript", "Web Audio API", "Three.js", "WebGL", "Yaratıcı Kodlama", "Duyarlı Animasyon"],
         "links": {
-          "portfolio": "View in Portfolio"
+          "portfolio": "Portföyde Görüntüle"
         }
       },
       "neuralnet": {
-        "label": "Neural Network",
-        "title": "Neural Network Visualization",
-        "subtitle": "Educational tool for understanding AI",
-        "description": "<p>An interactive visualization tool that demystifies how neural networks learn. This project allows users to observe the learning process in real-time, with animated data flows and weight adjustments that make the abstract concepts of machine learning more tangible.</p><p>Inspired by my master's thesis, this tool has been used in educational settings to help students understand the fundamentals of artificial intelligence.</p>",
-        "skills": ["D3.js", "JavaScript", "Machine Learning", "Educational Design", "Interactive Visualization"],
+        "label": "Sinir Ağı",
+        "title": "Sinir Ağı Görselleştirmesi",
+        "subtitle": "Yapay zekayı anlamak için eğitim aracı",
+        "description": "<p>Sinir ağlarının nasıl öğrendiğini açıklayan etkileşimli bir görselleştirme aracı. Bu proje, kullanıcıların öğrenme sürecini gerçek zamanlı olarak gözlemlemelerine olanak tanır, makine öğrenmesinin soyut kavramlarını daha somut hale getiren animasyonlu veri akışları ve ağırlık ayarlamaları ile.</p><p>Yüksek lisans tezimden esinlenen bu araç, öğrencilerin yapay zekanın temellerini anlamalarına yardımcı olmak için eğitim ortamlarında kullanılmıştır.</p>",
+        "skills": ["D3.js", "JavaScript", "Makine Öğrenmesi", "Eğitim Tasarımı", "Etkileşimli Görselleştirme"],
         "links": {
-          "portfolio": "View in Portfolio"
+          "portfolio": "Portföyde Görüntüle"
         }
       },
       "ai": {
-        "label": "AI & ML",
-        "title": "Artificial Intelligence & Machine Learning",
-        "subtitle": "Interest in intelligent systems",
-        "description": "<p>I'm deeply interested in how AI and machine learning can be made more accessible and understandable through thoughtful visualization and interface design.</p><p>My background in both technical implementation and design helps me create experiences that bridge the gap between complex AI concepts and intuitive user interfaces.</p>",
-        "skills": ["Machine Learning Concepts", "Neural Networks", "Data Science", "Ethical AI"],
+        "label": "YZ & MÖ",
+        "title": "Yapay Zeka & Makine Öğrenmesi",
+        "subtitle": "Akıllı sistemlere ilgi",
+        "description": "<p>Yapay zeka ve makine öğrenmesinin, düşünceli görselleştirme ve arayüz tasarımı yoluyla nasıl daha erişilebilir ve anlaşılır hale getirilebileceğiyle derinden ilgileniyorum.</p><p>Hem teknik uygulama hem de tasarım konusundaki geçmişim, karmaşık yapay zeka kavramları ile sezgisel kullanıcı arayüzleri arasındaki boşluğu dolduran deneyimler oluşturmama yardımcı oluyor.</p>",
+        "skills": ["Makine Öğrenmesi Kavramları", "Sinir Ağları", "Veri Bilimi", "Etik YZ"],
         "links": {
-          "neuralnet": "See Neural Network Visualization"
+          "neuralnet": "Sinir Ağı Görselleştirmesini Gör"
         }
       },
       "interactive": {
-        "label": "Interactive Art",
-        "title": "Interactive Art & Creative Coding",
-        "subtitle": "Exploring the intersection of art and technology",
-        "description": "<p>I'm passionate about the creative potential of code and how it can be used to create interactive art experiences. I experiment with generative art, interactive installations, and creative visualizations that respond to user input or environmental data.</p><p>This interest influences my professional work by encouraging innovative approaches to design challenges and user interaction patterns.</p>",
-        "skills": ["Creative Coding", "Generative Art", "p5.js", "Interactive Installations", "Algorithmic Design"],
+        "label": "Etkileşimli Sanat",
+        "title": "Etkileşimli Sanat & Yaratıcı Kodlama",
+        "subtitle": "Sanat ve teknolojinin kesişimini keşfetme",
+        "description": "<p>Kodun yaratıcı potansiyeli ve bunun etkileşimli sanat deneyimleri oluşturmak için nasıl kullanılabileceği konusunda tutkuluyum. Kullanıcı girişine veya çevresel verilere yanıt veren üretken sanat, etkileşimli kurulumlar ve yaratıcı görselleştirmelerle deneyler yapıyorum.</p><p>Bu ilgi, tasarım zorluklarına ve kullanıcı etkileşim kalıplarına yenilikçi yaklaşımları teşvik ederek profesyonel çalışmalarımı etkiliyor.</p>",
+        "skills": ["Yaratıcı Kodlama", "Üretken Sanat", "p5.js", "Etkileşimli Kurulumlar", "Algoritmik Tasarım"],
         "links": {
-          "visualizer": "See Audio Visualizer"
+          "visualizer": "Ses Görselleştiricisini Gör"
         }
       },
       "music": {
-        "label": "Music",
-        "title": "Music & Audio",
-        "subtitle": "Passion for music and audio technology",
-        "description": "<p>My interest in music extends to how it can be visualized and experienced through technology. I enjoy exploring the intersection of audio processing, visualization, and interactive design.</p><p>This passion has influenced projects like my audio visualizer and informs my approach to creating immersive, multisensory digital experiences.</p>",
-        "skills": ["Audio Processing", "Music Production", "Sound Design", "Web Audio API"],
+        "label": "Müzik",
+        "title": "Müzik & Ses",
+        "subtitle": "Müzik ve ses teknolojisine tutku",
+        "description": "<p>Müziğe olan ilgim, teknoloji aracılığıyla nasıl görselleştirilebileceğine ve deneyimlenebileceğine kadar uzanıyor. Ses işleme, görselleştirme ve etkileşimli tasarımın kesişimini keşfetmekten keyif alıyorum.</p><p>Bu tutku, ses görselleştiricim gibi projeleri etkiledi ve sürükleyici, çok duyulu dijital deneyimler oluşturma yaklaşımımı şekillendiriyor.</p>",
+        "skills": ["Ses İşleme", "Müzik Prodüksiyonu", "Ses Tasarımı", "Web Audio API"],
         "links": {
-          "visualizer": "See Audio Visualizer"
+          "visualizer": "Ses Görselleştiricisini Gör"
         }
       },
       "space": {
-        "label": "Space",
-        "title": "Space & Astronomy",
-        "subtitle": "Fascination with cosmic exploration",
-        "description": "<p>I'm fascinated by space exploration and astronomy, which inspires many of my design aesthetics and visualization projects. The cosmic theme you see throughout my portfolio reflects this interest.</p><p>I enjoy finding ways to represent astronomical data and concepts in interactive, accessible formats.</p>",
-        "skills": ["Astronomy Visualization", "Scientific Data Representation", "Space-Inspired Design"],
+        "label": "Uzay",
+        "title": "Uzay & Astronomi",
+        "subtitle": "Kozmik keşiflere hayranlık",
+        "description": "<p>Uzay keşfi ve astronomi beni büyülüyor, bu da birçok tasarım estetiğimi ve görselleştirme projemi etkiliyor. Portföyümde gördüğünüz kozmik tema bu ilgiyi yansıtıyor.</p><p>Astronomi verilerini ve kavramlarını etkileşimli, erişilebilir formatlarda temsil etmenin yollarını bulmaktan keyif alıyorum.</p>",
+        "skills": ["Astronomi Görselleştirmesi", "Bilimsel Veri Temsili", "Uzay-İlhamlı Tasarım"],
         "links": {
-          "dataviz": "See Data Visualization Work"
+          "dataviz": "Veri Görselleştirme Çalışmalarını Gör"
         }
       }
     }
