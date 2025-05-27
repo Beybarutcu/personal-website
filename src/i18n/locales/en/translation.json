@@ -37,12 +37,52 @@
       "backend": "Backend",
       "design": "Design",
       "data": "Data"
+    },
+    "experience": {
+      "current": {
+        "period": "2022 - Present",
+        "title": "Senior Frontend Developer",
+        "company": "Interactive Data Solutions",
+        "description": "Leading frontend development for data visualization platforms with an emphasis on interactive user experiences. Implementing complex D3.js visualizations and optimizing performance for large datasets."
+      },
+      "previous1": {
+        "period": "2019 - 2022",
+        "title": "UI/UX Developer",
+        "company": "Creative Web Studio",
+        "description": "Created responsive web applications with modern JavaScript frameworks. Designed and implemented interactive user interfaces focused on usability and accessibility."
+      },
+      "previous2": {
+        "period": "2017 - 2019",
+        "title": "Web Developer",
+        "company": "Digital Agency Inc.",
+        "description": "Developed websites and web applications for various clients. Worked on both frontend and backend technologies, focusing on creating seamless user experiences."
+      }
+    },
+    "education": {
+      "masters": {
+        "period": "2015 - 2017",
+        "degree": "Master's Degree in Computer Science",
+        "school": "University of Technology",
+        "description": "Specialized in AI and interactive visualization techniques. Thesis focused on neural network visualization methods for educational purposes."
+      },
+      "bachelors": {
+        "period": "2011 - 2015",
+        "degree": "Bachelor's Degree in Software Engineering",
+        "school": "State Technical University",
+        "description": "Core curriculum in programming, algorithms, data structures, and software development methodologies."
+      },
+      "courses": {
+        "period": "Ongoing",
+        "degree": "Professional Development",
+        "school": "Various Online Platforms",
+        "description": "Continuous learning through specialized courses in emerging web technologies, data visualization, and machine learning."
+      }
     }
   },
   "portfolio": {
     "title": "My Work",
     "subtitle": "Explore a selection of my projects showcasing my skills in web development, design, and interactive data visualization.",
-    "mindMapTitle": "InSight",
+    "mindMapTitle": "Insight",
     "mindMapDescription": "Explore my thoughts, skills and interests through this interactive visualization. Click on nodes to learn more.",
     "filters": {
       "all": "All Projects",

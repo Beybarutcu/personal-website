@@ -1,7 +1,7 @@
 // src/components/sections/About.jsx
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Code, Brush, Database, Server } from 'lucide-react';
+import { Code, Brush, Database, Server, Calendar, Briefcase, GraduationCap } from 'lucide-react';
 
 const About = ({ language }) => {
   const { t } = useTranslation();
@@ -16,11 +16,7 @@ const About = ({ language }) => {
               title={t('about.skillCategories.frontend')} 
               icon={<Code size={20} />}
               skills={[
-                { name: 'React', level: 90 },
-                { name: 'Vue.js', level: 85 },
-                { name: 'JavaScript/TypeScript', level: 95 },
-                { name: 'HTML/CSS/SASS', level: 90 },
-                { name: 'Tailwind CSS', level: 85 }
+                'React', 'Vue.js', 'JavaScript/TypeScript', 'HTML/CSS/SASS', 'Tailwind CSS'
               ]}
             />
             
@@ -28,11 +24,7 @@ const About = ({ language }) => {
               title={t('about.skillCategories.design')} 
               icon={<Brush size={20} />}
               skills={[
-                { name: 'UI/UX Design', level: 80 },
-                { name: 'Figma', level: 85 },
-                { name: 'Creative Visualization', level: 90 },
-                { name: 'Animation', level: 75 },
-                { name: 'Responsive Design', level: 90 }
+                'UI/UX Design', 'Figma', 'Creative Visualization', 'Animation', 'Responsive Design'
               ]}
             />
             
@@ -40,11 +32,7 @@ const About = ({ language }) => {
               title={t('about.skillCategories.backend')} 
               icon={<Server size={20} />}
               skills={[
-                { name: 'Node.js', level: 85 },
-                { name: 'Python/Django', level: 80 },
-                { name: 'RESTful APIs', level: 90 },
-                { name: 'GraphQL', level: 75 },
-                { name: 'Authentication', level: 85 }
+                'Node.js', 'Python/Django', 'RESTful APIs', 'GraphQL', 'Authentication'
               ]}
             />
             
@@ -52,58 +40,56 @@ const About = ({ language }) => {
               title={t('about.skillCategories.data')} 
               icon={<Database size={20} />}
               skills={[
-                { name: 'D3.js', level: 95 },
-                { name: 'Data Analysis', level: 85 },
-                { name: 'Chart.js', level: 80 },
-                { name: 'Python Data Science', level: 85 },
-                { name: 'SQL/NoSQL', level: 80 }
+                'D3.js', 'Data Analysis', 'Chart.js', 'Python Data Science', 'SQL/NoSQL'
               ]}
             />
           </div>
         );
       case 'experience':
         return (
-          <div className="space-y-6">
+          <div className="space-y-8">
             <ExperienceItem 
-              period="2022 - Present"
-              title="Senior Frontend Developer"
-              company="Interactive Data Solutions"
-              description="Leading frontend development for data visualization platforms with an emphasis on interactive user experiences. Implementing complex D3.js visualizations and optimizing performance for large datasets."
+              period={t('about.experience.current.period')}
+              title={t('about.experience.current.title')}
+              company={t('about.experience.current.company')}
+              description={t('about.experience.current.description')}
+              current={true}
             />
             <ExperienceItem 
-              period="2019 - 2022"
-              title="UI/UX Developer"
-              company="Creative Web Studio"
-              description="Created responsive web applications with modern JavaScript frameworks. Designed and implemented interactive user interfaces focused on usability and accessibility."
+              period={t('about.experience.previous1.period')}
+              title={t('about.experience.previous1.title')}
+              company={t('about.experience.previous1.company')}
+              description={t('about.experience.previous1.description')}
             />
             <ExperienceItem 
-              period="2017 - 2019"
-              title="Web Developer"
-              company="Digital Agency Inc."
-              description="Developed websites and web applications for various clients. Worked on both frontend and backend technologies, focusing on creating seamless user experiences."
+              period={t('about.experience.previous2.period')}
+              title={t('about.experience.previous2.title')}
+              company={t('about.experience.previous2.company')}
+              description={t('about.experience.previous2.description')}
             />
           </div>
         );
       case 'education':
         return (
-          <div className="space-y-6">
+          <div className="space-y-8">
             <EducationItem 
-              period="2015 - 2017"
-              degree="Master's Degree in Computer Science"
-              school="University of Technology"
-              description="Specialized in AI and interactive visualization techniques. Thesis focused on neural network visualization methods for educational purposes."
+              period={t('about.education.masters.period')}
+              degree={t('about.education.masters.degree')}
+              school={t('about.education.masters.school')}
+              description={t('about.education.masters.description')}
             />
             <EducationItem 
-              period="2011 - 2015"
-              degree="Bachelor's Degree in Software Engineering"
-              school="State Technical University"
-              description="Core curriculum in programming, algorithms, data structures, and software development methodologies."
+              period={t('about.education.bachelors.period')}
+              degree={t('about.education.bachelors.degree')}
+              school={t('about.education.bachelors.school')}
+              description={t('about.education.bachelors.description')}
             />
             <EducationItem 
-              period="Ongoing"
-              degree="Professional Development"
-              school="Various Online Platforms"
-              description="Continuous learning through specialized courses in emerging web technologies, data visualization, and machine learning."
+              period={t('about.education.courses.period')}
+              degree={t('about.education.courses.degree')}
+              school={t('about.education.courses.school')}
+              description={t('about.education.courses.description')}
+              ongoing={true}
             />
           </div>
         );
@@ -112,11 +98,10 @@ const About = ({ language }) => {
     }
   };
   
+// Add these global styles at the end of the component
   return (
     <section id="about" className="relative py-20 overflow-hidden">
-      {/* Keep only the gradient orbs */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        {/* Gradient orbs with a different color scheme */}
         <div className="absolute top-1/4 right-1/4 w-96 h-96 rounded-full bg-emerald-500/10 blur-3xl animate-float-y" 
              style={{ animationDelay: "0.5s" }}></div>
         <div className="absolute bottom-1/3 left-1/5 w-80 h-80 rounded-full bg-indigo-500/10 blur-3xl animate-float-y" 
@@ -136,7 +121,6 @@ const About = ({ language }) => {
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          {/* Bio section */}
           <div className="lg:col-span-5 space-y-8">
             <div className="bg-gray-800/40 backdrop-blur-md rounded-xl border border-gray-700/50 p-6 md:p-8 shadow-xl">
               <h3 className="text-2xl font-bold text-white mb-4">
@@ -183,10 +167,8 @@ const About = ({ language }) => {
             </div>
           </div>
           
-          {/* Skills, Experience, Education tabs */}
           <div className="lg:col-span-7">
             <div className="bg-gray-800/40 backdrop-blur-md rounded-xl border border-gray-700/50 overflow-hidden shadow-xl">
-              {/* Tabs */}
               <div className="flex border-b border-gray-700/50">
                 {[
                   { id: 'skills', label: t('about.tabs.skills') },
@@ -195,19 +177,19 @@ const About = ({ language }) => {
                 ].map(tab => (
                   <button
                     key={tab.id}
-                    className={`flex-1 py-4 px-4 text-center transition-colors ${
+                    className={`flex-1 py-4 px-4 text-center transition-colors focus:outline-none focus:ring-0 focus:ring-offset-0 focus-visible:outline-none focus-visible:ring-0 active:outline-none ${
                       activeTab === tab.id
                         ? 'bg-gradient-to-r from-gray-700/50 to-gray-800/50 text-white font-medium'
                         : 'text-gray-400 hover:text-gray-300 hover:bg-gray-700/30'
                     }`}
                     onClick={() => setActiveTab(tab.id)}
+                    style={{ outline: 'none' }} // Inline style as a fallback
                   >
                     {tab.label}
                   </button>
                 ))}
               </div>
               
-              {/* Tab content */}
               <div className="p-6 md:p-8">
                 {renderTabContent()}
               </div>
@@ -215,70 +197,101 @@ const About = ({ language }) => {
           </div>
         </div>
       </div>
+      
+      {/* Global styles to remove focus outlines */}
+      <style jsx global>{`
+        button:focus {
+          outline: none !important;
+          box-shadow: none !important;
+        }
+      `}</style>
     </section>
   );
 };
 
-// SkillCategory Component with Orange Highlight
+// SkillCategory component with hover effects removed
 const SkillCategory = ({ title, icon, skills }) => {
   return (
-    <div className="bg-gray-800/60 backdrop-blur-sm rounded-lg border border-gray-700/50 p-5 transition-transform hover:transform hover:scale-[1.02]">
-      <div className="flex items-center gap-3 mb-4">
-        <div className="p-2 bg-orange-500/20 rounded-full text-orange-500">
+    <div className="bg-gray-800/60 backdrop-blur-sm rounded-lg border border-gray-700/50 p-5 shadow-lg">
+      <div className="flex items-center gap-3 mb-5">
+        <div className="p-2.5 bg-gradient-to-br from-orange-500/30 to-orange-500/10 rounded-full text-orange-400 shadow-md shadow-orange-900/10">
           {icon}
         </div>
         <h4 className="text-lg font-semibold text-white">{title}</h4>
       </div>
       
-      <div className="space-y-3">
+      <div className="flex flex-wrap gap-2 mt-2">
         {skills.map((skill, index) => (
-          <div key={index}>
-            <div className="flex justify-between text-sm mb-1">
-              <span className="text-gray-300">{skill.name}</span>
-              <span className="text-orange-400">{skill.level}%</span>
-            </div>
-            <div className="w-full bg-gray-700/50 rounded-full h-1.5">
-              <div 
-                className="h-1.5 rounded-full bg-gradient-to-r from-orange-500 to-orange-400"
-                style={{ width: `${skill.level}%` }}
-              ></div>
-            </div>
-          </div>
+          <span 
+            key={index}
+            className="px-3 py-1.5 bg-gradient-to-br from-gray-700/80 to-gray-800/80 text-gray-200 rounded-lg text-sm border border-gray-600/50 shadow-sm"
+          >
+            {skill}
+          </span>
         ))}
       </div>
     </div>
   );
 };
 
-// Experience Item Component
-const ExperienceItem = ({ period, title, company, description }) => {
+// Updated ExperienceItem with perfectly centered circle indicator
+const ExperienceItem = ({ period, title, company, description, current = false }) => {
   return (
-    <div className="relative pl-8 before:absolute before:left-0 before:top-0 before:bottom-0 before:w-0.5 before:bg-gradient-to-b before:from-white/70 before:to-gray-600">
-      <div className="absolute left-0 top-1 w-2.5 h-2.5 rounded-full bg-white transform -translate-x-1/2"></div>
+    <div className="relative pl-12">
+      {/* Timeline line with consistent width and centered positioning */}
+      <div className="absolute left-[11px] top-0 bottom-0 w-[2px] bg-gradient-to-b from-orange-500/80 via-orange-500/50 to-orange-500/20"></div>
       
-      <div className="text-sm text-gray-400 mb-1">{period}</div>
-      <h4 className="text-lg font-semibold text-white mb-1">{title}</h4>
-      <div className="text-gray-300 mb-2">{company}</div>
-      <p className="text-gray-300">{description}</p>
+      {/* Circle indicator precisely centered on the line */}
+      <div className="absolute left-[12px] top-0 w-6 h-6 flex items-center justify-center rounded-full bg-gray-800 border-2 border-orange-500 transform -translate-x-1/2 z-10 shadow-[0_0_8px_rgba(249,115,22,0.5)]">
+        <Briefcase size={12} className="text-orange-400" />
+      </div>
+      
+      <div className="flex items-center space-x-2 mb-3">
+        <Calendar size={14} className="text-orange-400" />
+        <div className="text-sm text-gray-300 font-medium">{period}</div>
+        {current && (
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-500/20 text-green-400 border border-green-500/30">
+            Current
+          </span>
+        )}
+      </div>
+      
+      <h4 className="text-xl font-semibold text-white mb-2">{title}</h4>
+      <div className="text-orange-400 font-medium mb-3">{company}</div>
+      <p className="text-gray-300 leading-relaxed">{description}</p>
     </div>
   );
 };
 
-// Education Item Component
-const EducationItem = ({ period, degree, school, description }) => {
+// Updated EducationItem with elegant vertical line styling to match ExperienceItem
+const EducationItem = ({ period, degree, school, description, ongoing = false }) => {
   return (
-    <div className="relative pl-8 before:absolute before:left-0 before:top-0 before:bottom-0 before:w-0.5 before:bg-gradient-to-b before:from-white/70 before:to-gray-600">
-      <div className="absolute left-0 top-1 w-2.5 h-2.5 rounded-full bg-white transform -translate-x-1/2"></div>
+    <div className="relative pl-12">
+      {/* Timeline line with elegant styling */}
+      <div className="absolute left-[11px] top-0 bottom-0 w-[2px] bg-gradient-to-b from-blue-500/80 via-blue-500/50 to-blue-500/20"></div>
       
-      <div className="text-sm text-gray-400 mb-1">{period}</div>
-      <h4 className="text-lg font-semibold text-white mb-1">{degree}</h4>
-      <div className="text-gray-300 mb-2">{school}</div>
-      <p className="text-gray-300">{description}</p>
+      {/* Circle indicator with glow effect */}
+      <div className="absolute left-[12px] top-0 w-6 h-6 flex items-center justify-center rounded-full bg-gray-800 border-2 border-blue-500 transform -translate-x-1/2 z-10 shadow-[0_0_8px_rgba(96,165,250,0.5)]">
+        <GraduationCap size={12} className="text-blue-400" />
+      </div>
+      
+      <div className="flex items-center space-x-2 mb-3">
+        <Calendar size={14} className="text-blue-400" />
+        <div className="text-sm text-gray-300 font-medium">{period}</div>
+        {ongoing && (
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-500/20 text-blue-400 border border-blue-500/30">
+            Ongoing
+          </span>
+        )}
+      </div>
+      
+      <h4 className="text-xl font-semibold text-white mb-2">{degree}</h4>
+      <div className="text-blue-400 font-medium mb-3">{school}</div>
+      <p className="text-gray-300 leading-relaxed">{description}</p>
     </div>
   );
 };
 
-// Personal Detail Component
 const PersonalDetail = ({ label, value }) => {
   return (
     <li className="flex justify-between items-center py-2 border-b border-gray-700/30 last:border-0">

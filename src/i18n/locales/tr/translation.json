@@ -37,12 +37,52 @@
       "backend": "Arkayüz",
       "design": "Tasarım",
       "data": "Veri"
+    },
+    "experience": {
+      "current": {
+        "period": "2022 - Günümüz",
+        "title": "Kıdemli Önyüz Geliştirici",
+        "company": "Interactive Data Solutions",
+        "description": "Etkileşimli kullanıcı deneyimleri odaklı veri görselleştirme platformları için önyüz geliştirme liderliği. Karmaşık D3.js görselleştirmeleri uygulanması ve büyük veri setleri için performans optimizasyonu."
+      },
+      "previous1": {
+        "period": "2019 - 2022",
+        "title": "UI/UX Geliştirici",
+        "company": "Creative Web Studio",
+        "description": "Modern JavaScript çerçeveleri ile duyarlı web uygulamaları oluşturma. Kullanılabilirlik ve erişilebilirlik odaklı etkileşimli kullanıcı arayüzleri tasarımı ve uygulaması."
+      },
+      "previous2": {
+        "period": "2017 - 2019",
+        "title": "Web Geliştirici",
+        "company": "Digital Agency Inc.",
+        "description": "Çeşitli müşteriler için web siteleri ve web uygulamaları geliştirme. Sorunsuz kullanıcı deneyimleri oluşturmaya odaklanarak hem önyüz hem de arkayüz teknolojileri üzerinde çalışma."
+      }
+    },
+    "education": {
+      "masters": {
+        "period": "2015 - 2017",
+        "degree": "Bilgisayar Bilimlerinde Yüksek Lisans",
+        "school": "Teknoloji Üniversitesi",
+        "description": "Yapay zeka ve etkileşimli görselleştirme teknikleri konusunda uzmanlaşma. Tez çalışması eğitim amaçlı sinir ağı görselleştirme yöntemleri üzerine odaklandı."
+      },
+      "bachelors": {
+        "period": "2011 - 2015",
+        "degree": "Yazılım Mühendisliğinde Lisans",
+        "school": "Devlet Teknik Üniversitesi",
+        "description": "Programlama, algoritmalar, veri yapıları ve yazılım geliştirme metodolojileri üzerine temel müfredat."
+      },
+      "courses": {
+        "period": "Sürekli",
+        "degree": "Profesyonel Gelişim",
+        "school": "Çeşitli Online Platformlar",
+        "description": "Yeni ortaya çıkan web teknolojileri, veri görselleştirme ve makine öğrenmesi konularında uzmanlaşmış kurslar aracılığıyla sürekli öğrenme."
+      }
     }
   },
   "portfolio": {
     "title": "Çalışmalarım",
     "subtitle": "Web geliştirme, tasarım ve interaktif veri görselleştirme konularındaki becerilerimi sergileyen projelerimi keşfedin.",
-    "mindMapTitle": "InSight",
+    "mindMapTitle": "Insight",
     "mindMapDescription": "Bu interaktif görselleştirme ile düşüncelerimi, becerilerimi ve ilgi alanlarımı keşfedin. Daha fazla bilgi için düğümlere tıklayın.",
     "filters": {
       "all": "Tüm Projeler",
