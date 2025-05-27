@@ -20,6 +20,7 @@ import CosmicBackground from './components/ui/CosmicBackground';
 
 function App() {
   const [loading, setLoading] = useState(true);
+  const [fadeOut, setFadeOut] = useState(false);
   const [language, setLanguage] = useState('en');
   const { i18n } = useTranslation();
   
@@ -40,21 +41,35 @@ function App() {
       i18n.changeLanguage(storedLanguage);
     }
   }, [i18n]);
-  
-  // Simulate loading time
+  // Handle intro animation timing with smooth transition
   useEffect(() => {
-    // Show loading for at least 1.5 seconds to make loading animation visible
-    const timer = setTimeout(() => {
+    const timer1 = setTimeout(() => {
+      setFadeOut(true);
+    }, 1800); // Start fade out after all signals complete
+
+    const timer2 = setTimeout(() => {
       setLoading(false);
-    }, 1500);
+    }, 2100); // Complete removal with enough buffer for all animations
     
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+    };
   }, []);
   
+  // Show intro animation
   if (loading) {
-    return <LoadingIndicator isLoading={loading} />;
+    return (
+      <div className={`fixed inset-0 flex items-center justify-center transition-opacity duration-300 ease-in-out
+        ${fadeOut ? 'opacity-0' : 'opacity-100'}
+        bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950
+        before:absolute before:inset-0 before:bg-[radial-gradient(circle,rgba(var(--color-primary),0.08)_0%,transparent_70%)]`}>
+        <div className="relative">
+          <LoadingIndicator size={250} />
+        </div>
+      </div>
+    );
   }
-  
   return (
     <div className="flex flex-col min-h-screen relative">
       {/* Cosmic animated background */}
