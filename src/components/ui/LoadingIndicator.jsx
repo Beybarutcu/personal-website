@@ -8,6 +8,16 @@ const LoadingIndicator = ({ size = 200 }) => {
     const svg = d3.select(svgRef.current);
     svg.selectAll('*').remove();
 
+    // Store all ongoing transitions for cleanup
+    const transitions = new Set();
+
+    // Function to create and track transitions
+    const createTrackedTransition = (selection) => {
+      const transition = selection.transition();
+      transitions.add(transition);
+      return transition;
+    };
+
     // Add glow filter
     const defs = svg.append('defs');
     
@@ -57,7 +67,7 @@ const LoadingIndicator = ({ size = 200 }) => {
       return {
         x: center.x + Math.cos(angle) * r,
         y: center.y + Math.sin(angle) * r,
-        size: size * (0.045 + Math.random() * 0.02) // Increased from 0.03 to 0.045
+        size: size * (0.045 + Math.random() * 0.02)
       };
     });
 
@@ -72,13 +82,12 @@ const LoadingIndicator = ({ size = 200 }) => {
       .append('circle')
       .attr('cx', center.x)
       .attr('cy', center.y)
-      .attr('r', size * 0.1) // Increased from 0.08 to 0.1
+      .attr('r', size * 0.1)
       .attr('fill', 'rgb(var(--color-primary))')
       .attr('opacity', 0);
 
     // Fade in center node
-    centerNode
-      .transition()
+    const centerTransition = createTrackedTransition(centerNode)
       .duration(400)
       .attr('opacity', 1)
       .ease(d3.easeCubicOut);
@@ -101,13 +110,12 @@ const LoadingIndicator = ({ size = 200 }) => {
         .append('circle')
         .attr('cx', node.x)
         .attr('cy', node.y)
-        .attr('r', 0) // Start with size 0
+        .attr('r', 0)
         .attr('fill', 'white')
         .attr('opacity', 0);
 
-      // Enhanced fade in for outer node with size animation
-      outerNode
-        .transition()
+      // Enhanced fade in for outer node
+      const nodeTransition = createTrackedTransition(outerNode)
         .delay(300 + i * 50)
         .duration(400)
         .attr('r', node.size)
@@ -115,68 +123,84 @@ const LoadingIndicator = ({ size = 200 }) => {
         .ease(d3.easeCubicOut);
 
       // Animate line growth
-      line
-        .transition()
+      const lineTransition = createTrackedTransition(line)
         .delay(300 + i * 60)
         .duration(450)
         .attr('x2', node.x)
         .attr('y2', node.y)
         .ease(d3.easeCubicOut)
         .on('end', () => {
-          // After line is drawn, animate the signal dot immediately
+          if (!svg.node()) return; // Check if component is still mounted
+
           const length = Math.hypot(node.x - center.x, node.y - center.y);
           
-          // Update gradient coordinates
           gradient
             .attr('x1', center.x)
             .attr('y1', center.y)
             .attr('x2', node.x)
             .attr('y2', node.y);
 
-          // Animate signal dot
           const signalDot = linesGroup
             .append('circle')
             .attr('r', 3)
             .attr('fill', 'url(#dotGradient)')
             .attr('opacity', 0);
 
-          // Start signals sooner after line completes
-          const dotPath = d3.transition()
-            .delay(100 + i * 50)  // Reduced from 750 to 100ms delay
+          const dotTransition = createTrackedTransition(signalDot)
+            .delay(100 + i * 50)
             .duration(300)
+            .attr('opacity', 1)
             .ease(d3.easeLinear);
 
-          signalDot
-            .transition(dotPath)
-            .attr('opacity', 1)
+          dotTransition
             .attrTween('transform', () => (t) => {
               const x = center.x + (node.x - center.x) * t;
               const y = center.y + (node.y - center.y) * t;
               return `translate(${x},${y})`;
             })
             .on('end', () => {
-              // Make outer node glow when signal reaches
-              outerNode
-                .transition()
+              if (!svg.node()) return; // Check if component is still mounted
+
+              const glowTransition = createTrackedTransition(outerNode)
                 .duration(200)
                 .attr('opacity', 1)
                 .attr('filter', 'url(#glow)')
-                .attr('r', node.size * 1.2)
-                .on('end', function() {
-                  // Subtle pulsing effect
-                  d3.select(this)
-                    .transition()
-                    .duration(300)
-                    .attr('r', node.size)
-                    .ease(d3.easeCubicInOut);
-                });
-              
-              // Remove signal dot
+                .attr('r', node.size * 1.2);
+
+              glowTransition.on('end', function() {
+                if (!svg.node()) return; // Check if component is still mounted
+
+                const pulseTransition = createTrackedTransition(d3.select(this))
+                  .duration(300)
+                  .attr('r', node.size)
+                  .ease(d3.easeCubicInOut);
+                
+                transitions.add(pulseTransition);
+              });
+
               signalDot.remove();
             });
+
+          transitions.add(dotTransition);
         });
+
+      transitions.add(lineTransition);
+      transitions.add(nodeTransition);
     });
 
+    transitions.add(centerTransition);
+
+    // Cleanup function
+    return () => {
+      // Interrupt all ongoing transitions
+      transitions.forEach(t => {
+        try {
+          t.interrupt();
+        } catch (e) {
+          // Ignore any errors during cleanup
+        }
+      });
+    };
   }, [size]);
 
   return (
