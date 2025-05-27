@@ -3,22 +3,50 @@ import * as d3 from 'd3';
 
 // Function to center the portfolio section in the viewport
 export function centerPortfolioSection(sectionRef) {
-  if (sectionRef.current) {
-    const sectionRect = sectionRef.current.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
-    
-    // If the section isn't fully visible in the viewport, scroll to it
-    if (sectionRect.top < 0 || sectionRect.bottom > windowHeight) {
-      // Calculate the ideal position: centered in the viewport
-      const idealScrollPosition = sectionRect.top + window.pageYOffset - (windowHeight / 2) + (sectionRect.height / 2);
-      
-      // Smooth scroll to that position
-      window.scrollTo({
-        top: idealScrollPosition,
-        behavior: 'smooth'
-      });
-    }
+  console.log('centerPortfolioSection called!');
+  
+  if (!sectionRef?.current) {
+    console.log('No sectionRef or current');
+    return;
   }
+  
+  // Find the interactive visualization container (the actual SVG container)
+  const container = sectionRef.current.querySelector('.interactivePortfolioContainer') ||
+                   sectionRef.current.querySelector('[class*="interactivePortfolioContainer"]');
+  
+  console.log('Container found:', container);
+  
+  if (!container) {
+    console.log('No container found');
+    return;
+  }
+  
+  // Get the container's bounding rect for more accurate positioning
+  const containerRect = container.getBoundingClientRect();
+  const currentScrollY = window.pageYOffset;
+  
+  // Calculate the absolute position of the container top
+  const containerAbsoluteTop = containerRect.top + currentScrollY;
+  
+  console.log('Container rect top:', containerRect.top);
+  console.log('Current scroll Y:', currentScrollY);
+  console.log('Container absolute top:', containerAbsoluteTop);
+  
+  // Account for the fixed header height
+  const headerHeight = 80;
+  
+  // Calculate scroll position to put container right below header
+  const targetScroll = containerAbsoluteTop - headerHeight;
+  
+  console.log('Target scroll position:', targetScroll);
+  
+  // Scroll to position the visualization area at the top of viewport
+  window.scrollTo({
+    top: Math.max(0, targetScroll),
+    behavior: 'smooth'
+  });
+  
+  console.log('Scroll command executed to:', Math.max(0, targetScroll));
 }
 
 // Updated setupVisualizations with improved physics settings to prevent vibration
@@ -383,8 +411,6 @@ export function createNodeElements(nodes, styles) {
         .attr("opacity", 0.9);
     });
 }
-
-// Replace your current setupParticleSystem function with this improved version
 
 // Add this improved setupParticleSystem function to your visualizationUtils.js file
 // Make sure to keep all your other functions like setupVisualizations, createNodeElements, etc.

@@ -1,97 +1,150 @@
 // src/components/ui/LoadingIndicator.jsx
 import React, { useState, useEffect } from 'react';
+import { ChevronDown } from 'lucide-react';
 
 const LoadingIndicator = ({ isLoading }) => {
   const [progress, setProgress] = useState(0);
-  const [text, setText] = useState("Initializing");
+  const [currentPhase, setCurrentPhase] = useState(0);
+  const [isComplete, setIsComplete] = useState(false);
+  
+  // More realistic and faster loading phases
+  const phases = [
+    { label: "Initializing portfolio", duration: 200 },
+    { label: "Loading interactive elements", duration: 250 },
+    { label: "Preparing mind map", duration: 300 },
+    { label: "Welcome!", duration: 150 }
+  ];
   
   useEffect(() => {
     if (!isLoading) return;
     
-    // Simulate loading sequence
-    const progressInterval = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(progressInterval);
-          return 100;
-        }
-        return prev + 1;
-      });
-    }, 25);
+    let currentProgress = 0;
+    let phaseIndex = 0;
+    const totalDuration = phases.reduce((sum, p) => sum + p.duration, 0);
     
-    // Update loading text
-    const textSequence = [
-      { time: 0, text: "Initializing" },
-      { time: 20, text: "Loading assets" },
-      { time: 40, text: "Building interface" },
-      { time: 60, text: "Connecting space-time" },
-      { time: 80, text: "Almost ready" },
-      { time: 95, text: "Launching experience" }
-    ];
-    
-    const textTimers = textSequence.map(item => {
-      return setTimeout(() => {
-        setText(item.text);
-      }, item.time * 25);
-    });
-    
-    return () => {
-      clearInterval(progressInterval);
-      textTimers.forEach(timer => clearTimeout(timer));
+    const updateProgress = () => {
+      const increment = 100 / (totalDuration / 20); // Update every 20ms
+      currentProgress += increment;
+      setProgress(Math.min(currentProgress, 100));
+      
+      // Update phase based on progress
+      const progressPerPhase = 100 / phases.length;
+      const newPhaseIndex = Math.min(
+        Math.floor(currentProgress / progressPerPhase),
+        phases.length - 1
+      );
+      
+      if (newPhaseIndex !== phaseIndex) {
+        setCurrentPhase(newPhaseIndex);
+        phaseIndex = newPhaseIndex;
+      }
+      
+      if (currentProgress >= 100) {
+        setIsComplete(true);
+      }
     };
+    
+    const interval = setInterval(updateProgress, 20);
+    
+    return () => clearInterval(interval);
   }, [isLoading]);
   
   if (!isLoading) return null;
   
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gray-900">
-      {/* Star background */}
+    <div className={`fixed inset-0 z-50 flex flex-col items-center justify-center transition-opacity duration-500 ${isComplete ? 'opacity-0' : 'opacity-100'}`}
+         style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)' }}>
+      
+      {/* Animated background particles */}
       <div className="absolute inset-0 overflow-hidden">
-        {Array.from({ length: 50 }).map((_, i) => (
+        {Array.from({ length: 25 }).map((_, i) => (
           <div
-            key={`loader-star-${i}`}
-            className="absolute rounded-full bg-white animate-starTwinkle"
+            key={`particle-${i}`}
+            className="absolute rounded-full bg-white opacity-20 animate-pulse"
             style={{
-              width: `${Math.random() * 2 + 1}px`,
-              height: `${Math.random() * 2 + 1}px`,
+              width: `${Math.random() * 3 + 1}px`,
+              height: `${Math.random() * 3 + 1}px`,
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
-              opacity: Math.random() * 0.7 + 0.3,
               animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${Math.random() * 3 + 2}s`
+              animationDuration: `${Math.random() * 2 + 2}s`
             }}
           />
         ))}
       </div>
       
-      {/* Cosmic design */}
-      <div className="relative w-24 h-24 mb-8">
-        {/* Spinning outer ring */}
-        <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-white border-b-white/30 animate-spin"></div>
-        
-        {/* Middle orbital ring */}
-        <div className="absolute inset-2 rounded-full border-2 border-transparent border-l-purple-400 border-r-blue-400 animate-spin" style={{ animationDuration: '3s', animationDirection: 'reverse' }}></div>
-        
-        {/* Inner core */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full animate-pulse"></div>
-          <div className="absolute w-6 h-6 bg-white rounded-full animate-pulse opacity-80"></div>
+      {/* Main loading animation */}
+      <div className="relative mb-8">
+        {/* Outer ring with progress */}
+        <div className="w-24 h-24 rounded-full border-2 border-gray-700 relative">
+          {/* Progress ring */}
+          <svg className="w-24 h-24 absolute inset-0 -rotate-90" viewBox="0 0 100 100">
+            <circle
+              cx="50"
+              cy="50"
+              r="45"
+              stroke="currentColor"
+              strokeWidth="3"
+              fill="none"
+              className="text-gray-700"
+            />
+            <circle
+              cx="50"
+              cy="50"
+              r="45"
+              stroke="currentColor"
+              strokeWidth="3"
+              fill="none"
+              className="text-orange-500"
+              strokeLinecap="round"
+              strokeDasharray={`${2 * Math.PI * 45}`}
+              strokeDashoffset={`${2 * Math.PI * 45 * (1 - progress / 100)}`}
+              style={{ 
+                transition: 'stroke-dashoffset 0.3s ease',
+                filter: 'drop-shadow(0 0 5px rgba(249, 115, 22, 0.5))'
+              }}
+            />
+          </svg>
+          
+          {/* Inner glow */}
+          <div className="absolute inset-4 rounded-full bg-gradient-to-br from-orange-500/20 to-purple-500/20 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-purple-500 animate-pulse" />
+          </div>
         </div>
+        
+        {/* Floating particles around the loader */}
+        {Array.from({ length: 6 }).map((_, i) => (
+          <div
+            key={`orbit-${i}`}
+            className="absolute w-2 h-2 bg-orange-400 rounded-full animate-spin"
+            style={{
+              top: '50%',
+              left: '50%',
+              transform: `translate(-50%, -50%) rotate(${i * 60}deg) translateY(-40px)`,
+              animationDuration: '3s',
+              animationDelay: `${i * 0.5}s`,
+            }}
+          />
+        ))}
       </div>
       
       {/* Loading text */}
-      <div className="text-white text-xl font-medium mb-4">{text}...</div>
-      
-      {/* Progress bar */}
-      <div className="w-64 h-1 bg-gray-800 rounded-full overflow-hidden">
-        <div 
-          className="h-full bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-300 rounded-full"
-          style={{ width: `${progress}%` }}
-        ></div>
+      <div className="text-center">
+        <div className="text-white text-xl font-medium mb-2 transition-all duration-300">
+          {phases[currentPhase]?.label}
+        </div>
+        <div className="text-gray-400 text-sm font-mono">
+          {Math.round(progress)}%
+        </div>
       </div>
       
-      {/* Progress percentage */}
-      <div className="text-gray-400 mt-2">{progress}%</div>
+      {/* Subtle hint for what's coming */}
+      {progress > 75 && (
+        <div className="absolute bottom-16 text-center opacity-0 animate-fadeIn">
+          <p className="text-gray-400 text-sm mb-2">Interactive portfolio ready</p>
+          <ChevronDown className="mx-auto text-gray-400 animate-bounce" size={20} />
+        </div>
+      )}
     </div>
   );
 };

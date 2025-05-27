@@ -98,7 +98,6 @@ const About = ({ language }) => {
     }
   };
   
-// Add these global styles at the end of the component
   return (
     <section id="about" className="relative py-20 overflow-hidden">
       <div className="absolute inset-0 z-0 overflow-hidden">
@@ -177,13 +176,12 @@ const About = ({ language }) => {
                 ].map(tab => (
                   <button
                     key={tab.id}
-                    className={`flex-1 py-4 px-4 text-center transition-colors focus:outline-none focus:ring-0 focus:ring-offset-0 focus-visible:outline-none focus-visible:ring-0 active:outline-none ${
+                    className={`flex-1 py-4 px-4 text-center transition-colors about-tab-button ${
                       activeTab === tab.id
                         ? 'bg-gradient-to-r from-gray-700/50 to-gray-800/50 text-white font-medium'
                         : 'text-gray-400 hover:text-gray-300 hover:bg-gray-700/30'
                     }`}
                     onClick={() => setActiveTab(tab.id)}
-                    style={{ outline: 'none' }} // Inline style as a fallback
                   >
                     {tab.label}
                   </button>
@@ -197,14 +195,6 @@ const About = ({ language }) => {
           </div>
         </div>
       </div>
-      
-      {/* Global styles to remove focus outlines */}
-      <style jsx global>{`
-        button:focus {
-          outline: none !important;
-          box-shadow: none !important;
-        }
-      `}</style>
     </section>
   );
 };

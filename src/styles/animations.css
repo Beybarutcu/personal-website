@@ -132,4 +132,16 @@
   }
 }
 
-/* Removed Node-specific animations */
+/* Button focus styles - moved from About.jsx */
+.about-tab-button:focus,
+.about-tab-button:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* General button focus removal for about section */
+.about-section button:focus,
+.about-section button:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
