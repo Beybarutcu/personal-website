@@ -36,7 +36,7 @@ const Hero = () => {
           {/* Title with enhanced animation */}
           <div className="overflow-hidden mb-6">
             <h1 
-              className="text-5xl md:text-7xl font-bold opacity-0"
+              className="hero-title opacity-0"
               style={{ 
                 ...titleStyle,
                 animation: 'fadeSlideUp 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.5s forwards'

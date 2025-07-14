@@ -595,7 +595,7 @@ export default function InteractivePortfolio() {
                       <div class="${styles.descriptionContainer}">${nodeContent.description}</div>
                       ${shouldShowSkills(d) ? `
                         <div class="${styles.panelSkills}">
-                          <h3 class="${styles.skillsTitle}">${t('mindMap.skillsLabel')}</h3>
+                          <h3 class="${styles.skillsTitle}">${t('insight.skillsLabel')}</h3>
                           <div class="${styles.skillsList}">
                             ${t(`${d.contentKey}.skills`, { returnObjects: true })
                               .slice(0, isMobile ? 4 : 6) // Display fewer skills to prevent overflow
@@ -934,14 +934,14 @@ export default function InteractivePortfolio() {
   return (
     <div className={styles.sectionContainer} ref={sectionRef}>
       <div className={styles.sectionHeading}>
-        <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">{t('portfolio.mindMapTitle')}</h2>
-        <p className="max-w-3xl mx-auto text-xl text-gray-300">{t('portfolio.mindMapDescription')}</p>
+        <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">{t('portfolio.insightTitle')}</h2>
+        <p className="max-w-3xl mx-auto text-xl text-gray-300">{t('portfolio.insightDescription')}</p>
         <div className={styles.interactionInstructions}>
           <span className={styles.instructionItem}>
-            <span className={styles.instructionIcon}>🔍</span> {t('mindMap.clickNodes')}
+            <span className={styles.instructionIcon}>🔍</span> {t('insight.clickNodes')}
           </span>
           <span className={styles.instructionItem}>
-            <span className={styles.instructionIcon}>✋</span> {t('mindMap.dragNodes')}
+            <span className={styles.instructionIcon}>✋</span> {t('insight.dragNodes')}
           </span>
         </div>
       </div>

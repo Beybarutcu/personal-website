@@ -7,8 +7,8 @@
   },
   "hero": {
     "greeting": "Merhaba, Ben",
-    "title": "Yaratıcı Geliştirici",
-    "description": "Yenilikçi tasarımı keskin teknoloji ile birleştirerek, akılda kalıcı kullanıcı deneyimleri oluşturuyorum.",
+    "title": "Beyazıt Barutçu",
+    "description": "Yazılım mühendisliği, araştırma ve tasarımı birleştirerek akıllı sistemler geliştirmeye tutkulu, yaratıcı ve detay odaklı bir geliştiriciyim. Kullanıcı odaklı, düşünceli ve teknik olarak sağlam çözümler üretirim.",
     "viewWork": "Çalışmalarımı Gör",
     "contactMe": "İletişime Geç",
     "scrollDown": "Aşağı Kaydır"
@@ -82,8 +82,8 @@
   "portfolio": {
     "title": "Çalışmalarım",
     "subtitle": "Web geliştirme, tasarım ve interaktif veri görselleştirme konularındaki becerilerimi sergileyen projelerimi keşfedin.",
-    "mindMapTitle": "Insight",
-    "mindMapDescription": "Bu interaktif görselleştirme ile düşüncelerimi, becerilerimi ve ilgi alanlarımı keşfedin. Daha fazla bilgi için düğümlere tıklayın.",
+    "insightTitle": "Insight",
+    "insightDescription": "Yolculuğumu, becerilerimi ve ilgi alanlarımı bu interaktif insight haritası ile keşfedin. Deneyimlerimin ve tutkularımın nasıl bağlantılı olduğunu görmek için düğümlere tıklayın.",
     "filters": {
       "all": "Tüm Projeler",
       "featured": "Öne Çıkanlar"
@@ -142,11 +142,11 @@
     "en": "İngilizce",
     "tr": "Türkçe"
   },
-  "mindMap": {
+  "insight": {
     "loading": "Görselleştirme yükleniyor...",
     "clickNodes": "Keşfetmek için düğümlere tıklayın",
     "dragNodes": "Yeniden düzenlemek için sürükleyin",
-    "title": "Zihin Haritam",
+    "title": "Insight Haritam",
     "subtitle": "Bu interaktif görselleştirme ile becerilerimi ve ilgi alanlarımı keşfedin.",
     "clickToView": "Detayları görmek için tıklayın",
     "skillsLabel": "Beceriler",

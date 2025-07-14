@@ -7,8 +7,8 @@
   },
   "hero": {
     "greeting": "Hello, I'm",
-    "title": "Creative Developer",
-    "description": "I build captivating digital experiences that blend innovative design with cutting-edge technology to create memorable user journeys.",
+    "title": "Beyazıt Barutçu",
+    "description": "Creative and detail-oriented developer with a passion for building intelligent systems, combining software engineering, research, and design to create thoughtful, user-focused, and technically sound solutions.",
     "viewWork": "View My Work",
     "contactMe": "Contact Me",
     "scrollDown": "Scroll Down"
@@ -82,8 +82,8 @@
   "portfolio": {
     "title": "My Work",
     "subtitle": "Explore a selection of my projects showcasing my skills in web development, design, and interactive data visualization.",
-    "mindMapTitle": "Insight",
-    "mindMapDescription": "Explore my thoughts, skills and interests through this interactive visualization. Click on nodes to learn more.",
+    "insightTitle": "Insight",
+    "insightDescription": "Explore my portfolio through an interactive network of ideas, projects, and technologies. Each node reveals a key part of my journey, from core skills to creative experiments.",
     "filters": {
       "all": "All Projects",
       "featured": "Featured"
@@ -143,26 +143,17 @@
     "tr": "Turkish"
   },
   
-  "mindMap": {
-    "loading": "Loading visualization...",
+  "insight": {
     "clickNodes": "Click nodes to explore",
     "dragNodes": "Drag to rearrange",
-    "title": "My Mind Map",
-    "subtitle": "Explore my skills and interests through this interactive visualization.",
-    "clickToView": "Click to view details",
     "skillsLabel": "Skills",
     "relatedLinksLabel": "Related Links",
     "nodes": {
       "main": {
         "label": "Me",
         "title": "About Me",
-        "subtitle": "Creative Developer & Digital Designer",
-        "description": "<p>I'm a creative developer with 5+ years of experience building engaging digital experiences that blend artful design with technical precision.</p><p>My passion lies at the intersection of code and creativity, where I build immersive, interactive web applications with particular expertise in data visualization and user interface design.</p><p>I'm constantly exploring new technologies and techniques to push the boundaries of what's possible on the web, focusing on performance, accessibility, and delightful user experiences.</p>",
-        "skills": ["React", "JavaScript", "Creative Coding", "UI/UX Design", "Data Visualization"],
-        "links": {
-          "portfolio": "View Portfolio",
-          "contact": "Contact Me"
-        }
+        "subtitle": "A Journey Through Code, Design, and Discovery",
+        "description": "I’m a developer with a multidisciplinary mindset, combining software engineering, AI, and design thinking to create purposeful, intelligent systems. My work is rooted in curiosity, continuous learning, and the drive to build tools that both solve real problems and inspire new ideas. This node connects the dots across everything I do — from education and skills to research and creative projects."
       },
       "frontend": {
         "label": "Frontend",
@@ -228,12 +219,11 @@
         }
       },
       "bachelors": {
-        "label": "Bachelors",
-        "title": "Bachelor's in Software Engineering",
-        "subtitle": "State Technical University, 2011-2015",
-        "description": "<p>My undergraduate education provided me with a strong foundation in computer science principles, software engineering methodologies, and practical programming skills.</p><p>During this time, I developed my interest in frontend development and UI/UX design through various course projects and extracurricular activities.</p>",
-        "skills": ["Software Development", "Computer Science Fundamentals", "Database Systems", "Web Technologies", "Software Architecture"],
-        "links": {}
+        "label": "Education",
+        "title": "Education",
+        "subtitle": "Uludag University Computer Engineering Bachelor's Degree",
+        "description": "The formal education I received in computer engineering provided me with a solid foundation in algorithms, data structures, and applied artificial intelligence, and in light of the theoretical knowledge I gained, I have developed a broader perspective in this field.",
+        "skills": ["Algorithms", "Python", "C++", "Java", "JavaScript", "R", "SQL", "Statistics", "Unity"]
       },
       "courses": {
         "label": "Online Courses",
