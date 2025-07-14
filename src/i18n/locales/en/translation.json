@@ -17,14 +17,13 @@
     "title": "About Me",
     "subtitle": "Creative developer with a passion for building interactive and visually stunning digital experiences.",
     "whoIAm": "Who I Am",
-    "bioP1": "I'm a creative developer with 5+ years of experience crafting engaging digital experiences that blend artful design with technical precision.",
-    "bioP2": "My passion lies at the intersection of code and creativity, where I build immersive, interactive web applications with particular expertise in data visualization and user interface design.",
-    "bioP3": "I'm constantly exploring new technologies and techniques to push the boundaries of what's possible on the web, focusing on performance, accessibility, and delightful user experiences.",
+    "bioP1": "I’m a computer engineer with a focus on building practical and scalable technology solutions. My background includes experience in software development, automation, and data-driven systems.",
+    "bioP2": "I approach each project with a balance of analytical thinking and collaborative mindset—ensuring that solutions are not only functional but also align with real-world needs.",
+    "bioP3": "Adaptable and curious by nature, I follow emerging technologies closely and enjoy working in environments where knowledge-sharing and joint effort lead to better outcomes.",
     "personalDetails": {
       "name": "Name",
       "email": "Email",
-      "location": "Location",
-      "availability": "Availability"
+      "location": "Location"
     },
     "downloadResume": "Download Resume",
     "tabs": {
@@ -40,35 +39,25 @@
     },
     "experience": {
       "current": {
-        "period": "2022 - Present",
-        "title": "Senior Frontend Developer",
-        "company": "Interactive Data Solutions",
-        "description": "Leading frontend development for data visualization platforms with an emphasis on interactive user experiences. Implementing complex D3.js visualizations and optimizing performance for large datasets."
+        "period": "2024 - Present",
+        "title": "Freelance Computer Engineer",
+        "company": "Freelance Development & Ongoing Business Support",
+        "description": "Since 2024, I’ve been actively working on freelance software projects, developing custom solutions across different needs and platforms. In parallel, I continue to support my family’s business operations, contributing to both daily workflows and broader problem-solving efforts."
       },
       "previous1": {
-        "period": "2019 - 2022",
-        "title": "UI/UX Developer",
-        "company": "Creative Web Studio",
-        "description": "Created responsive web applications with modern JavaScript frameworks. Designed and implemented interactive user interfaces focused on usability and accessibility."
-      },
-      "previous2": {
-        "period": "2017 - 2019",
-        "title": "Web Developer",
-        "company": "Digital Agency Inc.",
-        "description": "Developed websites and web applications for various clients. Worked on both frontend and backend technologies, focusing on creating seamless user experiences."
+        "period": "2023 - 2024",
+        "title": "Computer Engineer Intern",
+        "company": "GANİ OTOMASYON MÜHENDİSLİK SAN. VE TİC. A.Ş.",
+        "description": "Completed a internship at Gani Otomasyon, where I took part in the early development of intelligent monitoring solutions within an industrial setting. Actively contributed to the design and testing of camera-based systems aimed at improving operational awareness and efficiency."
       }
+  
     },
     "education": {
-      "masters": {
-        "period": "2015 - 2017",
-        "degree": "Master's Degree in Computer Science",
-        "school": "University of Technology",
-        "description": "Specialized in AI and interactive visualization techniques. Thesis focused on neural network visualization methods for educational purposes."
-      },
+      
       "bachelors": {
-        "period": "2011 - 2015",
-        "degree": "Bachelor's Degree in Software Engineering",
-        "school": "State Technical University",
+        "period": "2019 - 2024",
+        "degree": "Bachelor's Degree in Computer Engineering",
+        "school": "Bursa Uludag University",
         "description": "Core curriculum in programming, algorithms, data structures, and software development methodologies."
       },
       "courses": {
@@ -81,7 +70,7 @@
   },
   "portfolio": {
     "title": "My Work",
-    "subtitle": "Explore a selection of my projects showcasing my skills in web development, design, and interactive data visualization.",
+    "subtitle": "Here you can find a selection of my projects showcasing practical solutions and diverse technical skills.",
     "insightTitle": "Insight",
     "insightDescription": "Explore my portfolio through an interactive network of ideas, projects, and technologies. Each node reveals a key part of my journey, from core skills to creative experiments.",
     "filters": {
@@ -90,9 +79,9 @@
     },
     "projects": {
       "neuralNetwork": {
-        "title": "Neural Network Visualization",
-        "description": "An interactive D3.js visualization of neural networks with real-time simulation of network learning. Explore connections between nodes, observe weights changing, and see how data flows through the network.",
-        "details": "Built with React and D3.js, this visualization demonstrates advanced concepts in interactive data visualization, animation techniques, and real-time updates."
+        "title": "Personal Website",
+        "description": "A curated showcase of my projects, reflecting a blend of technical depth and visual sophistication—designed to engage and inspire through interactive and modern presentations.",
+        "details": "This portfolio website is built with React and D3.js, featuring interactive visualizations like force-directed graphs and real-time particle systems. It supports multilingual functionality using react-i18next and employs Tailwind CSS with custom themes for responsive and consistent design. Animations and interactions are optimized through requestAnimationFrame and efficient SVG manipulations for smooth user experience."
       }
     },
     "viewLive": "View Live",
@@ -162,7 +151,7 @@
         "description": "<p>I specialize in crafting modern frontend experiences using the latest web technologies. My approach focuses on creating responsive, accessible, and performant interfaces that work across all devices.</p><p>My expertise includes modern JavaScript frameworks like React and Vue.js, along with advanced CSS techniques including animations, Grid, and Flexbox layouts. I prioritize creating semantic markup and accessible interfaces that work for all users.</p>",
         "skills": ["React", "Vue.js", "JavaScript/TypeScript", "HTML5/CSS3", "Responsive Design", "Web Accessibility", "Tailwind CSS", "Performance Optimization"],
         "links": {
-          "portfolio": "Related Project: Portfolio Website",
+          "portfolio": "Related Project: Personel Website",
           "frontend": "See Frontend Work" 
         }
       },
@@ -183,21 +172,10 @@
         "description": "<p>I develop scalable backend systems that power modern web applications. My focus is on creating clean, maintainable APIs and efficient database designs that support the frontend experience.</p><p>While my primary expertise is in frontend development, I'm comfortable working across the full stack, which helps me create more integrated solutions and better understand system architecture as a whole.</p>",
         "skills": ["Node.js", "Express", "RESTful APIs", "GraphQL", "Database Design", "Authentication", "Python/Django", "API Design"],
         "links": {
-          "portfolio": "Related Project: Data Dashboard"
+          "portfolio": "Related Project: Gym Membership Tracker"
         }
       },
-      "dataviz": {
-        "label": "Data Viz",
-        "title": "Data Visualization",
-        "subtitle": "Turning complex data into intuitive visual stories",
-        "description": "<p>I specialize in transforming complex datasets into clear, interactive visualizations that tell compelling stories. Using tools like D3.js and modern charting libraries, I create custom visualizations that help users explore and understand data intuitively.</p><p>My approach combines technical precision with design principles to ensure visualizations are not only accurate but also aesthetically pleasing and accessible to non-technical audiences.</p>",
-        "image": "/images/dataviz-thumbnail.jpg",
-        "skills": ["D3.js", "SVG", "Canvas", "Chart.js", "Data Analysis", "Interactive Visualizations", "Dashboards", "Information Design"],
-        "links": {
-          "neuralnet": "Related Project: Neural Network Visualization",
-          "datadashboard": "Related Project: Data Dashboard"
-        }
-      },
+      
       "animation": {
         "label": "Animation",
         "title": "Web Animation",
@@ -205,19 +183,10 @@
         "description": "<p>I create smooth, purposeful animations that enhance user experience and bring interfaces to life. Focusing on performance and accessibility, I implement animations that guide users, provide feedback, and add delight without being distracting.</p><p>My toolkit includes CSS animations, JavaScript animation libraries, SVG animation, and WebGL for more complex 3D effects when appropriate.</p>",
         "skills": ["CSS Animations", "GSAP", "Framer Motion", "SVG Animation", "Three.js", "Motion Design", "Interaction Design", "Performance Optimization"],
         "links": {
-          "visualizer": "Related Project: Audio Visualizer"
+          "visualizer": "Related Project: Personel Website"
         }
       },
-      "masters": {
-        "label": "Masters Degree",
-        "title": "Masters in Computer Science",
-        "subtitle": "University of Technology, 2015-2017",
-        "description": "<p>My graduate studies focused on interactive visualization techniques and artificial intelligence applications. This multidisciplinary program combined computer science theory with practical applications in data visualization and machine learning.</p><p>My thesis project explored novel methods for visualizing neural networks for educational purposes, which led directly to my professional work in data visualization.</p>",
-        "skills": ["Academic Research", "Machine Learning", "Computer Graphics", "Algorithm Design", "Technical Writing", "Data Analysis"],
-        "links": {
-          "neuralnet": "Related Project: Neural Network Visualization"
-        }
-      },
+      
       "bachelors": {
         "label": "Education",
         "title": "Education",
@@ -233,87 +202,35 @@
         "skills": ["Self-directed Learning", "Technical Skill Development", "Creative Coding", "Professional Development"],
         "links": {}
       },
-      "portfolio": {
-        "label": "Portfolio",
-        "title": "Portfolio Website",
-        "subtitle": "Personal website with interactive features",
-        "description": "<p>This portfolio website showcases my skills and projects through interactive elements like the mind map visualization you're currently exploring. It features a responsive design, smooth animations, and multilingual support.</p><p>Built with React, Tailwind CSS, and custom animations, this project demonstrates my approach to creating engaging and accessible web experiences.</p>",
-        "skills": ["React", "Tailwind CSS", "i18n", "D3.js", "Responsive Design", "Custom Animations"],
-        "links": {
-          "source": "View Website Source"
-        }
-      },
-      "datadashboard": {
-        "label": "Data Dashboard",
-        "title": "Interactive Data Dashboard",
-        "subtitle": "Real-time data visualization platform",
-        "description": "<p>A comprehensive dashboard for visualizing and analyzing complex datasets. This application features multiple interactive visualization components, real-time data updates, and customizable views.</p><p>The dashboard demonstrates my skills in both frontend and backend development, with a focus on creating intuitive ways to explore and understand data.</p>",
-        "skills": ["React", "D3.js", "Node.js", "Firebase", "State Management", "Data Analysis"],
-        "links": {
-          "portfolio": "View in Portfolio"
-        }
-      },
-      "visualizer": {
-        "label": "Audio Visualizer",
-        "title": "Interactive Audio Visualizer",
-        "subtitle": "Creative visualization of music and sound",
-        "description": "<p>This project transforms audio input into captivating visual displays using the Web Audio API and WebGL. Users can upload their own music or use the microphone to create unique visual patterns that respond to the audio's frequency and amplitude.</p><p>The project demonstrates my creativity and technical skills in audio processing, animation, and interactive design.</p>",
-        "skills": ["JavaScript", "Web Audio API", "Three.js", "WebGL", "Creative Coding", "Responsive Animation"],
-        "links": {
-          "portfolio": "View in Portfolio"
-        }
-      },
-      "neuralnet": {
-        "label": "Neural Network",
-        "title": "Neural Network Visualization",
-        "subtitle": "Educational tool for understanding AI",
-        "description": "<p>An interactive visualization tool that demystifies how neural networks learn. This project allows users to observe the learning process in real-time, with animated data flows and weight adjustments that make the abstract concepts of machine learning more tangible.</p><p>Inspired by my master's thesis, this tool has been used in educational settings to help students understand the fundamentals of artificial intelligence.</p>",
-        "image": "/images/neuralnet-thumbnail.jpg",
-        "skills": ["D3.js", "JavaScript", "Machine Learning", "Educational Design", "Interactive Visualization"],
-        "links": {
-          "portfolio": "View in Portfolio"
-        }
-      },
+      
       "ai": {
         "label": "AI & ML",
         "title": "Artificial Intelligence & Machine Learning",
-        "subtitle": "Interest in intelligent systems",
-        "description": "<p>I'm deeply interested in how AI and machine learning can be made more accessible and understandable through thoughtful visualization and interface design.</p><p>My background in both technical implementation and design helps me create experiences that bridge the gap between complex AI concepts and intuitive user interfaces.</p>",
-        "skills": ["Machine Learning Concepts", "Neural Networks", "Data Science", "Ethical AI"],
-        "links": {
-          "neuralnet": "See Neural Network Visualization"
-        }
+        "subtitle": "Developing a foundation in intelligent systems",
+        "description": "<p>AI is where my curiosity and technical interest intersect. I’m drawn to how machines learn, adapt, and uncover patterns—pushing me to experiment with models, tools, and ideas that challenge my understanding and fuel my growth as a developer.</p>",
+        "skills": ["Exploratory Thinking", "Model Prototyping", "Python", "Problem Framing", "Continuous Learning"]
       },
-      "interactive": {
-        "label": "Interactive Art",
-        "title": "Interactive Art & Creative Coding",
-        "subtitle": "Exploring the intersection of art and technology",
-        "description": "<p>I'm passionate about the creative potential of code and how it can be used to create interactive art experiences. I experiment with generative art, interactive installations, and creative visualizations that respond to user input or environmental data.</p><p>This interest influences my professional work by encouraging innovative approaches to design challenges and user interaction patterns.</p>",
-        "skills": ["Creative Coding", "Generative Art", "p5.js", "Interactive Installations", "Algorithmic Design"],
-        "links": {
-          "visualizer": "See Audio Visualizer"
-        }
+
+
+      "freelance": {
+        "label": "Freelance",
+        "title": "Freelance Projects",
+        "subtitle": "Exploring and building through real work",
+        "description": "<p>Freelance work has been a way for me to stay hands-on, grow through real-world challenges, and explore my passion for software development in diverse contexts.</p>",
+        "skills": ["Problem Solving", "Software Development", "Client Collaboration", "Continuous Learning"]
       },
-      "music": {
-        "label": "Music",
-        "title": "Music & Audio",
-        "subtitle": "Passion for music and audio technology",
-        "description": "<p>My interest in music extends to how it can be visualized and experienced through technology. I enjoy exploring the intersection of audio processing, visualization, and interactive design.</p><p>This passion has influenced projects like my audio visualizer and informs my approach to creating immersive, multisensory digital experiences.</p>",
-        "skills": ["Audio Processing", "Music Production", "Sound Design", "Web Audio API"],
-        "links": {
-          "visualizer": "See Audio Visualizer"
-        }
-      },
-      "space": {
-        "label": "Space",
-        "title": "Space & Astronomy",
-        "subtitle": "Fascination with cosmic exploration",
-        "description": "<p>I'm fascinated by space exploration and astronomy, which inspires many of my design aesthetics and visualization projects. The cosmic theme you see throughout my portfolio reflects this interest.</p><p>I enjoy finding ways to represent astronomical data and concepts in interactive, accessible formats.</p>",
-        "skills": ["Astronomy Visualization", "Scientific Data Representation", "Space-Inspired Design"],
-        "links": {
-          "dataviz": "See Data Visualization Work"
-        }
+
+      "vision": {
+        "label": "Vision",
+        "title": "Career Goals & Focus",
+        "subtitle": "Growing through data, design, and real-world impact",
+        "description": "<p>I'm building a career at the intersection of software development and data science, with a strong interest in turning complex information into actionable insights. In the long term, I aim to contribute to impactful tech-driven projects, while continuously developing my skills in machine learning, system design, and collaborative development environments.</p>",
+        "skills": ["Problem Solving", "Critical Thinking", "Collaboration", "Adaptability", "Technical Growth"]
       }
+
+        
+
+
     }
   }
 }
