@@ -76,10 +76,20 @@
       "featured": "Öne Çıkanlar"
     },
     "projects": {
-      "neuralNetwork": {
+      "personalWebsite": {
         "title": "Kişisel Web Sitesi",
         "description": "Teknik derinlik ve görsel sofistikasyonun karışımını yansıtan, etkileşimli ve modern sunumlarla meşgul etmek ve ilham vermek için tasarlanmış projelerimin özenle seçilmiş bir vitrini.",
         "details": "Bu portföy web sitesi React ve D3.js ile oluşturulmuş, kuvvet yönlendirmeli grafikler ve gerçek zamanlı parçacık sistemleri gibi etkileşimli görselleştirmeler içermektedir. react-i18next kullanarak çok dilli işlevselliği destekler ve duyarlı ve tutarlı tasarım için özel temalarla Tailwind CSS kullanır. Animasyonlar ve etkileşimler, pürüzsüz kullanıcı deneyimi için requestAnimationFrame ve verimli SVG manipülasyonları aracılığıyla optimize edilmiştir."
+      },
+      "gymTracker": {
+        "title": "Spor Salonu Üyelik Takipçisi",
+        "description": "Sezgisel arayüz ve güçlü veri takip yetenekleri ile spor salonu üyelik yönetimini kolaylaştırmak için tasarlanmış kapsamlı bir Flutter mobil uygulaması.",
+        "details": "Flutter ve Dart ile oluşturulan bu mobil uygulama, spor salonu üyeliklerini yönetmek, üye aktivitelerini takip etmek ve abonelik durumlarını izlemek için temiz bir Material Design arayüzü sunar. Uygulama, hızlı performans ve çevrimdışı işlevsellik sağlayan yerel veri depolama için SQLite kullanır. Temel özellikler arasında üye kaydı, ödeme takibi, aktivite günlükleri ve spor salonu yöneticileri için detaylı analitik panosu bulunur."
+      },
+      "humanTracker": {
+        "title": "İnsan Tanımlayıcı ve Takipçi",
+        "description": "QR kodları aracılığıyla bireyleri tanımlayan ve kapsamlı davranışsal veri kaydetme sırasında hareketlerini takip eden gelişmiş bir bilgisayarlı görü sistemi.",
+        "details": "Bu akıllı takip sistemi YOLO nesne tespiti, görüntü işleme için OpenCV ve QR kod tanıma için Pyzbar'ı birleştirir. QR kodlu bir kişi kameranın görüş alanına girdiğinde, sistem QR kodunda kodlanmış isme göre onları anında tanımlar ve hareketlerini takip etmeye başlar. Uygulama sürekli olarak davranış kalıplarını, konum verilerini ve aktivite ölçümlerini izler ve bir veritabanına kaydeder, güvenlik, araştırma veya operasyonel amaçlar için değerli öngörüler sağlar."
       }
     },
     "viewLive": "Canlı Görüntüle",

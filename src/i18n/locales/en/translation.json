@@ -17,7 +17,7 @@
     "title": "About Me",
     "subtitle": "Creative developer with a passion for building interactive and visually stunning digital experiences.",
     "whoIAm": "Who I Am",
-    "bioP1": "I’m a computer engineer with a focus on building practical and scalable technology solutions. My background includes experience in software development, automation, and data-driven systems.",
+    "bioP1": "I'm a computer engineer with a focus on building practical and scalable technology solutions. My background includes experience in software development, automation, and data-driven systems.",
     "bioP2": "I approach each project with a balance of analytical thinking and collaborative mindset—ensuring that solutions are not only functional but also align with real-world needs.",
     "bioP3": "Adaptable and curious by nature, I follow emerging technologies closely and enjoy working in environments where knowledge-sharing and joint effort lead to better outcomes.",
     "personalDetails": {
@@ -42,7 +42,7 @@
         "period": "2024 - Present",
         "title": "Freelance Computer Engineer",
         "company": "Freelance Development & Ongoing Business Support",
-        "description": "Since 2024, I’ve been actively working on freelance software projects, developing custom solutions across different needs and platforms. In parallel, I continue to support my family’s business operations, contributing to both daily workflows and broader problem-solving efforts."
+        "description": "Since 2024, I've been actively working on freelance software projects, developing custom solutions across different needs and platforms. In parallel, I continue to support my family's business operations, contributing to both daily workflows and broader problem-solving efforts."
       },
       "previous1": {
         "period": "2023 - 2024",
@@ -78,10 +78,20 @@
       "featured": "Featured"
     },
     "projects": {
-      "neuralNetwork": {
+      "personalWebsite": {
         "title": "Personal Website",
         "description": "A curated showcase of my projects, reflecting a blend of technical depth and visual sophistication—designed to engage and inspire through interactive and modern presentations.",
         "details": "This portfolio website is built with React and D3.js, featuring interactive visualizations like force-directed graphs and real-time particle systems. It supports multilingual functionality using react-i18next and employs Tailwind CSS with custom themes for responsive and consistent design. Animations and interactions are optimized through requestAnimationFrame and efficient SVG manipulations for smooth user experience."
+      },
+      "gymTracker": {
+        "title": "Gym Membership Tracker",
+        "description": "A comprehensive Flutter mobile application designed to streamline gym membership management with an intuitive interface and robust data tracking capabilities.",
+        "details": "Built with Flutter and Dart, this mobile application features a clean Material Design interface for managing gym memberships, tracking member activities, and monitoring subscription statuses. The app utilizes SQLite for local data storage, ensuring fast performance and offline functionality. Key features include member registration, payment tracking, activity logs, and detailed analytics dashboard for gym administrators."
+      },
+      "humanTracker": {
+        "title": "Human Identifier & Tracker",
+        "description": "An advanced computer vision system that identifies individuals through QR codes and tracks their movements while recording comprehensive behavioral data.",
+        "details": "This intelligent tracking system combines YOLO object detection, OpenCV for image processing, and Pyzbar for QR code recognition. When a person with a QR code enters the camera's field of view, the system instantly identifies them by the name encoded in the QR code and begins tracking their movements. The application continuously monitors and records behavioral patterns, location data, and activity metrics to a database, providing valuable insights for security, research, or operational purposes."
       }
     },
     "viewLive": "View Live",
@@ -142,7 +152,7 @@
         "label": "Me",
         "title": "About Me",
         "subtitle": "A Journey Through Code, Design, and Discovery",
-        "description": "I’m a developer with a multidisciplinary mindset, combining software engineering, AI, and design thinking to create purposeful, intelligent systems. My work is rooted in curiosity, continuous learning, and the drive to build tools that both solve real problems and inspire new ideas. This node connects the dots across everything I do — from education and skills to research and creative projects."
+        "description": "I'm a developer with a multidisciplinary mindset, combining software engineering, AI, and design thinking to create purposeful, intelligent systems. My work is rooted in curiosity, continuous learning, and the drive to build tools that both solve real problems and inspire new ideas. This node connects the dots across everything I do — from education and skills to research and creative projects."
       },
       "frontend": {
         "label": "Frontend",
@@ -151,7 +161,7 @@
         "description": "<p>I specialize in crafting modern frontend experiences using the latest web technologies. My approach focuses on creating responsive, accessible, and performant interfaces that work across all devices.</p><p>My expertise includes modern JavaScript frameworks like React and Vue.js, along with advanced CSS techniques including animations, Grid, and Flexbox layouts. I prioritize creating semantic markup and accessible interfaces that work for all users.</p>",
         "skills": ["React", "Vue.js", "JavaScript/TypeScript", "HTML5/CSS3", "Responsive Design", "Web Accessibility", "Tailwind CSS", "Performance Optimization"],
         "links": {
-          "portfolio": "Related Project: Personel Website",
+          "portfolio": "Related Project: Personal Website",
           "frontend": "See Frontend Work" 
         }
       },
@@ -159,8 +169,8 @@
         "label": "Design",
         "title": "UI/UX Design",
         "subtitle": "Creating intuitive and appealing user experiences",
-        "description": "<p>My design philosophy centers on creating intuitive, accessible, and aesthetically pleasing interfaces. I bridge the gap between visual design and technical implementation to ensure a cohesive user experience.</p><p>Working with tools like Figma and Adobe Creative Suite, I create design systems, prototypes, and visual assets that bring ideas to life. I'm particularly interested in creating designs that aren't just beautiful, but also practical and implementable.</p>",
-        "skills": ["UI Design", "UX Research", "Figma", "Adobe Creative Suite", "Design Systems", "Prototyping", "Interaction Design", "Accessibility"],
+        "description": "<p>My design philosophy centers on creating intuitive, accessible, and aesthetically pleasing interfaces. I bridge the gap between visual design and technical implementation to ensure a cohesive user experience.</p><p>Working with tools like Figma, I create design systems, prototypes, and visual assets that bring ideas to life. I'm particularly interested in creating designs that are not just beautiful, but also practical and implementable.</p>",
+        "skills": ["UI Design", "UX Research", "Figma", "Design Systems", "Prototyping", "Interaction Design", "Accessibility"],
         "links": {
           "portfolio": "View Design Work"
         }
@@ -174,7 +184,6 @@
           "portfolio": "Related Project: Gym Membership Tracker"
         }
       },
-      
       "animation": {
         "label": "Animation",
         "title": "Web Animation",
@@ -182,10 +191,9 @@
         "description": "<p>I create smooth, purposeful animations that enhance user experience and bring interfaces to life. Focusing on performance and accessibility, I implement animations that guide users, provide feedback, and add delight without being distracting.</p><p>My toolkit includes CSS animations, JavaScript animation libraries, SVG animation, and WebGL for more complex 3D effects when appropriate.</p>",
         "skills": ["CSS Animations", "Framer Motion", "SVG Animation", "Three.js", "Interaction Design", "Performance Optimization"],
         "links": {
-          "visualizer": "Related Project: Personel Website"
+          "visualizer": "Related Project: Personal Website"
         }
       },
-      
       "bachelors": {
         "label": "Education",
         "title": "Education",
@@ -201,16 +209,13 @@
         "skills": ["Self-directed Learning", "Technical Skill Development", "Creative Coding", "Professional Development"],
         "links": {}
       },
-      
       "ai": {
         "label": "AI & ML",
         "title": "Artificial Intelligence & Machine Learning",
         "subtitle": "Developing a foundation in intelligent systems",
-        "description": "<p>AI is where my curiosity and technical interest intersect. I’m drawn to how machines learn, adapt, and uncover patterns—pushing me to experiment with models, tools, and ideas that challenge my understanding and fuel my growth as a developer.</p>",
+        "description": "<p>AI is where my curiosity and technical interest intersect. I'm drawn to how machines learn, adapt, and uncover patterns—pushing me to experiment with models, tools, and ideas that challenge my understanding and fuel my growth as a developer.</p>",
         "skills": ["Exploratory Thinking", "Model Prototyping", "Python", "Problem Framing", "Continuous Learning"]
       },
-
-
       "freelance": {
         "label": "Freelance",
         "title": "Freelance Projects",
@@ -218,7 +223,6 @@
         "description": "<p>Freelance work has been a way for me to stay hands-on, grow through real-world challenges, and explore my passion for software development in diverse contexts.</p>",
         "skills": ["Problem Solving", "Software Development", "Client Collaboration", "Continuous Learning"]
       },
-
       "vision": {
         "label": "Vision",
         "title": "Career Goals & Focus",
@@ -226,15 +230,13 @@
         "description": "<p>I'm building a career at the intersection of software development and data science, with a strong interest in turning complex information into actionable insights. In the long term, I aim to contribute to impactful tech-driven projects, while continuously developing my skills in machine learning, system design, and collaborative development environments.</p>",
         "skills": ["Problem Solving", "Critical Thinking", "Collaboration", "Adaptability", "Technical Growth"]
       },
-
       "datascience": {
         "label": "Data Science",
         "title": "Data Science",
         "subtitle": "A growing interest in understanding data",
-        "description": "<p>I’m drawn to how data can reveal patterns, inform decisions, and shape systems. While I’m still developing my skills in this area, exploring data science helps me think more critically, structure problems better, and stay connected to real-world applications of code.</p>",
+        "description": "<p>I'm drawn to how data can reveal patterns, inform decisions, and shape systems. While I'm still developing my skills in this area, exploring data science helps me think more critically, structure problems better, and stay connected to real-world applications of code.</p>",
         "skills": ["Basic Statistics", "Data Exploration", "Python", "Curiosity", "Problem Framing"]
       },
-
       "emergingtech": {
         "label": "Emerging Tech",
         "title": "Emerging Technologies",
@@ -242,7 +244,6 @@
         "description": "<p>I actively follow and explore modern technologies to stay ahead—whether it's experimenting with AI models, exploring web performance trends, or testing new front-end libraries. Curiosity keeps my workflow fresh and adaptive.</p>",
         "skills": ["Large Language Models", "Next.js", "WebAssembly", "Edge Deployment", "Visualization Tools"]
       },
-
       "thesis": {
         "label": "Thesis",
         "title": "Bachelor's Thesis Project",
@@ -250,23 +251,19 @@
         "description": "<p>For my final project, I developed a classification model using XGBoost to predict lung cancer presence based on methylation profiles from the TCGA dataset. The process involved feature preprocessing, model training, and performance evaluation on test data, highlighting how machine learning can support biomedical insights.</p>",
         "skills": ["XGBoost", "Feature Engineering", "TCGA", "Model Validation", "Biomedical Data Analysis"]
       },
-
       "research": {
         "label": "Research",
         "title": "Research & Exploration",
         "subtitle": "Diving deeper into how and why things work",
-        "description": "<p>I’m naturally drawn to questions that require structured thinking and long-term curiosity. Research allows me to slow down, explore concepts in depth, and connect theory with practical application—especially in technical and data-driven contexts.</p>",
+        "description": "<p>I'm naturally drawn to questions that require structured thinking and long-term curiosity. Research allows me to slow down, explore concepts in depth, and connect theory with practical application—especially in technical and data-driven contexts.</p>",
         "skills": ["Literature Review", "Analytical Thinking", "Documentation", "Scientific Curiosity", "Structured Exploration"]
       },
-
       "languages": {
         "label": "Languages",
         "title": "Language Skills",
-        "description": "<p>Turkish is my native language. I also work actively in English—confident in reading, writing, and technical communication, especially within software and academic contexts. While not a native speaker, I’m comfortable using English in both collaborative and independent work environments.</p>",
+        "description": "<p>Turkish is my native language. I also work actively in English—confident in reading, writing, and technical communication, especially within software and academic contexts. While not a native speaker, I'm comfortable using English in both collaborative and independent work environments.</p>",
         "skills": ["Turkish (Native)", "English (Professional Use)", "Technical Reading", "Documentation"]
       }
-
-
     }
   }
 }
