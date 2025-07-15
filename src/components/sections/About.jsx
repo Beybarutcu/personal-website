@@ -16,7 +16,7 @@ const About = ({ language }) => {
               title={t('about.skillCategories.frontend')} 
               icon={<Code size={20} />}
               skills={[
-                'React', 'Vue.js', 'JavaScript/TypeScript', 'HTML/CSS/SASS', 'Tailwind CSS'
+                'React', 'Vue.js', 'JavaScript/TypeScript', 'HTML5/CSS3', 'Tailwind CSS'
               ]}
             />
             
@@ -24,7 +24,7 @@ const About = ({ language }) => {
               title={t('about.skillCategories.design')} 
               icon={<Brush size={20} />}
               skills={[
-                'UI/UX Design', 'Figma', 'Creative Visualization', 'Animation', 'Responsive Design'
+                'UI Design', 'UX Research', 'Figma', 'Design Systems', 'Interaction Design'
               ]}
             />
             
@@ -32,7 +32,7 @@ const About = ({ language }) => {
               title={t('about.skillCategories.backend')} 
               icon={<Server size={20} />}
               skills={[
-                'Node.js', 'Python/Django', 'RESTful APIs', 'GraphQL', 'Authentication'
+                'Node.js', 'Python', 'RESTful APIs', 'Database Design', 'API Design'
               ]}
             />
             
@@ -40,7 +40,7 @@ const About = ({ language }) => {
               title={t('about.skillCategories.data')} 
               icon={<Database size={20} />}
               skills={[
-                'D3.js', 'Data Analysis', 'Chart.js', 'Python Data Science', 'SQL/NoSQL'
+                'Algorithms', 'Python', 'C++', 'Java', 'R', 'SQL', 'Statistics'
               ]}
             />
           </div>
@@ -61,23 +61,11 @@ const About = ({ language }) => {
               company={t('about.experience.previous1.company')}
               description={t('about.experience.previous1.description')}
             />
-            <ExperienceItem 
-              period={t('about.experience.previous2.period')}
-              title={t('about.experience.previous2.title')}
-              company={t('about.experience.previous2.company')}
-              description={t('about.experience.previous2.description')}
-            />
           </div>
         );
       case 'education':
         return (
           <div className="space-y-8">
-            <EducationItem 
-              period={t('about.education.masters.period')}
-              degree={t('about.education.masters.degree')}
-              school={t('about.education.masters.school')}
-              description={t('about.education.masters.description')}
-            />
             <EducationItem 
               period={t('about.education.bachelors.period')}
               degree={t('about.education.bachelors.degree')}
@@ -135,33 +123,29 @@ const About = ({ language }) => {
             
             <div className="bg-gray-800/40 backdrop-blur-md rounded-xl border border-gray-700/50 p-6 md:p-8 shadow-xl">
               <h3 className="text-xl font-semibold text-white mb-4">
-                {t('about.personalDetails.name')}
+                Personal Details
               </h3>
               
               <ul className="space-y-4">
                 <PersonalDetail 
                   label={t('about.personalDetails.name')} 
-                  value="Your Name" 
+                  value="Beyazıt Barutçu" 
                 />
                 <PersonalDetail 
                   label={t('about.personalDetails.email')} 
-                  value="your.email@example.com" 
+                  value="beyazbarutcu@gmail.com" 
                 />
                 <PersonalDetail 
                   label={t('about.personalDetails.location')} 
-                  value="City, Country" 
-                />
-                <PersonalDetail 
-                  label={t('about.personalDetails.availability')} 
-                  value="Available for Freelance" 
+                  value="Bursa, Türkiye" 
                 />
               </ul>
               
               <a 
-                href="#contact" 
+                href="mailto:beyazbarutcu@gmail.com" 
                 className="mt-6 inline-block px-6 py-3 bg-white text-gray-900 rounded-lg font-medium hover:bg-gray-200 transition-all hover:-translate-y-1 shadow-lg"
               >
-                {t('about.downloadResume')}
+                Contact Me
               </a>
             </div>
           </div>

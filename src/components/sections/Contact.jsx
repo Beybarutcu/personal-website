@@ -116,21 +116,14 @@ const Contact = () => {
                 <ContactInfoItem 
                   icon={<Mail size={20} className="text-orange-500" />}
                   title={t('contact.infoDetails.email')}
-                  content="your.email@example.com"
-                  href="mailto:your.email@example.com"
+                  content="beyazbarutcu@gmail.com"
+                  href="mailto:beyazbarutcu@gmail.com"
                 />
                 
                 <ContactInfoItem 
                   icon={<MapPin size={20} className="text-orange-500" />}
                   title={t('contact.infoDetails.location')}
-                  content="City, Country"
-                />
-                
-                <ContactInfoItem 
-                  icon={<Phone size={20} className="text-orange-500" />}
-                  title={t('contact.infoDetails.phone')}
-                  content="+1 (555) 123-4567"
-                  href="tel:+15551234567"
+                  content="Bursa, Türkiye"
                 />
               </div>
             </div>
@@ -143,19 +136,14 @@ const Contact = () => {
               
               <div className="flex justify-center space-x-6">
                 <SocialLink 
-                  href="https://github.com/yourusername" 
+                  href="https://github.com/Beybarutcu" 
                   icon={<Github size={20} />}
                   label="GitHub"
                 />
                 <SocialLink 
-                  href="https://linkedin.com/in/yourusername" 
+                  href="https://linkedin.com/in/beyazitbarutcu" 
                   icon={<Linkedin size={20} />}
                   label="LinkedIn"
-                />
-                <SocialLink 
-                  href="https://x.com/yourusername" 
-                  icon={<XLogo size={20} />}
-                  label="X (formerly Twitter)"
                 />
               </div>
             </div>
@@ -173,7 +161,7 @@ const Contact = () => {
                 />
                 <AvailabilityItem 
                   label={t('contact.availabilityTypes.fulltime')}
-                  available={false}
+                  available={true}
                 />
                 <AvailabilityItem 
                   label={t('contact.availabilityTypes.collaborations')}

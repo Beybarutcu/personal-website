@@ -29,19 +29,19 @@ const Footer = ({ language = 'en' }) => {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="flex flex-col items-center md:items-start mb-6 md:mb-0">
             <h2 className="text-xl font-bold text-white header-name-highlight">
-              YourName
+              Beyazıt Barutçu
             </h2>
             <p className="text-gray-400 mt-2">
               {language === 'tr' 
-                ? 'Etkileyici dijital deneyimler oluşturan yaratıcı geliştirici.' 
-                : 'Creative developer building captivating digital experiences.'
+                ? 'Pratik ve ölçeklenebilir teknoloji çözümleri geliştiren bilgisayar mühendisi.' 
+                : 'Computer engineer building practical and scalable technology solutions.'
               }
             </p>
           </div>
           
           <div className="flex space-x-4">
             <a 
-              href="https://github.com/yourusername" 
+              href="https://github.com/beyazitbarutcu" 
               target="_blank" 
               rel="noopener noreferrer"
               className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-white hover:text-gray-900 transition-all duration-300"
@@ -50,22 +50,13 @@ const Footer = ({ language = 'en' }) => {
               <Github size={18} />
             </a>
             <a 
-              href="https://linkedin.com/in/yourusername" 
+              href="https://linkedin.com/in/beyazit-barutcu" 
               target="_blank" 
               rel="noopener noreferrer"
               className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-white hover:text-gray-900 transition-all duration-300"
               aria-label="LinkedIn"
             >
               <Linkedin size={18} />
-            </a>
-            <a 
-              href="https://x.com/yourusername" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-white hover:text-gray-900 transition-all duration-300"
-              aria-label="X (formerly Twitter)"
-            >
-              <XLogo size={18} />
             </a>
           </div>
         </div>

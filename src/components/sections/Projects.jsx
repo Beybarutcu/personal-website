@@ -11,73 +11,37 @@ const Projects = () => {
   const [visibleCount, setVisibleCount] = useState(4);
   const [selectedProject, setSelectedProject] = useState(null);
   
-  // Sample project data - would typically come from your projectsData.js file
+  // Updated project data based on your real information
   const projects = [
     {
-      id: 'neural-network',
-      title: t('portfolio.projects.neuralNetwork.title'),
-      description: t('portfolio.projects.neuralNetwork.description'),
-      details: t('portfolio.projects.neuralNetwork.details'),
-      image: '/assets/images/projects/neural-network-thumb.jpg', // This would be a placeholder image
-      technologies: ['React', 'D3.js', 'TypeScript'],
-      demoUrl: 'https://example.com/neural-network-demo',
-      codeUrl: 'https://github.com/yourusername/neural-network-viz',
-      categories: ['featured', 'visualization', 'frontend']
-    },
-    {
-      id: 'data-dashboard',
-      title: 'Interactive Data Dashboard',
-      description: 'Real-time data visualization dashboard with customizable widgets and filtering capabilities.',
-      details: 'Built with React and D3.js, this dashboard provides a modular system for creating reusable visualization components.',
-      image: '/assets/images/projects/dashboard-thumb.jpg',
-      technologies: ['React', 'Redux', 'D3.js', 'Firebase'],
-      demoUrl: 'https://example.com/dashboard-demo',
-      codeUrl: 'https://github.com/yourusername/interactive-dashboard',
+      id: 'personal-website',
+      title: t('portfolio.projects.personalWebsite.title'),
+      description: t('portfolio.projects.personalWebsite.description'),
+      details: t('portfolio.projects.personalWebsite.details'),
+      image: '/assets/images/portfolio-thumb.jpg',
+      technologies: ['React', 'D3.js', 'Tailwind CSS', 'i18next'],
+      demoUrl: window.location.origin, // Current website
+      codeUrl: 'https://github.com/Beybarutcu/personal-website',
       categories: ['featured', 'frontend', 'visualization']
     },
     {
-      id: 'portfolio-site',
-      title: 'Portfolio Website',
-      description: 'Personal portfolio website with interactive mind map navigation and multilingual support.',
-      details: 'A responsive website built with React and Tailwind CSS, featuring creative animations and interactive elements.',
-      image: '/assets/images/projects/portfolio-thumb.jpg',
-      technologies: ['React', 'Tailwind CSS', 'i18next', 'Framer Motion'],
-      demoUrl: 'https://example.com',
-      codeUrl: 'https://github.com/yourusername/portfolio',
-      categories: ['frontend', 'design']
+      id: 'gym-membership-tracker',
+      title: t('portfolio.projects.gymTracker.title'),
+      description: t('portfolio.projects.gymTracker.description'),
+      details: t('portfolio.projects.gymTracker.details'),
+      image: './assets/images/gym-tracker-thumb.jpg',
+      technologies: ['Flutter', 'Dart', 'SQLite', 'Material Design'],
+      codeUrl: 'https://github.com/Beybarutcu/gym_membership_tracker',
+      categories: ['featured', 'mobile', 'flutter']
     },
     {
-      id: 'ar-education',
-      title: 'AR Educational App',
-      description: 'Augmented reality application for teaching complex scientific concepts through interactive 3D models.',
-      details: 'Uses WebXR and Three.js to create immersive educational experiences accessible through modern browsers.',
-      image: '/assets/images/projects/ar-app-thumb.jpg',
-      technologies: ['Three.js', 'WebXR', 'React', 'Node.js'],
-      demoUrl: 'https://example.com/ar-demo',
-      codeUrl: 'https://github.com/yourusername/ar-education',
-      categories: ['featured', 'frontend', 'webxr']
-    },
-    {
-      id: 'sentiment-analysis',
-      title: 'Sentiment Analysis Dashboard',
-      description: 'Real-time analysis of social media sentiment with natural language processing and data visualization.',
-      details: 'Combines Python backend for NLP processing with a React frontend for data visualization.',
-      image: '/assets/images/projects/sentiment-thumb.jpg',
-      technologies: ['Python', 'React', 'D3.js', 'NLP'],
-      demoUrl: 'https://example.com/sentiment-demo',
-      codeUrl: 'https://github.com/yourusername/sentiment-analysis',
-      categories: ['backend', 'ai', 'visualization']
-    },
-    {
-      id: 'music-visualizer',
-      title: 'Audio Spectrum Visualizer',
-      description: 'Interactive music visualization tool that responds to audio input with beautiful generative visuals.',
-      details: 'Uses Web Audio API and WebGL to create dynamic visualizations that react to music frequencies and beats.',
-      image: '/assets/images/projects/audio-viz-thumb.jpg',
-      technologies: ['JavaScript', 'Web Audio API', 'Three.js', 'WebGL'],
-      demoUrl: 'https://example.com/audio-visualizer',
-      codeUrl: 'https://github.com/yourusername/audio-visualizer',
-      categories: ['frontend', 'visualization', 'creative']
+      id: 'human-identifier-tracker',
+      title: t('portfolio.projects.humanTracker.title'),
+      description: t('portfolio.projects.humanTracker.description'),
+      details: t('portfolio.projects.humanTracker.details'),
+      image: '/assets/images/projects/cv-tracker-thumb.jpg',
+      technologies: ['Python', 'YOLO', 'OpenCV', 'Pyzbar', 'Computer Vision'],
+      categories: ['featured', 'ai', 'computer-vision', 'python']
     }
   ];
   
@@ -85,10 +49,12 @@ const Projects = () => {
   const categories = [
     { id: 'all', label: t('portfolio.filters.all') },
     { id: 'featured', label: t('portfolio.filters.featured') },
-    { id: 'visualization', label: 'Visualization' },
     { id: 'frontend', label: 'Frontend' },
-    { id: 'backend', label: 'Backend' },
-    { id: 'creative', label: 'Creative' }
+    { id: 'mobile', label: 'Mobile' },
+    { id: 'ai', label: 'AI/ML' },
+    { id: 'python', label: 'Python' },
+    { id: 'flutter', label: 'Flutter' },
+    { id: 'visualization', label: 'Visualization' }
   ];
   
   // Filter projects when activeFilter changes
@@ -115,16 +81,16 @@ const Projects = () => {
   
   const openProjectModal = (project) => {
     setSelectedProject(project);
-    document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+    document.body.style.overflow = 'hidden';
   };
   
   const closeProjectModal = () => {
     setSelectedProject(null);
-    document.body.style.overflow = 'auto'; // Restore scrolling when modal is closed
+    document.body.style.overflow = 'auto';
   };
   
   return (
-    <section id="portfolio" className="relative py-20 overflow-hidden">
+    <section id="projects" className="relative py-20 overflow-hidden">
       {/* Keep only the gradient orbs */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         {/* Gradient orbs with a different color scheme */}
@@ -203,7 +169,7 @@ const Projects = () => {
         {/* GitHub link */}
         <div className="text-center mt-16">
           <a
-            href="https://github.com/yourusername"
+            href="https://github.com/Beybarutcu"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 bg-gray-800/80 backdrop-blur-sm border border-gray-700/50 rounded-lg text-gray-300 font-medium hover:text-white hover:bg-gray-700/80 transition-all hover:-translate-y-1"
@@ -226,7 +192,7 @@ const Projects = () => {
   );
 };
 
-// Project Card Component with Simplified Background
+// Project Card Component
 const ProjectCard = ({ project, onClick, t }) => {
   return (
     <div 
@@ -235,13 +201,13 @@ const ProjectCard = ({ project, onClick, t }) => {
     >
       {/* Simplified background with project-card-bg class */}
       <div className="h-56 bg-gradient-to-br from-gray-700 to-gray-900 relative overflow-hidden">
-        {/* Create a monochromatic space-themed placeholder if no image */}
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-700/30 to-gray-900/30 project-card-bg"></div>
+        {/* Create a tech-themed placeholder */}
+        <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-purple-500/20 project-card-bg"></div>
         
         {/* View overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
           <div className="bg-white rounded-full p-3 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-            <Github size={24} className="text-gray-900" />
+            <Eye size={24} className="text-gray-900" />
           </div>
         </div>
       </div>
@@ -276,8 +242,25 @@ const ProjectCard = ({ project, onClick, t }) => {
           })}
         </div>
         
-        {/* Action links - Only View Code */}
-        <div className="flex justify-center pt-4 border-t border-gray-700/30">
+        {/* Action links */}
+        <div className="flex justify-between pt-4 border-t border-gray-700/30">
+          {project.demoUrl ? (
+            <a 
+              href={project.demoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-1"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Eye size={16} />
+              {t('portfolio.viewLive')}
+            </a>
+          ) : (
+            <span className="text-sm text-gray-500 flex items-center gap-1">
+              <Eye size={16} />
+              Mobile/Desktop App
+            </span>
+          )}
           <a 
             href={project.codeUrl}
             target="_blank"
@@ -294,7 +277,7 @@ const ProjectCard = ({ project, onClick, t }) => {
   );
 };
 
-// Project Modal Component with Simplified Background
+// Project Modal Component
 const ProjectModal = ({ project, onClose, t }) => {
   // Close when clicking outside the content
   const handleBackdropClick = (e) => {
@@ -324,11 +307,8 @@ const ProjectModal = ({ project, onClose, t }) => {
       onClick={handleBackdropClick}
     >
       <div className="bg-gray-800/90 backdrop-blur-md rounded-xl border border-gray-700/50 overflow-hidden shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
-        {/* Project Header with simplified background */}
-        <div className="h-80 bg-gradient-to-br from-gray-700 to-gray-900 relative overflow-hidden">
-          {/* Simplified background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-700/30 to-gray-900/30 project-card-bg"></div>
-          
+        {/* Project Header */}
+        <div className="h-80 bg-gradient-to-br from-orange-500/20 to-purple-500/20 relative overflow-hidden">
           {/* Title overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/70 to-transparent flex flex-col justify-end p-8">
             <h2 className="text-3xl font-bold text-white mb-2">{project.title}</h2>
@@ -372,15 +352,22 @@ const ProjectModal = ({ project, onClose, t }) => {
           
           {/* Action links */}
           <div className="flex flex-wrap gap-4">
-            <a 
-              href={project.demoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-white text-gray-900 rounded-lg font-medium hover:bg-gray-200 transition-all hover:-translate-y-1 shadow-lg"
-            >
-              <Eye size={18} />
-              {t('portfolio.viewLive')}
-            </a>
+            {project.demoUrl ? (
+              <a 
+                href={project.demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-gray-900 rounded-lg font-medium hover:bg-gray-200 transition-all hover:-translate-y-1 shadow-lg"
+              >
+                <Eye size={18} />
+                {t('portfolio.viewLive')}
+              </a>
+            ) : (
+              <div className="inline-flex items-center gap-2 px-6 py-3 bg-gray-600 text-gray-300 rounded-lg font-medium cursor-not-allowed">
+                <Eye size={18} />
+                Desktop/Mobile App
+              </div>
+            )}
             
             <a 
               href={project.codeUrl}

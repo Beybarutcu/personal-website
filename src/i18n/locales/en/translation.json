@@ -168,7 +168,6 @@
       "backend": {
         "label": "Backend",
         "title": "Backend Development",
-        "subtitle": "Building robust server-side solutions",
         "description": "<p>I develop scalable backend systems that power modern web applications. My focus is on creating clean, maintainable APIs and efficient database designs that support the frontend experience.</p><p>While my primary expertise is in frontend development, I'm comfortable working across the full stack, which helps me create more integrated solutions and better understand system architecture as a whole.</p>",
         "skills": ["Node.js", "Express", "RESTful APIs", "GraphQL", "Database Design", "Authentication", "Python/Django", "API Design"],
         "links": {
@@ -181,7 +180,7 @@
         "title": "Web Animation",
         "subtitle": "Creating engaging motion experiences",
         "description": "<p>I create smooth, purposeful animations that enhance user experience and bring interfaces to life. Focusing on performance and accessibility, I implement animations that guide users, provide feedback, and add delight without being distracting.</p><p>My toolkit includes CSS animations, JavaScript animation libraries, SVG animation, and WebGL for more complex 3D effects when appropriate.</p>",
-        "skills": ["CSS Animations", "GSAP", "Framer Motion", "SVG Animation", "Three.js", "Motion Design", "Interaction Design", "Performance Optimization"],
+        "skills": ["CSS Animations", "Framer Motion", "SVG Animation", "Three.js", "Interaction Design", "Performance Optimization"],
         "links": {
           "visualizer": "Related Project: Personel Website"
         }
@@ -226,9 +225,46 @@
         "subtitle": "Growing through data, design, and real-world impact",
         "description": "<p>I'm building a career at the intersection of software development and data science, with a strong interest in turning complex information into actionable insights. In the long term, I aim to contribute to impactful tech-driven projects, while continuously developing my skills in machine learning, system design, and collaborative development environments.</p>",
         "skills": ["Problem Solving", "Critical Thinking", "Collaboration", "Adaptability", "Technical Growth"]
-      }
+      },
 
-        
+      "datascience": {
+        "label": "Data Science",
+        "title": "Data Science",
+        "subtitle": "A growing interest in understanding data",
+        "description": "<p>I’m drawn to how data can reveal patterns, inform decisions, and shape systems. While I’m still developing my skills in this area, exploring data science helps me think more critically, structure problems better, and stay connected to real-world applications of code.</p>",
+        "skills": ["Basic Statistics", "Data Exploration", "Python", "Curiosity", "Problem Framing"]
+      },
+
+      "emergingtech": {
+        "label": "Emerging Tech",
+        "title": "Emerging Technologies",
+        "subtitle": "Staying in sync with the evolving landscape",
+        "description": "<p>I actively follow and explore modern technologies to stay ahead—whether it's experimenting with AI models, exploring web performance trends, or testing new front-end libraries. Curiosity keeps my workflow fresh and adaptive.</p>",
+        "skills": ["Large Language Models", "Next.js", "WebAssembly", "Edge Deployment", "Visualization Tools"]
+      },
+
+      "thesis": {
+        "label": "Thesis",
+        "title": "Bachelor's Thesis Project",
+        "subtitle": "Applying machine learning to biomedical data",
+        "description": "<p>For my final project, I developed a classification model using XGBoost to predict lung cancer presence based on methylation profiles from the TCGA dataset. The process involved feature preprocessing, model training, and performance evaluation on test data, highlighting how machine learning can support biomedical insights.</p>",
+        "skills": ["XGBoost", "Feature Engineering", "TCGA", "Model Validation", "Biomedical Data Analysis"]
+      },
+
+      "research": {
+        "label": "Research",
+        "title": "Research & Exploration",
+        "subtitle": "Diving deeper into how and why things work",
+        "description": "<p>I’m naturally drawn to questions that require structured thinking and long-term curiosity. Research allows me to slow down, explore concepts in depth, and connect theory with practical application—especially in technical and data-driven contexts.</p>",
+        "skills": ["Literature Review", "Analytical Thinking", "Documentation", "Scientific Curiosity", "Structured Exploration"]
+      },
+
+      "languages": {
+        "label": "Languages",
+        "title": "Language Skills",
+        "description": "<p>Turkish is my native language. I also work actively in English—confident in reading, writing, and technical communication, especially within software and academic contexts. While not a native speaker, I’m comfortable using English in both collaborative and independent work environments.</p>",
+        "skills": ["Turkish (Native)", "English (Professional Use)", "Technical Reading", "Documentation"]
+      }
 
 
     }
