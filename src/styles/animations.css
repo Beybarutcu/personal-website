@@ -145,3 +145,41 @@
   outline: none !important;
   box-shadow: none !important;
 }
+/* Ensure node colors work properly on all mobile devices */
+@media screen and (max-width: 768px) {
+  .node-elements circle {
+    /* Force hardware acceleration */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+  
+  /* Force orange color for inner circles */
+  .node-elements .innerCircleBg,
+  .node-elements .innerCircle,
+  .node-elements .innerCircleOverlay {
+    fill: rgb(249, 115, 22) !important;
+    -webkit-fill: rgb(249, 115, 22) !important;
+  }
+  
+  /* Force white color for outer circles */
+  .node-elements circle:not(.innerCircleBg):not(.innerCircle):not(.innerCircleOverlay):not(.nodeGlow) {
+    fill: #ffffff !important;
+    stroke: #ffffff !important;
+    -webkit-fill: #ffffff !important;
+    -webkit-stroke: #ffffff !important;
+  }
+  
+  /* Prevent any color inversion on mobile dark modes */
+  .node-elements circle {
+    filter: none !important;
+    -webkit-filter: none !important;
+  }
+}
+
+/* Force color support for older mobile browsers */
+@supports not (color: color(display-p3 1 0 0)) {
+  .node-elements .innerCircleBg,
+  .node-elements .innerCircle {
+    fill: #f97316 !important; /* Hex fallback for rgb() */
+  }
+}

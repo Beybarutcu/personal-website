@@ -10,45 +10,46 @@ const Navbar = ({ currentLanguage }) => {
   const [showScrollTop, setShowScrollTop] = useState(false);
   
   // Update active section based on scroll position
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + 300; // Offset to trigger earlier
-      
-      // Show/hide scroll to top button
-      if (scrollPosition > 800) {
-        setShowScrollTop(true);
-      } else {
-        setShowScrollTop(false);
-      }
-      
-      // Get all sections for intersection detection
-      const sections = ['home', 'portfolio', 'about', 'projects', 'contact'];
-      let currentActive = 'home';
-      
-      // Find which section is in view
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          const offset = window.innerHeight * 0.3;
-          
-          if (rect.top <= offset && rect.bottom >= offset) {
-            currentActive = section;
-            break;
-          }
+useEffect(() => {
+  const handleScroll = () => {
+    const scrollPosition = window.scrollY + 300; // Offset to trigger earlier
+    
+    // Show/hide scroll to top button
+    if (scrollPosition > 800) {
+      setShowScrollTop(true);
+    } else {
+      setShowScrollTop(false);
+    }
+    
+    // Get all sections for intersection detection
+    const sections = ['home', 'portfolio', 'about', 'projects', 'contact'];
+    let currentActive = 'home';
+    
+    // Find which section is in view
+    for (const section of sections) {
+      const element = document.getElementById(section);
+      if (element) {
+        const rect = element.getBoundingClientRect();
+        const offset = window.innerHeight * 0.3;
+        
+        if (rect.top <= offset && rect.bottom >= offset) {
+          currentActive = section;
+          break;
         }
       }
-      
-      setActiveSection(currentActive);
-    };
+    }
     
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initialize
-    
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+    setActiveSection(currentActive);
+  };
+  
+  // Add passive event listener for better performance
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  handleScroll(); // Initialize
+  
+  return () => {
+    window.removeEventListener('scroll', handleScroll, { passive: true });
+  };
+}, []);
   
   const scrollToTop = () => {
     window.scrollTo({

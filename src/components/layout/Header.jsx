@@ -26,8 +26,25 @@ const Header = ({ currentLanguage, onLanguageChange }) => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
   
+  // FIXED: Close mobile menu without scrolling to home
   const closeMobileMenu = () => {
     setMobileMenuOpen(false);
+    // Removed automatic scroll to top - stay where user was
+  };
+  
+  // FIXED: Custom navigation handler that doesn't force scroll to home
+  const handleNavigation = (targetId, event) => {
+    event.preventDefault();
+    closeMobileMenu();
+    
+    // Only scroll if clicking on a different section
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      targetElement.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start' 
+      });
+    }
   };
   
   return (
@@ -47,6 +64,7 @@ const Header = ({ currentLanguage, onLanguageChange }) => {
           <a 
             href="#home" 
             className="text-gray-300 hover:text-white transition-colors relative group"
+            onClick={(e) => handleNavigation('home', e)}
           >
             {t('navigation.home')}
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
@@ -54,6 +72,7 @@ const Header = ({ currentLanguage, onLanguageChange }) => {
           <a 
             href="#portfolio" 
             className="text-gray-300 hover:text-white transition-colors relative group"
+            onClick={(e) => handleNavigation('portfolio', e)}
           >
             InSight
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
@@ -61,6 +80,7 @@ const Header = ({ currentLanguage, onLanguageChange }) => {
           <a 
             href="#about" 
             className="text-gray-300 hover:text-white transition-colors relative group"
+            onClick={(e) => handleNavigation('about', e)}
           >
             {t('navigation.about')}
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
@@ -68,6 +88,7 @@ const Header = ({ currentLanguage, onLanguageChange }) => {
           <a 
             href="#projects" 
             className="text-gray-300 hover:text-white transition-colors relative group"
+            onClick={(e) => handleNavigation('projects', e)}
           >
             Projects
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
@@ -75,6 +96,7 @@ const Header = ({ currentLanguage, onLanguageChange }) => {
           <a 
             href="#contact" 
             className="text-gray-300 hover:text-white transition-colors relative group"
+            onClick={(e) => handleNavigation('contact', e)}
           >
             {t('navigation.contact')}
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
@@ -105,50 +127,57 @@ const Header = ({ currentLanguage, onLanguageChange }) => {
         </div>
       </div>
       
-      {/* Mobile Navigation Overlay - now includes InSight */}
+      {/* MODIFIED: Mobile Navigation Shelf - 30% height from top, cropped 15% left/right */}
       <div 
-        className={`fixed inset-0 bg-gray-900/95 backdrop-blur-lg z-30 transition-opacity duration-300 md:hidden ${
+        className={`fixed bg-gray-900/95 backdrop-blur-lg z-30 transition-all duration-300 md:hidden ${
           mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         style={{ 
-          top: mobileMenuOpen ? '0' : '-100%',
-          transitionProperty: 'opacity, top' 
+          /* FIXED: Shelf is only 30% of screen height, starts from top */
+          top: mobileMenuOpen ? '0' : '-30vh',  /* Slides down only 30vh */
+          left: '15%',      /* 15% crop from left */
+          right: '15%',     /* 15% crop from right */
+          height: '30vh',   /* Only 30% of screen height */
+          borderRadius: '0 0 12px 12px', /* Rounded only at bottom */
+          boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4)', 
+          transitionProperty: 'opacity, top',
+          border: '1px solid rgba(255, 255, 255, 0.1)'
         }}
       >
-        <div className="flex flex-col items-center justify-center h-full">
-          <nav className="flex flex-col items-center gap-8 p-8">
+        <div className="flex flex-col items-center justify-center h-full py-4">
+          <nav className="flex flex-col items-center justify-between h-full w-full max-w-sm">
             <a 
               href="#home" 
-              className="text-2xl text-gray-300 hover:text-white transition-colors"
-              onClick={closeMobileMenu}
+              className="text-xl text-gray-300 hover:text-white transition-colors"
+              onClick={(e) => handleNavigation('home', e)}
             >
               {t('navigation.home')}
             </a>
             <a 
               href="#portfolio" 
-              className="text-2xl text-gray-300 hover:text-white transition-colors"
-              onClick={closeMobileMenu}
+              className="text-xl text-gray-300 hover:text-white transition-colors"
+              onClick={(e) => handleNavigation('portfolio', e)}
             >
               InSight
             </a>
             <a 
               href="#about" 
-              className="text-2xl text-gray-300 hover:text-white transition-colors"
-              onClick={closeMobileMenu}
+              className="text-xl text-gray-300 hover:text-white transition-colors"
+              onClick={(e) => handleNavigation('about', e)}
             >
               {t('navigation.about')}
             </a>
             <a 
               href="#projects" 
-              className="text-2xl text-gray-300 hover:text-white transition-colors"
-              onClick={closeMobileMenu}
+              className="text-xl text-gray-300 hover:text-white transition-colors"
+              onClick={(e) => handleNavigation('projects', e)}
             >
               Projects
             </a>
             <a 
               href="#contact" 
-              className="text-2xl text-gray-300 hover:text-white transition-colors"
-              onClick={closeMobileMenu}
+              className="text-xl text-gray-300 hover:text-white transition-colors"
+              onClick={(e) => handleNavigation('contact', e)}
             >
               {t('navigation.contact')}
             </a>

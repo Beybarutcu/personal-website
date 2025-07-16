@@ -177,7 +177,7 @@ const CosmicBackground = () => {
       setScrollPosition(window.scrollY);
     };
     
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     
     // Initialize stars
     initScrollStars();
@@ -212,8 +212,8 @@ const CosmicBackground = () => {
     
     // Cleanup
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleScroll, { passive: true });
+      window.removeEventListener('resize', handleResize, { passive: true });
       clearInterval(cometInterval);
     };
   }, []);
