@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Home, User, Briefcase, Mail, ArrowUp } from 'lucide-react';
-import InsightIcon from '../icons/InsightIcon'; // Import the custom icon
+import InsightIcon from '../icons/InsightIcon';
 
 const Navbar = ({ currentLanguage }) => {
   const { t } = useTranslation();
@@ -10,66 +10,57 @@ const Navbar = ({ currentLanguage }) => {
   const [showScrollTop, setShowScrollTop] = useState(false);
   
   // Update active section based on scroll position
-useEffect(() => {
-  const handleScroll = () => {
-    const scrollPosition = window.scrollY + 300; // Offset to trigger earlier
-    
-    // Show/hide scroll to top button
-    if (scrollPosition > 800) {
-      setShowScrollTop(true);
-    } else {
-      setShowScrollTop(false);
-    }
-    
-    // Get all sections for intersection detection
-    const sections = ['home', 'portfolio', 'about', 'projects', 'contact'];
-    let currentActive = 'home';
-    
-    // Find which section is in view
-    for (const section of sections) {
-      const element = document.getElementById(section);
-      if (element) {
-        const rect = element.getBoundingClientRect();
-        const offset = window.innerHeight * 0.3;
-        
-        if (rect.top <= offset && rect.bottom >= offset) {
-          currentActive = section;
-          break;
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 300;
+      
+      // Show/hide scroll to top button
+      setShowScrollTop(scrollPosition > 800);
+      
+      // Find which section is in view
+      const sections = ['home', 'portfolio', 'about', 'projects', 'contact'];
+      let currentActive = 'home';
+      
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          const offset = window.innerHeight * 0.3;
+          
+          if (rect.top <= offset && rect.bottom >= offset) {
+            currentActive = section;
+            break;
+          }
         }
       }
-    }
+      
+      setActiveSection(currentActive);
+    };
     
-    setActiveSection(currentActive);
-  };
-  
-  // Add passive event listener for better performance
-  window.addEventListener('scroll', handleScroll, { passive: true });
-  handleScroll(); // Initialize
-  
-  return () => {
-    window.removeEventListener('scroll', handleScroll, { passive: true });
-  };
-}, []);
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+  
+  const navigationItems = [
+    { id: 'home', icon: Home, label: t('navigation.home') },
+    { id: 'portfolio', icon: InsightIcon, label: 'InSight', isCustomIcon: true },
+    { id: 'about', icon: User, label: t('navigation.about') },
+    { id: 'projects', icon: Briefcase, label: 'Projects' },
+    { id: 'contact', icon: Mail, label: t('navigation.contact') }
+  ];
   
   return (
     <>
-      {/* Fixed side navigation (desktop) */}
+      {/* Desktop Navigation */}
       <nav className="fixed left-6 top-1/2 transform -translate-y-1/2 z-30 hidden md:flex">
         <ul className="flex flex-col gap-6">
-          {[
-            { id: 'home', icon: Home, label: t('navigation.home') },
-            { id: 'portfolio', icon: InsightIcon, label: 'InSight', isCustomIcon: true }, // Using custom icon
-            { id: 'about', icon: User, label: t('navigation.about') },
-            { id: 'projects', icon: Briefcase, label: 'Projects' },
-            { id: 'contact', icon: Mail, label: t('navigation.contact') }
-          ].map(item => {
+          {navigationItems.map(item => {
             const Icon = item.icon;
             const isActive = activeSection === item.id;
             
@@ -77,7 +68,7 @@ useEffect(() => {
               <li key={item.id}>
                 <a 
                   href={`#${item.id}`}
-                  className={`relative block group`}
+                  className="relative block group"
                   aria-label={item.label}
                   title={item.id === 'portfolio' ? 'InSight (Interactive Portfolio)' : item.label}
                 >
@@ -111,16 +102,10 @@ useEffect(() => {
         </ul>
       </nav>
       
-      {/* Fixed bottom navigation (mobile) */}
+      {/* Mobile Navigation */}
       <nav className="fixed bottom-0 left-0 right-0 z-30 md:hidden bg-gray-900/90 backdrop-blur-md border-t border-gray-800/50">
         <ul className="flex justify-around">
-          {[
-            { id: 'home', icon: Home, label: t('navigation.home') },
-            { id: 'portfolio', icon: InsightIcon, label: 'InSight', isCustomIcon: true }, // Using custom icon
-            { id: 'about', icon: User, label: t('navigation.about') },
-            { id: 'projects', icon: Briefcase, label: 'Projects' },
-            { id: 'contact', icon: Mail, label: t('navigation.contact') }
-          ].map(item => {
+          {navigationItems.map(item => {
             const Icon = item.icon;
             const isActive = activeSection === item.id;
             
@@ -128,15 +113,12 @@ useEffect(() => {
               <li key={item.id} className="py-3">
                 <a 
                   href={`#${item.id}`}
-                  className={`flex flex-col items-center px-3 `}
+                  className="flex flex-col items-center px-3"
                   aria-label={item.label}
                 >
                   <Icon 
                     size={20} 
-                    className={isActive 
-                      ? 'text-white' 
-                      : 'text-gray-400'
-                    } 
+                    className={isActive ? 'text-white' : 'text-gray-400'} 
                   />
                   <span className={`text-xs mt-1 ${isActive ? 'text-white' : 'text-gray-400'}`}>
                     {item.label}

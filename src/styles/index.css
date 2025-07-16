@@ -58,13 +58,6 @@ body {
   opacity: 1;
 }
 
-/* Remove any conflicting styling from the original index.css */
-/* For example, replacing the original button styles with ones that work with Tailwind */
-button:focus,
-button:focus-visible {
-  @apply outline-none ring-2 ring-offset-2 ring-blue-500;
-}
-
 /* Smooth scrolling for anchor links */
 html {
   scroll-behavior: smooth;
@@ -140,54 +133,81 @@ html {
   }
 }
 
-/* Interest Cluster Styles */
-.cluster-visualization {
-  background: transparent;
-  overflow: visible;
+.animate-comet {
+  animation: comet 6s linear infinite;
 }
 
-.cluster-node {
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
-  cursor: pointer;
+/* FOCUS OUTLINE REMOVAL - This fixes the white and blue lines issue */
+
+/* Remove focus outlines from all buttons globally */
+button:focus,
+button:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: inherit !important;
 }
 
-.cluster-node:hover {
-  transform: scale(1.08);
+/* Specifically target language switcher buttons */
+.relative button:focus,
+.relative button:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: inherit !important;
 }
 
-.cluster-node-main {
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+/* Specifically target about section tab buttons */
+.about-section button:focus,
+.about-section button:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
-.cluster-node-main circle {
-  transform-origin: center;
-  animation: pulse-soft 4s ease-in-out infinite;
+/* Target buttons inside dropdown menus */
+[aria-expanded] button:focus,
+[aria-expanded] button:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
-.cluster-node circle {
-  transition: fill 0.3s ease, r 0.3s ease, filter 0.3s ease;
+/* Global button focus removal for better coverage */
+*:focus,
+*:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
-.cluster-node text {
-  pointer-events: none;
-  user-select: none;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+/* Ensure this applies to all interactive elements */
+button, 
+[role="button"], 
+[tabindex]:not([tabindex="-1"]) {
+  outline: none !important;
 }
 
-.cluster-link {
-  transition: stroke 0.3s ease, stroke-opacity 0.3s ease, stroke-width 0.3s ease;
-  pointer-events: none;
-  stroke-linecap: round;
+button:focus,
+button:focus-visible,
+button:active {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: inherit !important;
 }
 
-/* Gentle pulsing animation for main node */
-@keyframes pulse-soft {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.9;
-  }
-  50% {
-    transform: scale(1.05);
-    opacity: 1;
-  }
+/* Additional focus removal for specific button states */
+button:hover:focus,
+button:active:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove Tailwind's default focus styles */
+button:focus {
+  --tw-ring-shadow: none !important;
+  --tw-ring-offset-shadow: none !important;
+}
+
+/* Override any focus styles that might come from component libraries */
+.focus\:outline-none:focus,
+.focus\:ring-0:focus,
+.focus\:ring-transparent:focus {
+  outline: none !important;
+  box-shadow: none !important;
 }

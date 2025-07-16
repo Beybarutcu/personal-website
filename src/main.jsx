@@ -7,27 +7,15 @@ import App from "./App";
 import "./i18n/i18n";
 
 // Import styles in the correct order
-import "./styles/index.css"; // Tailwind directives
+import "./styles/index.css";
 import "./styles/custom-base.css";
-import "./styles/custom-theme.css"; // Our enhanced theme
+import "./styles/custom-theme.css";
 import "./styles/animations.css";
 import "./App.css";
 
-// Create a preloader for smooth initial loading
-const preloadFonts = async () => {
-  // You can add custom font preloading logic here if needed
-  return new Promise((resolve) => {
-    // Simulate font loading
-    setTimeout(resolve, 100);
-  });
-};
-
-// Initialize the app with preloaded assets
+// Initialize the app
 const initializeApp = async () => {
-  // Preload critical assets
-  await preloadFonts();
-  
-  // Add a class to the body when everything is ready
+  // Add a class to the body when ready
   document.body.classList.add('app-ready');
   
   // Render the application
@@ -41,7 +29,7 @@ const initializeApp = async () => {
 // Start initialization
 initializeApp().catch(console.error);
 
-// Add a minimal inline style for the initial loading state
+// Add initial loading styles
 const style = document.createElement('style');
 style.textContent = `
   body {

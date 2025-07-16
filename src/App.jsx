@@ -28,8 +28,6 @@ function App() {
   const handleLanguageChange = (lang) => {
     setLanguage(lang);
     i18n.changeLanguage(lang);
-    
-    // Store language preference
     localStorage.setItem('preferredLanguage', lang);
   };
   
@@ -41,15 +39,11 @@ function App() {
       i18n.changeLanguage(storedLanguage);
     }
   }, [i18n]);
-  // Handle intro animation timing with smooth transition
-  useEffect(() => {
-    const timer1 = setTimeout(() => {
-      setFadeOut(true);
-    }, 1800); // Start fade out after all signals complete
 
-    const timer2 = setTimeout(() => {
-      setLoading(false);
-    }, 2100); // Complete removal with enough buffer for all animations
+  // Handle intro animation timing
+  useEffect(() => {
+    const timer1 = setTimeout(() => setFadeOut(true), 1800);
+    const timer2 = setTimeout(() => setLoading(false), 2100);
     
     return () => {
       clearTimeout(timer1);
@@ -70,19 +64,17 @@ function App() {
       </div>
     );
   }
+
   return (
     <div className="flex flex-col min-h-screen relative">
-      {/* Cosmic animated background */}
       <CosmicBackground />
       
-      {/* Fixed navigation */}
       <Header 
         currentLanguage={language} 
         onLanguageChange={handleLanguageChange} 
       />
       <Navbar currentLanguage={language} />
       
-      {/* Main content - Make sure section IDs match navigation targets */}
       <main className="flex-grow pt-16">
         <section id="home">
           <Hero />
@@ -101,7 +93,6 @@ function App() {
         </section>
       </main>
       
-      {/* Footer */}
       <Footer language={language} />
     </div>
   );
