@@ -65,10 +65,10 @@ export default function InteractivePortfolio() {
   // Get container dimensions and update on resize
   useEffect(() => {
     if (!containerRef.current) return;
-    
+
     // Initial measurement
     updateDimensions();
-    
+
     // Create a ResizeObserver to detect container size changes
     const resizeObserver = new ResizeObserver(entries => {
       for (let entry of entries) {
@@ -77,16 +77,23 @@ export default function InteractivePortfolio() {
         }
       }
     });
-    
+
     // Start observing the container
     resizeObserver.observe(containerRef.current);
-    
+
     // Also listen for window resize as a fallback
     window.addEventListener('resize', updateDimensions);
-    
+
+    // Force re-render on window resize to update node sizes responsively
+    const handleWindowResize = () => {
+      setDimensions(dim => ({ ...dim }));
+    };
+    window.addEventListener('resize', handleWindowResize);
+
     return () => {
       resizeObserver.disconnect();
       window.removeEventListener('resize', updateDimensions);
+      window.removeEventListener('resize', handleWindowResize);
     };
   }, []);
   

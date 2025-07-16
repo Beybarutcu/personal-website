@@ -49,6 +49,15 @@ export function centerPortfolioSection(sectionRef) {
   console.log('Scroll command executed to:', Math.max(0, targetScroll));
 }
 
+// Responsive node size multiplier based on screen width
+function getResponsiveNodeSizeMultiplier() {
+  const width = window.innerWidth;
+  if (width < 480) return 0.7;
+  if (width < 768) return 0.9;
+  if (width < 1200) return 1.1;
+  return 1.3;
+}
+
 // Updated setupVisualizations with improved physics settings to prevent vibration
 export function setupVisualizations(svgElement, width, height, data) {
     // Create SVG element first WITHOUT zoom behavior
@@ -106,7 +115,7 @@ export function setupVisualizations(svgElement, width, height, data) {
       .force("link", d3.forceLink(data.links).id(d => d.id).distance(220))
       .force("charge", d3.forceManyBody().strength(-550))
       .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("collision", d3.forceCollide().radius(d => d.size * 5))
+      .force("collision", d3.forceCollide().radius(d => d.size * 4 * getResponsiveNodeSizeMultiplier()))
       // Stronger centering forces to prevent vibration
       .force("x", d3.forceX(width/2).strength(0.08))
       .force("y", d3.forceY(height/2).strength(0.08))
@@ -197,8 +206,11 @@ function dragended(event, simulation) {
 
 // Create node elements with improved visibility
 export function createNodeElements(nodes, styles) {
+  // Use responsive node size multiplier
+  const sizeMultiplier = 1.2 * getResponsiveNodeSizeMultiplier();
+
   // Increase node size multiplier for all nodes
-  const sizeMultiplier = 1.3;
+  // const sizeMultiplier = 1.3;
   
   // Create gradient definitions for each node
   const defs = d3.select("svg").select("defs");
